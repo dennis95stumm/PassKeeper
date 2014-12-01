@@ -1,8 +1,5 @@
 <resources>
-
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.NoActionBar">
-        <!-- Customize your theme here. -->
+    <style name="MyMaterial" parent="android:Theme.Material">
     </style>
 
 </resources>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 public class PassKeeperActivity extends Activity {
@@ -12,6 +13,7 @@ public class PassKeeperActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pass_keeper_layout);
+        Toast.makeText(getApplicationContext(), "Fictional: This application can buy you a House.", Toast.LENGTH_SHORT).show();
     }
 
 
