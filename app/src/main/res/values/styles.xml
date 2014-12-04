@@ -1,5 +1,5 @@
 <resources>
-    <style name="MyMaterial" parent="android:Theme.Material">
-    </style>
+
+    <style name="MyMaterial" parent="Theme.AppCompat"></style>
 
 </resources>
