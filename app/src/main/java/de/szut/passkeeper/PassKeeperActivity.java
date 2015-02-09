@@ -6,6 +6,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import de.szut.passkeeper.R;
+
 
 public class PassKeeperActivity extends Activity {
 

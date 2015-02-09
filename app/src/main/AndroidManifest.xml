@@ -7,7 +7,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name">
         <activity
-            android:name="de.szut.passkeeper.PassKeeperActivity"
+            android:name=".PassKeeperActivity"
             android:theme="@style/MaterialDarkTheme"
             android:label="@string/app_name" >
             <intent-filter>
