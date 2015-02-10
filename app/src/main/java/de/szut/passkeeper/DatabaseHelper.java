@@ -3,9 +3,6 @@ package de.szut.passkeeper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
-
-import java.util.Vector;
 
 /**
  * Created by Sami.Al-Khatib on 09.02.2015.
@@ -24,13 +21,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "PassDatabase";
     private static final String CREATE_USER_DATABASE_SQL =
             "CREATE TABLE " + TABLE_USER_DATABASE +
-                    "(\n"
-                    + KEY_ID_USER_DATABASE + " INTEGER NOT NULL AUTOINCREMENT,\n"
-                    + KEY_USER_DATABASE_NAME + " varchar(16) NOT NULL, \n"
-                    + KEY_USER_DATABASE_PWD + " varchar(4096) NOT NULL, \n"
-                    + KEY_USER_DATABASE_CDATE + " datetime DEFAULT date('now'), \n"
-                    + KEY_USER_DATABASE_MDATE + " datetime DEFAULT date('now')\n" +
-                    ")";
+                "(\n"
+                    + KEY_ID_USER_DATABASE + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n"
+                    + KEY_USER_DATABASE_NAME + " varchar(16) NOT NULL,\n"
+                    + KEY_USER_DATABASE_PWD + " varchar(4096) NOT NULL,\n"
+                    + KEY_USER_DATABASE_CDATE + " timestamp DEFAULT CURRENT_TIMESTAMP,\n"
+                    + KEY_USER_DATABASE_MDATE + " timestamp DEFAULT CURRENT_TIMESTAMP\n" +
+                ")";
 
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);

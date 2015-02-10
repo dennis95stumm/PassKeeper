@@ -1,24 +1,26 @@
 package de.szut.passkeeper;
 
-import java.util.Date;
-import java.util.Vector;
-
 /**
  * Created by Sami.Al-Khatib on 09.02.2015.
  */
-public class DatabaseProperties {
+public class UserDatabaseProperties {
     private int databaseId;
     private String databaseName;
     private String databasePwd;
-    private Date databaseCdate;
-    private Date databaseMdate;
+    private String databaseCdate;
+    private String databaseMdate;
 
-    public DatabaseProperties(int databaseId, String databaseName, String databasePwd, Date databaseCdate, Date databaseMdate){
+    public UserDatabaseProperties(int databaseId, String databaseName, String databasePwd, String databaseCdate, String databaseMdate) {
         this.databaseId = databaseId;
         this.databaseName = databaseName;
         this.databasePwd = databasePwd;
         this.databaseCdate = databaseCdate;
         this.databaseMdate = databaseMdate;
+    }
+
+    public UserDatabaseProperties(String databaseName, String databasePwd){
+        this.databaseName = databaseName;
+        this.databasePwd = databasePwd;
     }
 
     public int getDatabaseId() {
@@ -31,5 +33,13 @@ public class DatabaseProperties {
 
     public String getDatabasePwd() {
         return databasePwd;
+    }
+
+    public String getDatabaseCdate() {
+        return databaseCdate;
+    }
+
+    public String getDatabaseMdate() {
+        return databaseMdate;
     }
 }
