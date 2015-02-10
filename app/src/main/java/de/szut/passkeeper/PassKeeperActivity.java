@@ -6,16 +6,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.Vector;
+
 import de.szut.passkeeper.R;
 
 
 public class PassKeeperActivity extends Activity {
 
+    private DatabaseHelper databaseHelper;
+    private Vector<DatabaseProperties> vecDatabaseProperties;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pass_keeper_layout);
-        Toast.makeText(getApplicationContext(), "Fictional: This application can buy you a House.", Toast.LENGTH_SHORT).show();
     }
 
 
