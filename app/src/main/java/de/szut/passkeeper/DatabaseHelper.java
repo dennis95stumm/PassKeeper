@@ -16,9 +16,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String KEY_USER_DATABASE_PWD = "pass_database_pwd";
     public static final String KEY_USER_DATABASE_CDATE = "pass_database_cdate";
     public static final String KEY_USER_DATABASE_MDATE = "pass_database_mdate";
-
-    private static final int DB_VERSION = 1;
-    private static final String DB_NAME = "PassDatabase";
     private static final String CREATE_USER_DATABASE_SQL =
             "CREATE TABLE " + TABLE_USER_DATABASE +
                 "(\n"
@@ -28,6 +25,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + KEY_USER_DATABASE_CDATE + " timestamp DEFAULT CURRENT_TIMESTAMP,\n"
                     + KEY_USER_DATABASE_MDATE + " timestamp DEFAULT CURRENT_TIMESTAMP\n" +
                 ")";
+    private static final int DB_VERSION = 1;
+    private static final String DB_NAME = "PassDatabase.db";
 
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);

@@ -34,10 +34,9 @@ public class DatabaseModel {
     }
 
     public Vector<UserDatabaseProperties> getDatabasePropertiesVec(){
-        Vector vectorUserDatabaseProperties = new Vector<UserDatabaseProperties>();
+        Vector<UserDatabaseProperties> vectorUserDatabaseProperties = new Vector<UserDatabaseProperties>();
         Cursor cursor = sqLiteDatabase.query(DatabaseHelper.TABLE_USER_DATABASE, passDatabaseColumns, null, null, null, null, null);
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
+        while (cursor.moveToNext()) {
             vectorUserDatabaseProperties.add(
                  new UserDatabaseProperties(
                     cursor.getInt(0),
