@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Vector;
 
 /**
@@ -50,10 +52,10 @@ public class DatabaseModel {
         return vectorUserDatabaseProperties;
     }
 
-    public void createDatabase(UserDatabaseProperties userDatabaseProperties) {
+    public void createDatabase(UserDatabaseProperties userDatabaseProperties) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseHelper.KEY_USER_DATABASE_NAME, userDatabaseProperties.getDatabaseName());
-        contentValues.put(DatabaseHelper.KEY_USER_DATABASE_PWD, userDatabaseProperties.getDatabasePwd());
+        contentValues.put(DatabaseHelper.KEY_USER_DATABASE_PWD, Security.getInstance().encryptPassword(userDatabaseProperties.getDatabasePwd()));
         sqLiteDatabase.insert(DatabaseHelper.TABLE_USER_DATABASE, null, contentValues);
     }
 }

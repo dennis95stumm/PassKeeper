@@ -4,13 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 
 public class CreateDatabaseActivity extends Activity implements TextWatcher, View.OnClickListener{
@@ -34,7 +33,14 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
             case R.id.createNewDatabaseBtn:
                 buttonCreateNewDatabase.setEnabled(false);
                 databaseModel.openDatabaseConnection();
-                databaseModel.createDatabase(new UserDatabaseProperties(editTextDatabaseName.getText().toString(), editTextDatabasePwd.getText().toString()));
+                try {
+                    databaseModel.createDatabase(new UserDatabaseProperties(editTextDatabaseName.getText().toString(), editTextDatabasePwd.getText().toString()));
+                } catch (UnsupportedEncodingException e) {
+                    // TODO Fehler müssen abgefangen und an die Oberfläche gebracht werden
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
                 databaseModel.closeDatabaseConnection();
                 break;
         }
