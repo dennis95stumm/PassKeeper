@@ -4,7 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -25,36 +28,33 @@ public class DatabaseModel {
         databaseHelper = new DatabaseHelper(context);
     }
 
-    public void openDatabaseConnection() {
-        sqLiteDatabase = databaseHelper.getWritableDatabase();
-    }
-
-    public void closeDatabaseConnection() {
-        databaseHelper.close();
-    }
-
-    public Vector<UserDatabaseProperties> getDatabasePropertiesVec(){
-        Vector vectorUserDatabaseProperties = new Vector<UserDatabaseProperties>();
+    public List<UserDatabaseProperties> getDatabasePropertiesList(){
+        sqLiteDatabase = databaseHelper.getReadableDatabase();
+        List listUserDatabaseProperties = new ArrayList<UserDatabaseProperties>();
         Cursor cursor = sqLiteDatabase.query(DatabaseHelper.TABLE_USER_DATABASE, passDatabaseColumns, null, null, null, null, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            vectorUserDatabaseProperties.add(
-                 new UserDatabaseProperties(
-                    cursor.getInt(0),
-                    cursor.getString(1),
-                    cursor.getString(2),
-                    cursor.getString(3),
-                    cursor.getString(4)
-                )
+            listUserDatabaseProperties.add(
+                    new UserDatabaseProperties(
+                            cursor.getInt(0),
+                            cursor.getString(1),
+                            cursor.getString(2),
+                            String.valueOf(cursor.getString(3)),
+                            String.valueOf(cursor.getString(4))
+                    )
             );
+            cursor.moveToNext();
         }
-        return vectorUserDatabaseProperties;
+        databaseHelper.close();
+        return listUserDatabaseProperties;
     }
 
     public void createDatabase(UserDatabaseProperties userDatabaseProperties) {
+        sqLiteDatabase = databaseHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseHelper.KEY_USER_DATABASE_NAME, userDatabaseProperties.getDatabaseName());
         contentValues.put(DatabaseHelper.KEY_USER_DATABASE_PWD, userDatabaseProperties.getDatabasePwd());
         sqLiteDatabase.insert(DatabaseHelper.TABLE_USER_DATABASE, null, contentValues);
+        databaseHelper.close();
     }
 }

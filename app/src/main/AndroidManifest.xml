@@ -20,6 +20,10 @@
             android:name=".CreateDatabaseActivity"
             android:label="@string/title_activity_create_database" >
         </activity>
+        <activity
+            android:name=".ChooseDatabaseActivity"
+            android:label="@string/title_activity_chose_database" >
+        </activity>
     </application>
 
 </manifest>

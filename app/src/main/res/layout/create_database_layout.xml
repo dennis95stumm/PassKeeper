@@ -10,6 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newDatabaseName"
+        android:maxLength="16"
         android:hint="@string/hint_database_name"
     />
     <EditText
@@ -17,6 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/newDatabaseName"
         android:id="@+id/newDatabasePwd"
+        android:maxLength="16"
         android:hint="@string/hint_database_pwd"
     />
     <Button
