@@ -1,29 +1,31 @@
 package de.szut.passkeeper;
 
-import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.widget.CursorAdapter;
 
-import java.util.List;
 
-
-public class StartActivity extends Activity {
+public class StartActivity extends ListActivity {
 
     private DatabaseHelper databaseHelper;
-    private List listUserDatabaseProperties;
+    private Cursor cursorUserDatabaseProperties;
     private DatabaseModel databaseModel;
-
+    private DatabaseCursorAdapter databaseCursorAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.database_list_layout);
+        setContentView(R.layout.choose_database_layout);
         databaseModel = new DatabaseModel(this);
-        listUserDatabaseProperties = databaseModel.getDatabasePropertiesList();
-        if (listUserDatabaseProperties.size() == 0) {
+        cursorUserDatabaseProperties = databaseModel.getDatabasePropertiesCursor();
+        if (cursorUserDatabaseProperties.getCount() == 0) {
             Intent intent = new Intent(this, CreateDatabaseActivity.class);
             intent.addCategory(Intent.CATEGORY_HOME);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
+        databaseCursorAdapter = new DatabaseCursorAdapter(this, cursorUserDatabaseProperties, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+        setListAdapter(databaseCursorAdapter);
     }
 }
