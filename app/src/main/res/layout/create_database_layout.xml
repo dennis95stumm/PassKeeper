@@ -12,6 +12,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:hint="@string/hint_database_name"
+        android:maxLength="16"
     />
     <EditText
         android:id="@+id/newDatabasePwd"
@@ -20,6 +21,7 @@
         android:layout_below="@id/newDatabaseName"
         android:hint="@string/hint_database_pwd"
         android:inputType="textPassword"
+        android:maxLength="16"
     />
     <Button
         android:id="@+id/createNewDatabaseBtn"

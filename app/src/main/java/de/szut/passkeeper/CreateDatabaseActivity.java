@@ -32,7 +32,6 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
         switch (v.getId()){
             case R.id.createNewDatabaseBtn:
                 buttonCreateNewDatabase.setEnabled(false);
-                databaseModel.openDatabaseConnection();
                 try {
                     databaseModel.createDatabase(new UserDatabaseProperties(editTextDatabaseName.getText().toString(), editTextDatabasePwd.getText().toString()));
                 } catch (UnsupportedEncodingException e) {
@@ -41,7 +40,6 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 }
-                databaseModel.closeDatabaseConnection();
                 break;
         }
     }
@@ -53,6 +51,7 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
+        //TODO add Regex for Password!
         if(editTextDatabaseName.getText().length() != 0 && editTextDatabasePwd.getText().length() >= 8){
             buttonCreateNewDatabase.setEnabled(true);
         }else{

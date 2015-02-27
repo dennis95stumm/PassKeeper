@@ -26,7 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + KEY_USER_DATABASE_MDATE + " timestamp DEFAULT CURRENT_TIMESTAMP\n" +
                 ")";
     private static final int DB_VERSION = 1;
-    private static final String DB_NAME = "PassDatabase.db";
+    private static final String DB_NAME = "PassDatabase";
 
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
