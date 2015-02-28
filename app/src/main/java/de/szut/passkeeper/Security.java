@@ -33,12 +33,11 @@ public class Security {
         MessageDigest md = MessageDigest.getInstance("SHA-512");
         md.update(password.getBytes("UTF-8"));
         byte[] digest = md.digest();
-
         StringBuffer result = new StringBuffer();
         for (byte b : digest) {
             result.append(String.format("%02x", b));
         }
-        return result.toString().length() < 32 ? result.toString() : result.toString().substring(0, 32);
+        return result.toString();
     }
 
     /**
