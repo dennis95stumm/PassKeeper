@@ -1,6 +1,6 @@
 package de.szut.passkeeper;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,25 +11,31 @@ import android.widget.Toast;
 import java.util.List;
 
 
-public class StartActivity extends ListActivity {
+public class StartActivity extends Activity {
 
     private DatabaseHelper databaseHelper;
-    private List listUserDatabaseProperties;
+    private List<UserDatabaseProperties> listUserDatabaseProperties;
     private DatabaseModel databaseModel;
     private ListView listViewDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.);
+        setContentView(R.layout.choose_database_layout);
         databaseModel = new DatabaseModel(this);
         listUserDatabaseProperties = databaseModel.getDatabasePropertiesList();
+        for (UserDatabaseProperties userDatabaseProperties : listUserDatabaseProperties) {
+            Toast.makeText(getApplicationContext(), userDatabaseProperties.getDatabaseMdate(), Toast.LENGTH_SHORT).show();
+        }
+
         if (listUserDatabaseProperties.size() == 0) {
             Intent intent = new Intent(this, CreateDatabaseActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
         this.setTitle("");
+        listViewDatabase = (ListView) findViewById(R.id.listViewDatabase);
+        listViewDatabase.setAdapter(new CustomListViewAdapter(listUserDatabaseProperties, this));
     }
 
 
@@ -51,16 +57,5 @@ public class StartActivity extends ListActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-
-    private void initializeView() {
-        databaseModel = new DatabaseModel(getApplicationContext());
-        listUserDatabaseProperties = databaseModel.getDatabasePropertiesList();
-        for (UserDatabaseProperties userDatabaseProperties : listUserDatabaseProperties) {
-            Toast.makeText(getApplicationContext(), userDatabaseProperties.getDatabaseMdate(), Toast.LENGTH_SHORT).show();
-        }
-        listViewDatabase = (ListView) findViewById(R.id.listViewDatabase);
-        listViewDatabase.setAdapter(new CustomListViewAdapter(listUserDatabaseProperties, this));
     }
 }

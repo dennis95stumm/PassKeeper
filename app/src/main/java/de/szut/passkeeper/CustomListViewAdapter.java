@@ -8,15 +8,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 
 public class CustomListViewAdapter extends BaseAdapter {
 
     Context _c;
-    private ArrayList<UserDatabaseProperties> _data;
+    private List<UserDatabaseProperties> _data;
 
-    public CustomListViewAdapter(ArrayList<UserDatabaseProperties> data, Context c) {
+    public CustomListViewAdapter(List<UserDatabaseProperties> data, Context c) {
         this._data = data;
         this._c = c;
     }
