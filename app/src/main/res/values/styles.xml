@@ -2,4 +2,6 @@
 
     <style name="MaterialDarkTheme" parent="android:Theme.Material"></style>
 
+    <style name="MaterialLightTheme" parent="android:Theme.Material.Light"></style>
+
 </resources>

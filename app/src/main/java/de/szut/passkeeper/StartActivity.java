@@ -2,30 +2,65 @@ package de.szut.passkeeper;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.widget.CursorAdapter;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.List;
 
 
 public class StartActivity extends ListActivity {
 
     private DatabaseHelper databaseHelper;
-    private Cursor cursorUserDatabaseProperties;
+    private List listUserDatabaseProperties;
     private DatabaseModel databaseModel;
-    private DatabaseCursorAdapter databaseCursorAdapter;
+    private ListView listViewDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.choose_database_layout);
+        setContentView(R.layout.);
         databaseModel = new DatabaseModel(this);
-        cursorUserDatabaseProperties = databaseModel.getDatabasePropertiesCursor();
-        if (cursorUserDatabaseProperties.getCount() == 0) {
+        listUserDatabaseProperties = databaseModel.getDatabasePropertiesList();
+        if (listUserDatabaseProperties.size() == 0) {
             Intent intent = new Intent(this, CreateDatabaseActivity.class);
-            intent.addCategory(Intent.CATEGORY_HOME);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
-        databaseCursorAdapter = new DatabaseCursorAdapter(this, cursorUserDatabaseProperties, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
-        setListAdapter(databaseCursorAdapter);
+        this.setTitle("");
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.choose_database_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.addDatabase) {
+            startActivity(new Intent(this, CreateDatabaseActivity.class));
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    private void initializeView() {
+        databaseModel = new DatabaseModel(getApplicationContext());
+        listUserDatabaseProperties = databaseModel.getDatabasePropertiesList();
+        for (UserDatabaseProperties userDatabaseProperties : listUserDatabaseProperties) {
+            Toast.makeText(getApplicationContext(), userDatabaseProperties.getDatabaseMdate(), Toast.LENGTH_SHORT).show();
+        }
+        listViewDatabase = (ListView) findViewById(R.id.listViewDatabase);
+        listViewDatabase.setAdapter(new CustomListViewAdapter(listUserDatabaseProperties, this));
     }
 }

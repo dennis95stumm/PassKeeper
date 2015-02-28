@@ -24,7 +24,7 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_database_layout);
         databaseModel = new DatabaseModel(this);
-        this.initializeViews();
+        this.initializeView();
     }
 
     @Override
@@ -64,7 +64,7 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
 
     }
 
-    private void initializeViews(){
+    private void initializeView() {
         editTextDatabaseName = (EditText) findViewById(R.id.newDatabaseName);
         editTextDatabasePwd = (EditText) findViewById(R.id.newDatabasePwd);
         buttonCreateNewDatabase = (Button) findViewById(R.id.createNewDatabaseBtn);
