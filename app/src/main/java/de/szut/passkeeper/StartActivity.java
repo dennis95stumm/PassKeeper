@@ -16,6 +16,7 @@ public class StartActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setTitle(null);
         this.setStartActivity();
     }
 
@@ -24,11 +25,13 @@ public class StartActivity extends Activity {
         listUserDatabaseProperties = databaseModel.getDatabasePropertiesList();
         if(listUserDatabaseProperties.size() == 0){
             Intent intent = new Intent(this, CreateDatabaseActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             //intent.addCategory(Intent.CATEGORY_HOME);
             //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }else{
             Intent intent = new Intent(this, ChooseDatabaseActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             //intent.addCategory(Intent.CATEGORY_HOME);
             //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);

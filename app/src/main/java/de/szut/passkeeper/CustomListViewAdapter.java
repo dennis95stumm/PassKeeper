@@ -5,13 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-
-import de.szut.passkeeper.R;
-import de.szut.passkeeper.UserDatabaseProperties;
 
 
 public class CustomListViewAdapter extends BaseAdapter{
@@ -55,15 +53,17 @@ public class CustomListViewAdapter extends BaseAdapter{
         View v = convertView;
         if (v == null) {
             LayoutInflater vi = (LayoutInflater) _c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = vi.inflate(R.layout.layout_list_items, null);
+            v = vi.inflate(R.layout.list_item_layout, null);
         }
 
         ImageView imageView = (ImageView) v.findViewById(R.id.icon);
+        //ImageButton imageButton = (ImageButton) v.findViewById(R.id.icon2);
         TextView optionHeader = (TextView) v.findViewById(R.id.databaseName);
         TextView optionDescription = (TextView) v.findViewById(R.id.databaseEditationDate);
 
         UserDatabaseProperties userDatabaseProperties = _data.get(position);
         imageView.setImageResource(R.drawable.ic_launcher);
+        //imageButton.setImageResource(R.drawable.ic_launcher);
         optionHeader.setText(userDatabaseProperties.getDatabaseName());
         optionDescription.setText(userDatabaseProperties.getDatabaseMdate());
 
