@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -28,9 +29,9 @@ public class DatabaseModel {
         databaseHelper = new DatabaseHelper(context);
     }
 
-    public List<UserDatabaseProperties> getDatabasePropertiesList(){
+    public ArrayList<UserDatabaseProperties> getDatabasePropertiesList(){
         sqLiteDatabase = databaseHelper.getReadableDatabase();
-        List listUserDatabaseProperties = new ArrayList<UserDatabaseProperties>();
+        ArrayList listUserDatabaseProperties = new ArrayList<UserDatabaseProperties>();
         Cursor cursor = sqLiteDatabase.query(DatabaseHelper.TABLE_USER_DATABASE, passDatabaseColumns, null, null, null, null, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
