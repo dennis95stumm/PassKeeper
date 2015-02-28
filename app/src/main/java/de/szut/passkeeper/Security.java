@@ -45,8 +45,9 @@ public class Security {
      * @param hash
      * @return
      */
-    public boolean checkPassword(String password, String hash) {
-        return false;
+    public boolean checkPassword(String password, String hash) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        String passwordHash = encryptPassword(password);
+        return hash.equals(passwordHash);
     }
 
     /**
