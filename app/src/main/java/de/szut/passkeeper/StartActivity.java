@@ -16,7 +16,7 @@ public class StartActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setTitle(null);
+        this.setTitle("");
         this.setStartActivity();
     }
 
