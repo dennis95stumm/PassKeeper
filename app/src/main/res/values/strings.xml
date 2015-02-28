@@ -9,7 +9,7 @@
     <string name="hint_database_pwd">Database Password</string>
     <string name="create_database_btn_txt">Create</string>
     <string name="create_database_missing_letter">Database Name must have at least 1 letter and password must have at least 8 letters!</string>
-    <string name="title_activity_chose_database">Chose Database</string>
+    <string name="title_activity_chose_database">Choose Database</string>
     <string name="title_activity_main">MainActivity</string>
 
 </resources>
