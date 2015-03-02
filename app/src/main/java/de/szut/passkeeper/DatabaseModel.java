@@ -31,8 +31,7 @@ public class DatabaseModel {
         sqLiteDatabase = databaseHelper.getReadableDatabase();
         ArrayList listUserDatabaseProperties = new ArrayList<UserDatabaseProperties>();
         Cursor cursor = sqLiteDatabase.query(DatabaseHelper.TABLE_USER_DATABASE, passDatabaseColumns, null, null, null, null, null);
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
+        while (cursor.moveToNext()) {
             listUserDatabaseProperties.add(
                     new UserDatabaseProperties(
                             cursor.getInt(0),
@@ -42,7 +41,6 @@ public class DatabaseModel {
                             String.valueOf(cursor.getString(4))
                     )
             );
-            cursor.moveToNext();
         }
         sqLiteDatabase.close();
         return listUserDatabaseProperties;
