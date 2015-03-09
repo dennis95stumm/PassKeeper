@@ -4,5 +4,12 @@
     <string name="app_name">PassKeeper</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_create_database">Create Database</string>
+    <string name="hint_database_name">Database Name</string>
+    <string name="hint_database_pwd">Database Password</string>
+    <string name="create_database_btn_txt">Create</string>
+    <string name="create_database_missing_letter">Database Name must have at least 1 letter and password must have at least 8 letters!</string>
+    <string name="title_activity_chose_database">Choose Database</string>
+    <string name="title_activity_main">MainActivity</string>
 
 </resources>
