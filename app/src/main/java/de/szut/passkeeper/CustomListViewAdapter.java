@@ -1,6 +1,7 @@
 package de.szut.passkeeper;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +65,7 @@ public class CustomListViewAdapter extends BaseAdapter{
         UserDatabaseProperties userDatabaseProperties = _data.get(position);
         imageView.setImageResource(R.drawable.ic_launcher);
         //imageButton.setImageResource(R.drawable.ic_launcher);
+        Log.d(this.getClass().getSimpleName(), String.valueOf(R.drawable.ic_launcher));
         optionHeader.setText(userDatabaseProperties.getDatabaseName());
         optionDescription.setText(userDatabaseProperties.getDatabaseMdate());
 

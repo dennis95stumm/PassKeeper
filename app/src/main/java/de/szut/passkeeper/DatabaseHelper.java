@@ -28,6 +28,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + KEY_USER_DATABASE_CDATE + " timestamp DEFAULT CURRENT_TIMESTAMP,\n"
                     + KEY_USER_DATABASE_MDATE + " timestamp DEFAULT CURRENT_TIMESTAMP\n" +
                 ")";
+   /*
+    private static final String CREATE_CATEGORIE_DATABASE_SQL =
+            "CREATE TABLE " + TABLE_USER_CATEGORIE +
+                    "(\n"
+                        +
+    */
 
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);

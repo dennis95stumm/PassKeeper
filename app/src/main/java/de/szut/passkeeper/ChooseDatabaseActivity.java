@@ -56,5 +56,6 @@ public class ChooseDatabaseActivity extends Activity {
         }
         listViewDatabase = (ListView) findViewById(R.id.listViewDatabase);
         listViewDatabase.setAdapter(new CustomListViewAdapter(listUserDatabaseProperties, this));
+        String s = "dennis";
     }
 }
