@@ -1,13 +1,23 @@
 package de.szut.passkeeper;
 
-import android.util.Log;
+import android.util.Base64;
 
 import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.SecretKeySpec;
 
 /**
  * Created by Dennis Stumm on 17.02.15.
@@ -33,12 +43,11 @@ public class Security {
         MessageDigest md = MessageDigest.getInstance("SHA-512");
         md.update(password.getBytes("UTF-8"));
         byte[] digest = md.digest();
-
         StringBuffer result = new StringBuffer();
         for (byte b : digest) {
             result.append(String.format("%02x", b));
         }
-        return result.toString().length() < 32 ? result.toString() : result.toString().substring(0, 32);
+        return result.toString();
     }
 
     /**
@@ -46,8 +55,9 @@ public class Security {
      * @param hash
      * @return
      */
-    public boolean checkPassword(String password, String hash) {
-        return false;
+    public boolean checkPassword(String password, String hash) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        String passwordHash = encryptPassword(password);
+        return hash.equals(passwordHash);
     }
 
     /**
@@ -55,13 +65,16 @@ public class Security {
      * @param value
      * @return
      */
-    public String encryptValue(String password, String value) throws NoSuchPaddingException, NoSuchAlgorithmException {
+    public String encryptValue(String password, String value, byte[] salt) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException, BadPaddingException, IllegalBlockSizeException, InvalidKeySpecException {
+        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
+        SecretKey tmp = factory.generateSecret(spec);
+        SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
         Cipher cipher = Cipher.getInstance("AES");
-        //cipher.init(Cipher.ENCRYPT_MODE, k);
-        Log.d(Security.class.getSimpleName(), cipher.getAlgorithm());
-        //Log.d(Security.class.getSimpleName(), cipher.getParameters());
-
-        return "";
+        cipher.init(Cipher.ENCRYPT_MODE, secret);
+        byte[] encryptedValue = cipher.doFinal(value.getBytes("UTF-8"));
+        byte[] encryptedValueBase64 = Base64.encode(encryptedValue, Base64.DEFAULT);
+        return new String(encryptedValueBase64);
     }
 
     /**
@@ -69,7 +82,26 @@ public class Security {
      * @param value
      * @return
      */
-    public String decryptValue(String password, String value) {
-        return "";
+    public String decryptValue(String password, String value, byte[] salt) throws InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException, UnsupportedEncodingException, BadPaddingException, IllegalBlockSizeException, InvalidKeySpecException {
+        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
+        SecretKey tmp = factory.generateSecret(spec);
+        SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.DECRYPT_MODE, secret);
+        byte[] decodedValue = Base64.decode(value.getBytes("UTF-8"), Base64.DEFAULT);
+        byte[] decryptedValue = cipher.doFinal(decodedValue);
+        return new String(decryptedValue);
+    }
+
+    /**
+     * @return
+     * @throws NoSuchAlgorithmException
+     */
+    public byte[] generateSalt() throws NoSuchAlgorithmException {
+        byte[] salt = new byte[8];
+        SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+        random.nextBytes(salt);
+        return salt;
     }
 }

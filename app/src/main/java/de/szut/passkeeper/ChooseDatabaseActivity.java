@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -25,7 +24,6 @@ public class ChooseDatabaseActivity extends Activity {
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -39,23 +37,18 @@ public class ChooseDatabaseActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if(id == R.id.addDatabase){
+        if (id == R.id.addDatabase) {
             startActivity(new Intent(this, CreateDatabaseActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    
 
-    private void initializeView(){
+    private void initializeView() {
         databaseModel = new DatabaseModel(getApplicationContext());
         listUserDatabaseProperties = databaseModel.getDatabasePropertiesList();
-        for(UserDatabaseProperties userDatabaseProperties : listUserDatabaseProperties){
-            Toast.makeText(getApplicationContext(), userDatabaseProperties.getDatabaseMdate(), Toast.LENGTH_SHORT).show();
-        }
         listViewDatabase = (ListView) findViewById(R.id.listViewDatabase);
         listViewDatabase.setAdapter(new CustomListViewAdapter(listUserDatabaseProperties, this));
-        String s = "dennis";
     }
 }

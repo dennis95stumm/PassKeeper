@@ -8,32 +8,72 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by Sami.Al-Khatib on 09.02.2015.
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public static final String TABLE_USER_DATABASE = "pass_database";
-    public static final String TABLE_USER_CATEGORIE = "pass_categorie";
-    public static final String TABLE_USER_ENTRY = "pass_entry";
-    public static final String KEY_ID_USER_DATABASE = "pass_database_id";
-    public static final String KEY_USER_DATABASE_NAME = "pass_database_name";
-    public static final String KEY_USER_DATABASE_PWD = "pass_database_pwd";
-    public static final String KEY_USER_DATABASE_CDATE = "pass_database_cdate";
-    public static final String KEY_USER_DATABASE_MDATE = "pass_database_mdate";
-
-    private static final int DB_VERSION = 1;
+    // Database Version and Name
+    private static final int DB_VERSION = 4;
     private static final String DB_NAME = "PassDatabase";
-    private static final String CREATE_USER_DATABASE_SQL =
+
+    // Table
+    public static final String TABLE_USER_DATABASE = "pass_database";
+    public static final String TABLE_USER_CATEGORY = "pass_category";
+    public static final String TABLE_USER_ENTRY = "pass_entry";
+
+    // Columns of pass_database table
+    public static final String KEY_ID_USER_DATABASE = "pass_database_id";
+    public static final String KEY_NAME_USER_DATABASE = "pass_database_name";
+    public static final String KEY_PWD_USER_DATABASE = "pass_database_pwd";
+    public static final String KEY_CDATE_USER_DATABASE = "pass_database_cdate";
+    public static final String KEY_MDATE_USER_DATABASE = "pass_database_mdate";
+
+    // Columns of pass_category table
+    public static final String KEY_ID_USER_CATEGORY = "pass_categorie_id";
+    public static final String KEY_NAME_USER_CATEGORY = "pass_categorie_name";
+    public static final String KEY_CDATE_USER_CATEGORY = "pass_categorie_cdate";
+    public static final String KEY_MDATE_USER_CATEGORY = "pass_categorie_mdate";
+
+    // Columns of pass_entry table
+    public static final String KEY_ID_USER_ENTRY = "pass_entry_id";
+    public static final String KEY_USERNAME_USER_ENTRY = "pass_entry_username";
+    public static final String KEY_USERPWD_USER_ENTRY = "pass_entry_pwd";
+    public static final String KEY_CDATE_USER_ENTRY = "pass_entry_cdate";
+    public static final String KEY_MDATE_USER_ENTRY = "pass_entry_mdate";
+    public static final String KEY_HASH_USER_ENTRY = "pass_entry_hash";
+
+
+    private static final String CREATE_USER_DATABASE_TABLE_SQL =
             "CREATE TABLE " + TABLE_USER_DATABASE +
-                "(\n"
-                    + KEY_ID_USER_DATABASE + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n"
-                    + KEY_USER_DATABASE_NAME + " varchar(16) NOT NULL,\n"
-                    + KEY_USER_DATABASE_PWD + " varchar(4096) NOT NULL,\n"
-                    + KEY_USER_DATABASE_CDATE + " timestamp DEFAULT CURRENT_TIMESTAMP,\n"
-                    + KEY_USER_DATABASE_MDATE + " timestamp DEFAULT CURRENT_TIMESTAMP\n" +
-                ")";
-   /*
-    private static final String CREATE_CATEGORIE_DATABASE_SQL =
-            "CREATE TABLE " + TABLE_USER_CATEGORIE +
                     "(\n"
-                        +
-    */
+                    + KEY_ID_USER_DATABASE + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n"
+                    + KEY_NAME_USER_DATABASE + " TEXT NOT NULL,\n"
+                    + KEY_PWD_USER_DATABASE + " TEXT NOT NULL,\n"
+                    + KEY_CDATE_USER_DATABASE + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"
+                    + KEY_MDATE_USER_DATABASE + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n" +
+                    ")";
+
+    private static final String CREATE_USER_CATEGORY_TABLE_SQL =
+            "CREATE TABLE " + TABLE_USER_CATEGORY +
+                    "(\n"
+                    + KEY_ID_USER_CATEGORY + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n"
+                    + KEY_ID_USER_DATABASE + " INTEGER NOT NULL,\n"
+                    + KEY_NAME_USER_CATEGORY + " TEXT NOT NULL,\n"
+                    + KEY_CDATE_USER_CATEGORY + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"
+                    + KEY_MDATE_USER_CATEGORY + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"
+                    + " FOREIGN KEY (" + KEY_ID_USER_DATABASE + ") REFERENCES " + TABLE_USER_DATABASE + "(" + KEY_ID_USER_DATABASE + ")\n" +
+                    ")";
+
+    private static final String CREATE_USER_ENTRY_TABLE_SQL =
+            "CREATE TABLE " + TABLE_USER_ENTRY +
+                    "(\n"
+                    + KEY_ID_USER_ENTRY + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n"
+                    + KEY_ID_USER_DATABASE + " INTEGER NOT NULL,\n"
+                    + KEY_ID_USER_CATEGORY + " INTEGER NOT NULL,\n"
+                    + KEY_USERNAME_USER_ENTRY + " TEXT,\n"
+                    + KEY_USERPWD_USER_ENTRY + " TEXT,\n"
+                    + KEY_HASH_USER_ENTRY + " TEXT,\n"
+                    + KEY_CDATE_USER_ENTRY + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"
+                    + KEY_MDATE_USER_ENTRY + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"
+                    + "FOREIGN KEY (" + KEY_ID_USER_DATABASE + ") REFERENCES " + TABLE_USER_DATABASE + "(" + KEY_ID_USER_DATABASE + ")\n"
+                    + "FOREIGN KEY (" + KEY_ID_USER_CATEGORY + ") REFERENCES " + TABLE_USER_ENTRY + "(" + KEY_ID_USER_CATEGORY + ")\n" +
+                    ")";
 
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -41,11 +81,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(CREATE_USER_DATABASE_SQL);
+        sqLiteDatabase.execSQL(CREATE_USER_DATABASE_TABLE_SQL);
+        sqLiteDatabase.execSQL(CREATE_USER_CATEGORY_TABLE_SQL);
+        sqLiteDatabase.execSQL(CREATE_USER_ENTRY_TABLE_SQL);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_USER_DATABASE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_USER_CATEGORY);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_USER_ENTRY);
+        onCreate(sqLiteDatabase);
     }
 }
