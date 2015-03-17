@@ -18,7 +18,7 @@ public class UserDatabaseProperties {
         this.databaseMdate = databaseMdate;
     }
 
-    public UserDatabaseProperties(String databaseName, String databasePwd){
+    public UserDatabaseProperties(String databaseName, String databasePwd) {
         this.databaseName = databaseName;
         this.databasePwd = databasePwd;
     }

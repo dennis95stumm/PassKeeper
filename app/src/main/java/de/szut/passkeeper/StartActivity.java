@@ -3,10 +3,6 @@ package de.szut.passkeeper;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -14,48 +10,27 @@ import java.util.List;
 public class StartActivity extends Activity {
 
     private DatabaseHelper databaseHelper;
-    private List<UserDatabaseProperties> listUserDatabaseProperties;
+    private List listUserDatabaseProperties;
     private DatabaseModel databaseModel;
-    private ListView listViewDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.choose_database_layout);
-        databaseModel = new DatabaseModel(this);
-        listUserDatabaseProperties = databaseModel.getDatabasePropertiesList();
-        for (UserDatabaseProperties userDatabaseProperties : listUserDatabaseProperties) {
-            Toast.makeText(getApplicationContext(), userDatabaseProperties.getDatabaseMdate(), Toast.LENGTH_SHORT).show();
-        }
+        this.setTitle("");
+        this.setStartActivity();
+    }
 
+    private void setStartActivity() {
+        databaseModel = new DatabaseModel(getApplicationContext());
+        listUserDatabaseProperties = databaseModel.getDatabasePropertiesList();
         if (listUserDatabaseProperties.size() == 0) {
             Intent intent = new Intent(this, CreateDatabaseActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, ChooseDatabaseActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         }
-        this.setTitle("");
-        listViewDatabase = (ListView) findViewById(R.id.listViewDatabase);
-        listViewDatabase.setAdapter(new CustomListViewAdapter(listUserDatabaseProperties, this));
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.choose_database_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.addDatabase) {
-            startActivity(new Intent(this, CreateDatabaseActivity.class));
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

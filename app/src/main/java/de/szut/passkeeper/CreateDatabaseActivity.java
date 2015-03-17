@@ -3,7 +3,10 @@ package de.szut.passkeeper;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +20,9 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
     private EditText editTextDatabaseName;
     private EditText editTextDatabasePwd;
     private Button buttonCreateNewDatabase;
+    private Button testButton;
     private DatabaseModel databaseModel;
+    private boolean testClicked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,17 +34,20 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.createNewDatabaseBtn:
                 buttonCreateNewDatabase.setEnabled(false);
                 try {
-                    databaseModel.createDatabase(new UserDatabaseProperties(editTextDatabaseName.getText().toString(), editTextDatabasePwd.getText().toString()));
-                } catch (UnsupportedEncodingException e) {
-                    // TODO Fehler müssen abgefangen und an die Oberfläche gebracht werden
-                    e.printStackTrace();
+                    databaseModel.createPassDatabase(new UserDatabaseProperties(editTextDatabaseName.getText().toString(), editTextDatabasePwd.getText().toString()));
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
                 }
+                break;
+            case R.id.TestButton:
+                //editTextDatabasePwd.setInputType(InputType.TYPE_CLASS_TEXT);
+                //editTextDatabasePwd.setTransformationMethod(null);
                 break;
         }
     }
@@ -52,9 +60,9 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         //TODO add Regex for Password!
-        if(editTextDatabaseName.getText().length() != 0 && editTextDatabasePwd.getText().length() >= 8){
+        if (editTextDatabaseName.getText().length() != 0 && editTextDatabasePwd.getText().length() >= 8) {
             buttonCreateNewDatabase.setEnabled(true);
-        }else{
+        } else {
             buttonCreateNewDatabase.setEnabled(false);
         }
     }
@@ -68,9 +76,11 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
         editTextDatabaseName = (EditText) findViewById(R.id.newDatabaseName);
         editTextDatabasePwd = (EditText) findViewById(R.id.newDatabasePwd);
         buttonCreateNewDatabase = (Button) findViewById(R.id.createNewDatabaseBtn);
+        testButton = (Button) findViewById(R.id.TestButton);
 
         editTextDatabaseName.addTextChangedListener(this);
         editTextDatabasePwd.addTextChangedListener(this);
         buttonCreateNewDatabase.setOnClickListener(this);
+        testButton.setOnTouchListener(new CustomTouchListener(editTextDatabasePwd));
     }
 }
