@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.ContactsContract;
 import android.widget.CursorAdapter;
 
 import java.io.UnsupportedEncodingException;
@@ -25,6 +26,7 @@ public class DatabaseModel {
     };
     private String[] passCategoryColumns = {
             DatabaseHelper.KEY_ID_USER_CATEGORY,
+            DatabaseHelper.KEY_ID_USER_DATABASE,
             DatabaseHelper.KEY_NAME_USER_CATEGORY,
             DatabaseHelper.KEY_CDATE_USER_CATEGORY,
             DatabaseHelper.KEY_MDATE_USER_CATEGORY
@@ -45,7 +47,7 @@ public class DatabaseModel {
 
     public ArrayList<UserDatabaseProperty> getUserDatabasePropertyList() {
         sqLiteDatabase = databaseHelper.getReadableDatabase();
-        ArrayList listUserDatabaseProperty = new ArrayList<UserDatabaseProperty>();
+        ArrayList<UserDatabaseProperty> listUserDatabaseProperty = new ArrayList<UserDatabaseProperty>();
         Cursor cursor = sqLiteDatabase.query(DatabaseHelper.TABLE_USER_DATABASE, passDatabaseColumns, null, null, null, null, null);
         while (cursor.moveToNext()) {
             listUserDatabaseProperty.add(
@@ -62,11 +64,21 @@ public class DatabaseModel {
         return listUserDatabaseProperty;
     }
 
-    public ArrayList<UserCategoryProperty> getUserCategoryPropertyList() {
+    public ArrayList<UserCategoryProperty> getUserCategoryPropertyList(int databaseId) {
         sqLiteDatabase = databaseHelper.getReadableDatabase();
-        ArrayList listUserCategoryProperty = new ArrayList<UserCategoryProperty>();
-        //Cursor cursor = sqLiteDatabase.query(Da)
-        return listUserCategoryProperty;
+        ArrayList<UserCategoryProperty> arrayListUserCategory = new ArrayList<UserCategoryProperty>();
+        Cursor cursor = sqLiteDatabase.query(DatabaseHelper.TABLE_USER_CATEGORY, passCategoryColumns, DatabaseHelper.KEY_ID_USER_DATABASE + " = ?", new String[]{String.valueOf(databaseId)}, null, null, null);
+        while(cursor.moveToNext()){
+            arrayListUserCategory.add(new UserCategoryProperty(
+                    cursor.getInt(0),
+                    cursor.getInt(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getString(4)
+            ));
+            databaseHelper.close();
+        }
+        return arrayListUserCategory;
     }
 
     public void createPassDatabase(UserDatabaseProperty userDatabaseProperty) throws NoSuchAlgorithmException, UnsupportedEncodingException {
@@ -78,6 +90,7 @@ public class DatabaseModel {
         contentValues = new ContentValues();
         contentValues.put(DatabaseHelper.KEY_ID_USER_DATABASE, databaseId);
         contentValues.put(DatabaseHelper.KEY_NAME_USER_CATEGORY, "Default Category");
+        sqLiteDatabase.insert(DatabaseHelper.TABLE_USER_CATEGORY, null, contentValues);
         databaseHelper.close();
     }
 }

@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
@@ -31,13 +32,17 @@ public class ChooseDatabaseActivity extends Activity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.choose_database_layout);
         this.initializeView();
+        ArrayList<UserCategoryProperty> arrayListUserCategory = databaseModel.getUserCategoryPropertyList(1);
+        for(UserCategoryProperty userCategoryProperty : arrayListUserCategory)
+            Toast.makeText(this, String.valueOf(arrayListUserCategory.get(0).getDatabaseId()), Toast.LENGTH_SHORT).show();
+
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_choose_database_activity, menu);
+        getMenuInflater().inflate(R.menu.menu_choose_database, menu);
         return true;
     }
 
@@ -67,7 +72,8 @@ public class ChooseDatabaseActivity extends Activity implements AdapterView.OnIt
             public void onClick(DialogInterface dialog, int which){
                 try {
                     if (Security.getInstance().checkPassword(editText.getText().toString(), listUserDatabaseProperties.get(position).getDatabasePwd()))
-                        Toast.makeText(getApplicationContext(), "YO DAWG!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "YO DAWG!", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(ChooseDatabaseActivity.this, StartActivity.class));
                 } catch (UnsupportedEncodingException exception){
                     exception.printStackTrace();
                 } catch(NoSuchAlgorithmException exception){
