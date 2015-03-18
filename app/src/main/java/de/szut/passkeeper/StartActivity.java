@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import java.util.List;
+import java.util.Vector;
 
 
 public class StartActivity extends Activity {
 
     private DatabaseHelper databaseHelper;
-    private List listUserDatabaseProperties;
+    private Vector<UserDatabaseProperty> vectorUserDatabaseProperty;
     private DatabaseModel databaseModel;
 
     @Override
@@ -21,8 +21,8 @@ public class StartActivity extends Activity {
 
     private void setStartActivity() {
         databaseModel = new DatabaseModel(getApplicationContext());
-        listUserDatabaseProperties = databaseModel.getUserDatabasePropertyList();
-        if (listUserDatabaseProperties.size() == 0) {
+        vectorUserDatabaseProperty = databaseModel.getUserDatabasePropertyVector();
+        if (vectorUserDatabaseProperty.size() == 0) {
             Intent intent = new Intent(this, CreateDatabaseActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

@@ -10,6 +10,7 @@ import android.widget.CursorAdapter;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * Created by Sami.Al-Khatib on 10.02.2015.
@@ -45,12 +46,12 @@ public class DatabaseModel {
         databaseHelper = new DatabaseHelper(context);
     }
 
-    public ArrayList<UserDatabaseProperty> getUserDatabasePropertyList() {
+    public Vector<UserDatabaseProperty> getUserDatabasePropertyVector() {
         sqLiteDatabase = databaseHelper.getReadableDatabase();
-        ArrayList<UserDatabaseProperty> listUserDatabaseProperty = new ArrayList<UserDatabaseProperty>();
+        Vector<UserDatabaseProperty> vectorUserDatabaseProperty = new Vector<UserDatabaseProperty>();
         Cursor cursor = sqLiteDatabase.query(DatabaseHelper.TABLE_USER_DATABASE, passDatabaseColumns, null, null, null, null, null);
         while (cursor.moveToNext()) {
-            listUserDatabaseProperty.add(
+            vectorUserDatabaseProperty.add(
                     new UserDatabaseProperty(
                             cursor.getInt(0),
                             cursor.getString(1),
@@ -60,25 +61,27 @@ public class DatabaseModel {
                     )
             );
         }
+        cursor.close();
         databaseHelper.close();
-        return listUserDatabaseProperty;
+        return vectorUserDatabaseProperty;
     }
 
-    public ArrayList<UserCategoryProperty> getUserCategoryPropertyList(int databaseId) {
+    public Vector<UserCategoryProperty> getUserCategoryPropertyList(int databaseId) {
         sqLiteDatabase = databaseHelper.getReadableDatabase();
-        ArrayList<UserCategoryProperty> arrayListUserCategory = new ArrayList<UserCategoryProperty>();
+        Vector<UserCategoryProperty> vectorUserCategoryProperty = new Vector<>();
         Cursor cursor = sqLiteDatabase.query(DatabaseHelper.TABLE_USER_CATEGORY, passCategoryColumns, DatabaseHelper.KEY_ID_USER_DATABASE + " = ?", new String[]{String.valueOf(databaseId)}, null, null, null);
         while(cursor.moveToNext()){
-            arrayListUserCategory.add(new UserCategoryProperty(
+            vectorUserCategoryProperty.add(new UserCategoryProperty(
                     cursor.getInt(0),
                     cursor.getInt(1),
                     cursor.getString(2),
                     cursor.getString(3),
                     cursor.getString(4)
             ));
-            databaseHelper.close();
         }
-        return arrayListUserCategory;
+        cursor.close();
+        databaseHelper.close();
+        return vectorUserCategoryProperty;
     }
 
     public void createPassDatabase(UserDatabaseProperty userDatabaseProperty) throws NoSuchAlgorithmException, UnsupportedEncodingException {

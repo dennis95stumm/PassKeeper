@@ -16,15 +16,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
+import java.util.Vector;
 
 
 public class ChooseDatabaseActivity extends Activity implements AdapterView.OnItemClickListener {
 
     private DatabaseModel databaseModel;
-    private ArrayList<UserDatabaseProperty> listUserDatabaseProperties;
+    private Vector<UserDatabaseProperty> vectorUserDatabaseProperties;
     private ListView listViewDatabase;
 
     @Override
@@ -32,10 +31,6 @@ public class ChooseDatabaseActivity extends Activity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.choose_database_layout);
         this.initializeView();
-        ArrayList<UserCategoryProperty> arrayListUserCategory = databaseModel.getUserCategoryPropertyList(1);
-        for(UserCategoryProperty userCategoryProperty : arrayListUserCategory)
-            Toast.makeText(this, String.valueOf(arrayListUserCategory.get(0).getDatabaseId()), Toast.LENGTH_SHORT).show();
-
     }
 
 
@@ -71,7 +66,7 @@ public class ChooseDatabaseActivity extends Activity implements AdapterView.OnIt
             @Override
             public void onClick(DialogInterface dialog, int which){
                 try {
-                    if (Security.getInstance().checkPassword(editText.getText().toString(), listUserDatabaseProperties.get(position).getDatabasePwd()))
+                    if (Security.getInstance().checkPassword(editText.getText().toString(), vectorUserDatabaseProperties.get(position).getDatabasePwd()))
                         //Toast.makeText(getApplicationContext(), "YO DAWG!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(ChooseDatabaseActivity.this, StartActivity.class));
                 } catch (UnsupportedEncodingException exception){
@@ -92,9 +87,9 @@ public class ChooseDatabaseActivity extends Activity implements AdapterView.OnIt
 
     private void initializeView() {
         databaseModel = new DatabaseModel(getApplicationContext());
-        listUserDatabaseProperties = databaseModel.getUserDatabasePropertyList();
+        vectorUserDatabaseProperties = databaseModel.getUserDatabasePropertyVector();
         listViewDatabase = (ListView) findViewById(R.id.listViewDatabase);
-        listViewDatabase.setAdapter(new CustomListViewAdapter(listUserDatabaseProperties, this));
+        listViewDatabase.setAdapter(new CustomListViewAdapter(vectorUserDatabaseProperties, this));
         listViewDatabase.setOnItemClickListener(this);
         registerForContextMenu(listViewDatabase);
     }
