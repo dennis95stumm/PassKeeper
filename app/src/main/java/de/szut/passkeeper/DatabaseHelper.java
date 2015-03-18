@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
     // Database Version and Name
-    private static final int DB_VERSION = 4;
+    private static final int DB_VERSION = 1;
     private static final String DB_NAME = "PassDatabase";
 
     // Table
@@ -38,6 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String KEY_MDATE_USER_ENTRY = "pass_entry_mdate";
     public static final String KEY_HASH_USER_ENTRY = "pass_entry_hash";
 
+    // CREATE STATEMENTS FOR TABLES
 
     private static final String CREATE_USER_DATABASE_TABLE_SQL =
             "CREATE TABLE " + TABLE_USER_DATABASE +
@@ -75,6 +76,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     + "FOREIGN KEY (" + KEY_ID_USER_CATEGORY + ") REFERENCES " + TABLE_USER_ENTRY + "(" + KEY_ID_USER_CATEGORY + ")\n" +
                     ")";
 
+    /**
+     *
+     * @param context
+     */
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }

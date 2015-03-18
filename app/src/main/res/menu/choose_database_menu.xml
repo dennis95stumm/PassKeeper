@@ -3,6 +3,7 @@
     tools:context="de.szut.passkeeper.ChooseDatabaseActivity">
     <item
         android:id="@+id/addDatabase"
-        android:title="+"
-        android:showAsAction="ifRoom"></item>
+        android:title="@string/"
+        android:icon="@android:drawable/ic_menu_add"
+        android:showAsAction="always"></item>
 </menu>

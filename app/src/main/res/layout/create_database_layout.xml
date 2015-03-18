@@ -29,13 +29,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/newDatabasePwd"
         android:id="@+id/createNewDatabaseBtn"
-        android:text="@string/create_database_btn_txt"
+        android:text="@string/button_create_database"
         android:enabled="false" />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/createNewDatabaseBtn"
-        android:id="@+id/TestButton"
-        android:text="Test"
-        />
 </RelativeLayout>

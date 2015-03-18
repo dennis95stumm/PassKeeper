@@ -16,13 +16,12 @@ public class StartActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setTitle("");
         this.setStartActivity();
     }
 
     private void setStartActivity() {
         databaseModel = new DatabaseModel(getApplicationContext());
-        listUserDatabaseProperties = databaseModel.getDatabasePropertiesList();
+        listUserDatabaseProperties = databaseModel.getUserDatabasePropertyList();
         if (listUserDatabaseProperties.size() == 0) {
             Intent intent = new Intent(this, CreateDatabaseActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

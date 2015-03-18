@@ -1,7 +1,6 @@
 package de.szut.passkeeper;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +13,10 @@ import java.util.ArrayList;
 
 public class CustomListViewAdapter extends BaseAdapter {
 
-    private ArrayList<UserDatabaseProperties> _data;
+    private ArrayList<UserDatabaseProperty> _data;
     Context _c;
 
-    public CustomListViewAdapter(ArrayList<UserDatabaseProperties> data, Context c) {
+    public CustomListViewAdapter(ArrayList<UserDatabaseProperty> data, Context c) {
         this._data = data;
         this._c = c;
     }
@@ -57,16 +56,13 @@ public class CustomListViewAdapter extends BaseAdapter {
         }
 
         ImageView imageView = (ImageView) v.findViewById(R.id.icon);
-        //ImageButton imageButton = (ImageButton) v.findViewById(R.id.icon2);
-        TextView optionHeader = (TextView) v.findViewById(R.id.databaseName);
-        TextView optionDescription = (TextView) v.findViewById(R.id.databaseEditationDate);
+        TextView textViewDatabaseName = (TextView) v.findViewById(R.id.textViewDatabaseName);
+        TextView textViewEditationDate = (TextView) v.findViewById(R.id.textViewDatabaseEditationDate);
 
-        UserDatabaseProperties userDatabaseProperties = _data.get(position);
+        UserDatabaseProperty userDatabaseProperty = _data.get(position);
         imageView.setImageResource(R.drawable.ic_launcher);
-        //imageButton.setImageResource(R.drawable.ic_launcher);
-        Log.d(this.getClass().getSimpleName(), String.valueOf(R.drawable.ic_launcher));
-        optionHeader.setText(userDatabaseProperties.getDatabaseName());
-        optionDescription.setText(userDatabaseProperties.getDatabaseMdate());
+        textViewDatabaseName.setText(userDatabaseProperty.getDatabaseName());
+        textViewEditationDate.setText(userDatabaseProperty.getDatabaseMdate());
 
         return v;
     }

@@ -3,14 +3,14 @@ package de.szut.passkeeper;
 /**
  * Created by Sami.Al-Khatib on 09.02.2015.
  */
-public class UserDatabaseProperties {
+public class UserDatabaseProperty {
     private int databaseId;
     private String databaseName;
     private String databasePwd;
     private String databaseCdate;
     private String databaseMdate;
 
-    public UserDatabaseProperties(int databaseId, String databaseName, String databasePwd, String databaseCdate, String databaseMdate) {
+    public UserDatabaseProperty(int databaseId, String databaseName, String databasePwd, String databaseCdate, String databaseMdate) {
         this.databaseId = databaseId;
         this.databaseName = databaseName;
         this.databasePwd = databasePwd;
@@ -18,7 +18,7 @@ public class UserDatabaseProperties {
         this.databaseMdate = databaseMdate;
     }
 
-    public UserDatabaseProperties(String databaseName, String databasePwd) {
+    public UserDatabaseProperty(String databaseName, String databasePwd) {
         this.databaseName = databaseName;
         this.databasePwd = databasePwd;
     }

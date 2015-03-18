@@ -4,8 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.provider.ContactsContract;
-import android.util.Log;
+import android.widget.CursorAdapter;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -44,13 +43,13 @@ public class DatabaseModel {
         databaseHelper = new DatabaseHelper(context);
     }
 
-    public ArrayList<UserDatabaseProperties> getDatabasePropertiesList() {
+    public ArrayList<UserDatabaseProperty> getUserDatabasePropertyList() {
         sqLiteDatabase = databaseHelper.getReadableDatabase();
-        ArrayList listUserDatabaseProperties = new ArrayList<UserDatabaseProperties>();
+        ArrayList listUserDatabaseProperty = new ArrayList<UserDatabaseProperty>();
         Cursor cursor = sqLiteDatabase.query(DatabaseHelper.TABLE_USER_DATABASE, passDatabaseColumns, null, null, null, null, null);
         while (cursor.moveToNext()) {
-            listUserDatabaseProperties.add(
-                    new UserDatabaseProperties(
+            listUserDatabaseProperty.add(
+                    new UserDatabaseProperty(
                             cursor.getInt(0),
                             cursor.getString(1),
                             cursor.getString(2),
@@ -60,19 +59,25 @@ public class DatabaseModel {
             );
         }
         databaseHelper.close();
-        return listUserDatabaseProperties;
+        return listUserDatabaseProperty;
     }
 
-    public void createPassDatabase(UserDatabaseProperties userDatabaseProperties) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    public ArrayList<UserCategoryProperty> getUserCategoryPropertyList() {
+        sqLiteDatabase = databaseHelper.getReadableDatabase();
+        ArrayList listUserCategoryProperty = new ArrayList<UserCategoryProperty>();
+        //Cursor cursor = sqLiteDatabase.query(Da)
+        return listUserCategoryProperty;
+    }
+
+    public void createPassDatabase(UserDatabaseProperty userDatabaseProperty) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         sqLiteDatabase = databaseHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DatabaseHelper.KEY_NAME_USER_DATABASE, userDatabaseProperties.getDatabaseName());
-        contentValues.put(DatabaseHelper.KEY_PWD_USER_DATABASE, Security.getInstance().encryptPassword(userDatabaseProperties.getDatabasePwd()));
+        contentValues.put(DatabaseHelper.KEY_NAME_USER_DATABASE, userDatabaseProperty.getDatabaseName());
+        contentValues.put(DatabaseHelper.KEY_PWD_USER_DATABASE, Security.getInstance().encryptPassword(userDatabaseProperty.getDatabasePwd()));
         long databaseId = sqLiteDatabase.insert(DatabaseHelper.TABLE_USER_DATABASE, null, contentValues);
         contentValues = new ContentValues();
         contentValues.put(DatabaseHelper.KEY_ID_USER_DATABASE, databaseId);
         contentValues.put(DatabaseHelper.KEY_NAME_USER_CATEGORY, "Default Category");
-        long categoryId = sqLiteDatabase.insert(DatabaseHelper.TABLE_USER_CATEGORY, null, contentValues);
         databaseHelper.close();
     }
 }
