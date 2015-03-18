@@ -37,7 +37,7 @@ public class ChooseDatabaseActivity extends Activity implements AdapterView.OnIt
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.choose_database_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_choose_database_activity, menu);
         return true;
     }
 

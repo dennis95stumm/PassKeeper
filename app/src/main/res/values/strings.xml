@@ -12,5 +12,6 @@
     <string name="button_create_database">Create</string>
     <string name="title_activity_chose_database">Choose Database</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="menu_item_title_add_database">Add a new database!</string>
 
 </resources>
