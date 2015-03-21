@@ -16,8 +16,8 @@ import de.szut.passkeeper.R;
 
 public class CustomListViewAdapter extends BaseAdapter {
 
-    private Vector<IListViewType> vector;
     Context context;
+    private Vector<IListViewType> vector;
 
     public CustomListViewAdapter(Vector<IListViewType> vector, Context context) {
         this.vector = vector;

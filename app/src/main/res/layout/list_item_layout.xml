@@ -33,26 +33,24 @@
 
         <TextView
             android:id="@+id/textViewHeader"
-            android:text="Random Header"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
-        />
-            <!--android:textColor="@android:color/primary_text_dark"-->
+            android:text="Random Header"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+        <!--android:textColor="@android:color/primary_text_dark"-->
 
 
         <TextView
             android:id="@+id/textViewSubHeader"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Random Description"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
-        />
-            <!--android:textColor="@android:color/secondary_text_dark"-->
+            android:text="Random Description"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
+        <!--android:textColor="@android:color/secondary_text_dark"-->
 
     </LinearLayout>
 

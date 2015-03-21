@@ -20,12 +20,12 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Vector;
 
 import de.szut.passkeeper.Interface.IListViewType;
-import de.szut.passkeeper.Utility.AlertBuilderHelper;
-import de.szut.passkeeper.Utility.CustomListViewAdapter;
 import de.szut.passkeeper.Model.DatabaseModel;
-import de.szut.passkeeper.R;
 import de.szut.passkeeper.Model.Security;
 import de.szut.passkeeper.Property.UserDatabaseProperty;
+import de.szut.passkeeper.R;
+import de.szut.passkeeper.Utility.AlertBuilderHelper;
+import de.szut.passkeeper.Utility.CustomListViewAdapter;
 
 
 public class DatabaseActivity extends Activity implements AdapterView.OnItemClickListener {
@@ -63,7 +63,7 @@ public class DatabaseActivity extends Activity implements AdapterView.OnItemClic
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, final int position, long id){
+    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
         AlertDialog.Builder alertDialog = new AlertBuilderHelper(this, R.string.dialog_title_open_database, R.string.dialog_message_open_database);
         final EditText editText = new EditText(this);
         editText.setHint(R.string.hint_database_pwd);
@@ -72,16 +72,16 @@ public class DatabaseActivity extends Activity implements AdapterView.OnItemClic
         alertDialog.setView(editText);
         alertDialog.setPositiveButton(R.string.dialog_positive_button, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which){
+            public void onClick(DialogInterface dialog, int which) {
                 try {
-                    if (Security.getInstance().checkPassword(editText.getText().toString(), ((UserDatabaseProperty)vectorUserDatabaseProperties.get(position)).getDatabasePwd())){
+                    if (Security.getInstance().checkPassword(editText.getText().toString(), ((UserDatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabasePwd())) {
                         Intent intent = new Intent(DatabaseActivity.this, CategoryActivity.class);
-                        intent.putExtra("databaseId", ((UserDatabaseProperty)vectorUserDatabaseProperties.get(position)).getDatabaseId());
+                        intent.putExtra(getResources().getString(R.string.intent_extra_database_id), ((UserDatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId());
                         startActivity(intent);
                     }
-                } catch (UnsupportedEncodingException exception){
+                } catch (UnsupportedEncodingException exception) {
                     exception.printStackTrace();
-                } catch(NoSuchAlgorithmException exception){
+                } catch (NoSuchAlgorithmException exception) {
                     exception.printStackTrace();
                 }
             }

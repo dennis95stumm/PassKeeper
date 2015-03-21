@@ -1,7 +1,6 @@
 package de.szut.passkeeper.Utility;
 
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -12,13 +11,14 @@ import android.widget.EditText;
 public class CustomTouchListener implements View.OnTouchListener {
 
     private EditText editText;
-    public CustomTouchListener(EditText editText){
+
+    public CustomTouchListener(EditText editText) {
         this.editText = editText;
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        switch (event.getAction()){
+        switch (event.getAction()) {
             case MotionEvent.ACTION_UP:
                 editText.setTransformationMethod(new PasswordTransformationMethod());
                 editText.setSelection(editText.length());

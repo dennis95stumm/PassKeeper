@@ -1,21 +1,17 @@
 package de.szut.passkeeper.Activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.Vector;
 
 import de.szut.passkeeper.Interface.IListViewType;
 import de.szut.passkeeper.Model.DatabaseModel;
-import de.szut.passkeeper.Property.UserCategoryProperty;
 import de.szut.passkeeper.R;
 import de.szut.passkeeper.Utility.CustomListViewAdapter;
 
@@ -24,6 +20,8 @@ public class CategoryActivity extends Activity implements AdapterView.OnItemClic
     private ListView listView;
     private Vector<IListViewType> vectorUserCategoryProperty;
     private DatabaseModel databaseModel;
+    private int databaseId;
+    private String databaseName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +58,10 @@ public class CategoryActivity extends Activity implements AdapterView.OnItemClic
 
     }
 
-    private void initializeView(){
+    private void initializeView() {
         databaseModel = new DatabaseModel(getApplicationContext());
-        vectorUserCategoryProperty = databaseModel.getUserCategoryPropertyList(getIntent().getExtras().getInt("databaseId"));
+        databaseId = getIntent().getExtras().getInt(getResources().getString(R.string.intent_extra_database_id));
+        vectorUserCategoryProperty = databaseModel.getUserCategoryPropertyList(databaseId);
         listView = (ListView) findViewById(R.id.listViewDefault);
         listView.setAdapter(new CustomListViewAdapter(vectorUserCategoryProperty, this));
         listView.setOnItemClickListener(this);
