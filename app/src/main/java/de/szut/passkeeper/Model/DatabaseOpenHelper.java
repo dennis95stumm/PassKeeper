@@ -8,6 +8,11 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by Sami.Al-Khatib on 09.02.2015.
  */
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
+
+    // Database Version and Name
+    private static final int DB_VERSION = 1;
+    private static final String DB_NAME = "PassDatabase";
+
     // Table
     public static final String TABLE_USER_DATABASE = "pass_database";
     public static final String TABLE_USER_CATEGORY = "pass_category";
@@ -50,12 +55,13 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     // Columns of pass_entry table
     public static final String KEY_ID_USER_ENTRY = "pass_entry_id";
+    public static final String KEY_TITLE_USER_ENTRY = "pass_entry_title";
     public static final String KEY_USERNAME_USER_ENTRY = "pass_entry_username";
     public static final String KEY_USERPWD_USER_ENTRY = "pass_entry_pwd";
-    public static final String KEY_NOTE_USER_ENTRY = "pass_entry_pwd";
+    public static final String KEY_HASH_USER_ENTRY = "pass_entry_hash";
+    public static final String KEY_NOTE_USER_ENTRY = "pass_entry_note";
     public static final String KEY_CDATE_USER_ENTRY = "pass_entry_cdate";
     public static final String KEY_MDATE_USER_ENTRY = "pass_entry_mdate";
-    public static final String KEY_HASH_USER_ENTRY = "pass_entry_hash";
 
     // CREATE STATEMENTS FOR TABLES
     private static final String CREATE_USER_ENTRY_TABLE_SQL =
@@ -64,19 +70,17 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                     + KEY_ID_USER_ENTRY + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n"
                     + KEY_ID_USER_DATABASE + " INTEGER NOT NULL,\n"
                     + KEY_ID_USER_CATEGORY + " INTEGER NOT NULL,\n"
+                    + KEY_TITLE_USER_ENTRY + " TEXT,\n"
                     + KEY_USERNAME_USER_ENTRY + " TEXT,\n"
                     + KEY_USERPWD_USER_ENTRY + " TEXT,\n"
-                    + KEY_NOTE_USER_ENTRY + " TEXT,\n"
                     + KEY_HASH_USER_ENTRY + " TEXT,\n"
+                    + KEY_NOTE_USER_ENTRY + " TEXT,\n"
                     + KEY_CDATE_USER_ENTRY + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"
                     + KEY_MDATE_USER_ENTRY + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"
                     + "FOREIGN KEY (" + KEY_ID_USER_DATABASE + ") REFERENCES " + TABLE_USER_DATABASE + "(" + KEY_ID_USER_DATABASE + ") ON DELETE CASCADE\n"
                     + "FOREIGN KEY (" + KEY_ID_USER_CATEGORY + ") REFERENCES " + TABLE_USER_ENTRY + "(" + KEY_ID_USER_CATEGORY + ") ON DELETE CASCADE\n" +
                     ")";
 
-    // Database Version and Name
-    private static final int DB_VERSION = 1;
-    private static final String DB_NAME = "PassDatabase";
 
     /**
      * @param context

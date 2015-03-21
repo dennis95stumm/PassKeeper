@@ -1,18 +1,18 @@
 package de.szut.passkeeper.Property;
 
-import de.szut.passkeeper.Interface.IListViewType;
+import de.szut.passkeeper.Interface.IUserProperty;
 
 /**
  * Created by Sami.Al-Khatib on 18.03.2015.
  */
-public class UserCategoryProperty implements IListViewType {
+public class CategoryProperty implements IUserProperty {
     private int databaseId;
     private int categoryId;
     private String categoryName;
     private String categoryCdate;
     private String categoryMdate;
 
-    public UserCategoryProperty(int databaseId, int categoryId, String categoryName, String categoryCdate, String categoryMdate) {
+    public CategoryProperty(int databaseId, int categoryId, String categoryName, String categoryCdate, String categoryMdate) {
         this.databaseId = databaseId;
         this.categoryId = categoryId;
         this.categoryName = categoryName;

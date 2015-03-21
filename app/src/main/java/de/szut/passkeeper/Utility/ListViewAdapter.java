@@ -10,16 +10,16 @@ import android.widget.TextView;
 
 import java.util.Vector;
 
-import de.szut.passkeeper.Interface.IListViewType;
+import de.szut.passkeeper.Interface.IUserProperty;
 import de.szut.passkeeper.R;
 
 
-public class CustomListViewAdapter extends BaseAdapter {
+public class ListViewAdapter extends BaseAdapter {
 
     Context context;
-    private Vector<IListViewType> vector;
+    private Vector<IUserProperty> vector;
 
-    public CustomListViewAdapter(Vector<IListViewType> vector, Context context) {
+    public ListViewAdapter(Vector<IUserProperty> vector, Context context) {
         this.vector = vector;
         this.context = context;
     }
@@ -62,10 +62,10 @@ public class CustomListViewAdapter extends BaseAdapter {
         TextView textViewDatabaseName = (TextView) v.findViewById(R.id.textViewHeader);
         TextView textViewEditationDate = (TextView) v.findViewById(R.id.textViewSubHeader);
 
-        IListViewType IListViewType = vector.get(position);
+        IUserProperty IUserProperty = vector.get(position);
         imageView.setImageResource(R.drawable.ic_launcher);
-        textViewDatabaseName.setText(IListViewType.getItemHeader());
-        textViewEditationDate.setText(IListViewType.getItemSubHeader());
+        textViewDatabaseName.setText(IUserProperty.getItemHeader());
+        textViewEditationDate.setText(IUserProperty.getItemSubHeader());
 
         return v;
     }

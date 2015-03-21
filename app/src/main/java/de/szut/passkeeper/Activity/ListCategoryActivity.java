@@ -1,33 +1,39 @@
 package de.szut.passkeeper.Activity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.Vector;
 
-import de.szut.passkeeper.Interface.IListViewType;
+import de.szut.passkeeper.Interface.IActivity;
+import de.szut.passkeeper.Interface.IUserProperty;
 import de.szut.passkeeper.Model.DatabaseModel;
 import de.szut.passkeeper.R;
-import de.szut.passkeeper.Utility.CustomListViewAdapter;
+import de.szut.passkeeper.Utility.AlertBuilderHelper;
+import de.szut.passkeeper.Utility.ListViewAdapter;
 
-public class CategoryActivity extends Activity implements AdapterView.OnItemClickListener {
+public class ListCategoryActivity extends Activity implements AdapterView.OnItemClickListener, IActivity {
 
     private ListView listView;
-    private Vector<IListViewType> vectorUserCategoryProperty;
+    private Vector<IUserProperty> vectorCategoryProperty;
     private DatabaseModel databaseModel;
     private int databaseId;
-    private String databaseName;
+
+    //TODO implement context menu
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listview_layout);
-        initializeView();
+        setDefaults();
+        populateView();
     }
 
 
@@ -46,8 +52,19 @@ public class CategoryActivity extends Activity implements AdapterView.OnItemClic
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.addCategory) {
+            AlertBuilderHelper alertDialog = new AlertBuilderHelper(this, R.string.dialog_title_add_category, R.string.dialog_message_add_category, true);
+            final EditText editText = new EditText(this);
+            editText.setHint(R.string.hint_category_name);
+            alertDialog.setView(editText);
+            alertDialog.setPositiveButton(R.string.dialog_positive_button, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    databaseModel.createCategory(databaseId, editText.getText().toString());
+                    populateView();
+                }
+            });
+            alertDialog.show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -58,15 +75,21 @@ public class CategoryActivity extends Activity implements AdapterView.OnItemClic
 
     }
 
-    private void initializeView() {
+    @Override
+    public void setDefaults() {
         setTitle(getIntent().getExtras().getString(getResources().getString(R.string.intent_extra_database_name)));
-        databaseModel = new DatabaseModel(getApplicationContext());
         databaseId = getIntent().getExtras().getInt(getResources().getString(R.string.intent_extra_database_id));
-        vectorUserCategoryProperty = databaseModel.getUserCategoryPropertyList(databaseId);
+        databaseModel = new DatabaseModel(getApplicationContext());
         listView = (ListView) findViewById(R.id.listViewDefault);
-        listView.setAdapter(new CustomListViewAdapter(vectorUserCategoryProperty, this));
+
+    }
+
+    @Override
+    public void populateView() {
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        vectorCategoryProperty = databaseModel.getUserCategoryPropertyVector(databaseId);
+        listView.setAdapter(new ListViewAdapter(vectorCategoryProperty, this));
         listView.setOnItemClickListener(this);
         registerForContextMenu(listView);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

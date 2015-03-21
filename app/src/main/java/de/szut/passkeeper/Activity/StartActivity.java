@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import java.util.Vector;
 
-import de.szut.passkeeper.Interface.IListViewType;
+import de.szut.passkeeper.Interface.IUserProperty;
 import de.szut.passkeeper.Model.DatabaseModel;
 import de.szut.passkeeper.Model.DatabaseOpenHelper;
 
@@ -14,7 +14,7 @@ import de.szut.passkeeper.Model.DatabaseOpenHelper;
 public class StartActivity extends Activity {
 
     private DatabaseOpenHelper databaseOpenHelper;
-    private Vector<IListViewType> vectorUserDatabaseProperty;
+    private Vector<IUserProperty> vectorUserDatabaseProperty;
     private DatabaseModel databaseModel;
 
     @Override
@@ -31,7 +31,7 @@ public class StartActivity extends Activity {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else {
-            Intent intent = new Intent(this, DatabaseActivity.class);
+            Intent intent = new Intent(this, ListDatabaseActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
