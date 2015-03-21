@@ -59,6 +59,7 @@ public class CategoryActivity extends Activity implements AdapterView.OnItemClic
     }
 
     private void initializeView() {
+        setTitle(getIntent().getExtras().getString(getResources().getString(R.string.intent_extra_database_name)));
         databaseModel = new DatabaseModel(getApplicationContext());
         databaseId = getIntent().getExtras().getInt(getResources().getString(R.string.intent_extra_database_id));
         vectorUserCategoryProperty = databaseModel.getUserCategoryPropertyList(databaseId);

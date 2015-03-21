@@ -76,6 +76,7 @@ public class DatabaseActivity extends Activity implements AdapterView.OnItemClic
                 try {
                     if (Security.getInstance().checkPassword(editText.getText().toString(), ((UserDatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabasePwd())) {
                         Intent intent = new Intent(DatabaseActivity.this, CategoryActivity.class);
+                        intent.putExtra(getResources().getString(R.string.intent_extra_database_name), ((UserDatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseName());
                         intent.putExtra(getResources().getString(R.string.intent_extra_database_id), ((UserDatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId());
                         startActivity(intent);
                     }

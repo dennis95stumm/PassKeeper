@@ -41,6 +41,7 @@ public class DatabaseModel {
             DatabaseOpenHelper.KEY_ID_USER_CATEGORY,
             DatabaseOpenHelper.KEY_USERNAME_USER_ENTRY,
             DatabaseOpenHelper.KEY_USERPWD_USER_ENTRY,
+            DatabaseOpenHelper.KEY_NOTE_USER_ENTRY,
             DatabaseOpenHelper.KEY_CDATE_USER_ENTRY,
             DatabaseOpenHelper.KEY_MDATE_USER_ENTRY,
             DatabaseOpenHelper.KEY_HASH_USER_ENTRY

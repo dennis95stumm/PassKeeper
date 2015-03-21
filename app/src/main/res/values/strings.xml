@@ -17,5 +17,6 @@
     <string name="title_activity_category">CategoryActivity</string>
     <string name="action_settings">Settings</string>
     <string name="intent_extra_database_id">databaseId</string>
+    <string name="intent_extra_database_name">databaseName</string>
 
 </resources>

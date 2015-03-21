@@ -40,8 +40,8 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
                 try {
                     int databaseId = databaseModel.createPassDatabaseAndDefaultCategory(new UserDatabaseProperty(editTextDatabaseName.getText().toString(), editTextDatabasePwd.getText().toString()));
                     Intent intent = new Intent(CreateDatabaseActivity.this, CategoryActivity.class);
-                    //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.putExtra(getResources().getString(R.string.intent_extra_database_id), databaseId);
+                    intent.putExtra(getResources().getString(R.string.intent_extra_database_name), editTextDatabaseName.getText().toString());
                     startActivity(intent);
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
