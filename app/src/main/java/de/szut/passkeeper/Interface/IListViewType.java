@@ -5,5 +5,6 @@ package de.szut.passkeeper.Interface;
  */
 public interface IListViewType {
     public String getItemHeader();
+
     public String getItemSubHeader();
 }

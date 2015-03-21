@@ -13,11 +13,11 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
 import de.szut.passkeeper.Model.DatabaseModel;
-import de.szut.passkeeper.R;
 import de.szut.passkeeper.Property.UserDatabaseProperty;
+import de.szut.passkeeper.R;
 
 
-public class CreateDatabaseActivity extends Activity implements TextWatcher, View.OnClickListener{
+public class CreateDatabaseActivity extends Activity implements TextWatcher, View.OnClickListener {
 
     private EditText editTextDatabaseName;
     private EditText editTextDatabasePwd;
@@ -40,8 +40,8 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
                 try {
                     int databaseId = databaseModel.createPassDatabaseAndDefaultCategory(new UserDatabaseProperty(editTextDatabaseName.getText().toString(), editTextDatabasePwd.getText().toString()));
                     Intent intent = new Intent(CreateDatabaseActivity.this, CategoryActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intent.putExtra("databaseId", databaseId);
+                    //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra(getResources().getString(R.string.intent_extra_database_id), databaseId);
                     startActivity(intent);
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();

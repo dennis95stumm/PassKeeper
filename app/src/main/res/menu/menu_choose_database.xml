@@ -3,7 +3,7 @@
     tools:context="de.szut.passkeeper.Activity.DatabaseActivity">
     <item
         android:id="@+id/addDatabase"
-        android:title="@string/menu_item_title_add_database"
         android:icon="@android:drawable/ic_menu_add"
-        android:showAsAction="always"></item>
+        android:showAsAction="always"
+        android:title="@string/menu_item_title_add_database"></item>
 </menu>

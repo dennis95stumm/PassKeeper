@@ -2,7 +2,6 @@ package de.szut.passkeeper.Model;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -14,7 +13,6 @@ import java.util.Vector;
 import de.szut.passkeeper.Interface.IListViewType;
 import de.szut.passkeeper.Property.UserCategoryProperty;
 import de.szut.passkeeper.Property.UserDatabaseProperty;
-import de.szut.passkeeper.R;
 
 /**
  * Created by Sami.Al-Khatib on 10.02.2015.
@@ -45,7 +43,7 @@ public class DatabaseModel {
             DatabaseOpenHelper.KEY_USERPWD_USER_ENTRY,
             DatabaseOpenHelper.KEY_CDATE_USER_ENTRY,
             DatabaseOpenHelper.KEY_MDATE_USER_ENTRY,
-            DatabaseOpenHelper. KEY_HASH_USER_ENTRY
+            DatabaseOpenHelper.KEY_HASH_USER_ENTRY
     };
 
     public DatabaseModel(Context context) {
@@ -53,7 +51,6 @@ public class DatabaseModel {
     }
 
     /**
-     *
      * @return
      */
     public Vector<IListViewType> getUserDatabasePropertyVector() {
@@ -77,7 +74,6 @@ public class DatabaseModel {
     }
 
     /**
-     *
      * @param databaseId
      * @return
      */
@@ -86,7 +82,7 @@ public class DatabaseModel {
         Vector<IListViewType> vectorUserCategoryProperty = new Vector<>();
         Cursor cursor = sqLiteDatabase.query(DatabaseOpenHelper.TABLE_USER_CATEGORY, passCategoryColumns, DatabaseOpenHelper.KEY_ID_USER_DATABASE + " = ?", new String[]{String.valueOf(databaseId)}, null, null, null);
         Log.d(this.getClass().getSimpleName(), String.valueOf(cursor.getCount()));
-        while(cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             vectorUserCategoryProperty.add(new UserCategoryProperty(
                     cursor.getInt(0),
                     cursor.getInt(1),
@@ -101,7 +97,6 @@ public class DatabaseModel {
     }
 
     /**
-     *
      * @param userDatabaseProperty
      * @return
      * @throws NoSuchAlgorithmException

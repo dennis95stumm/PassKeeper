@@ -7,8 +7,8 @@ import android.os.Bundle;
 import java.util.Vector;
 
 import de.szut.passkeeper.Interface.IListViewType;
-import de.szut.passkeeper.Model.DatabaseOpenHelper;
 import de.szut.passkeeper.Model.DatabaseModel;
+import de.szut.passkeeper.Model.DatabaseOpenHelper;
 
 
 public class StartActivity extends Activity {

@@ -12,7 +12,7 @@ public class UserCategoryProperty implements IListViewType {
     private String categoryCdate;
     private String categoryMdate;
 
-    public UserCategoryProperty(int databaseId, int categoryId, String categoryName, String categoryCdate, String categoryMdate){
+    public UserCategoryProperty(int databaseId, int categoryId, String categoryName, String categoryCdate, String categoryMdate) {
         this.databaseId = databaseId;
         this.categoryId = categoryId;
         this.categoryName = categoryName;
