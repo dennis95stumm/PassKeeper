@@ -1,4 +1,4 @@
-package de.szut.passkeeper;
+package de.szut.passkeeper.Utility;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,23 +8,25 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Vector;
+
+import de.szut.passkeeper.Interface.IListViewType;
+import de.szut.passkeeper.R;
 
 
 public class CustomListViewAdapter extends BaseAdapter {
 
-    private Vector<UserDatabaseProperty> _data;
-    Context _c;
+    private Vector<IListViewType> vector;
+    Context context;
 
-    public CustomListViewAdapter(Vector<UserDatabaseProperty> data, Context c) {
-        this._data = data;
-        this._c = c;
+    public CustomListViewAdapter(Vector<IListViewType> vector, Context context) {
+        this.vector = vector;
+        this.context = context;
     }
 
     @Override
     public int getCount() {
-        return _data.size();
+        return vector.size();
     }
 
     @Override
@@ -52,18 +54,18 @@ public class CustomListViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup viewGroup) {
         View v = convertView;
         if (v == null) {
-            LayoutInflater vi = (LayoutInflater) _c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(R.layout.list_item_layout, null);
         }
 
         ImageView imageView = (ImageView) v.findViewById(R.id.icon);
-        TextView textViewDatabaseName = (TextView) v.findViewById(R.id.textViewDatabaseName);
-        TextView textViewEditationDate = (TextView) v.findViewById(R.id.textViewDatabaseEditationDate);
+        TextView textViewDatabaseName = (TextView) v.findViewById(R.id.textViewHeader);
+        TextView textViewEditationDate = (TextView) v.findViewById(R.id.textViewSubHeader);
 
-        UserDatabaseProperty userDatabaseProperty = _data.get(position);
+        IListViewType IListViewType = vector.get(position);
         imageView.setImageResource(R.drawable.ic_launcher);
-        textViewDatabaseName.setText(userDatabaseProperty.getDatabaseName());
-        textViewEditationDate.setText(userDatabaseProperty.getDatabaseMdate());
+        textViewDatabaseName.setText(IListViewType.getItemHeader());
+        textViewEditationDate.setText(IListViewType.getItemSubHeader());
 
         return v;
     }

@@ -1,4 +1,4 @@
-package de.szut.passkeeper;
+package de.szut.passkeeper.Model;
 
 import android.util.Base64;
 

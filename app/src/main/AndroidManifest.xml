@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="de.szut.passkeeper">
+    package="de.szut.passkeeper" >
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/MaterialLightTheme">
+        android:theme="@style/MaterialLightTheme" >
         <activity
-            android:name=".StartActivity"
-            android:label="@string/app_name">
+            android:name=".Activity.StartActivity"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,11 +17,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CreateDatabaseActivity"
-            android:label="@string/title_activity_create_database"></activity>
+            android:name=".Activity.CreateDatabaseActivity"
+            android:label="@string/title_activity_create_database" />
         <activity
-            android:name=".ChooseDatabaseActivity"
-            android:label="@string/title_activity_chose_database"></activity>
+            android:name=".Activity.DatabaseActivity"
+            android:label="@string/title_activity_chose_database" />
+        <activity
+            android:name=".Activity.CategoryActivity"
+            android:label="@string/title_activity_category"
+            android:parentActivityName=".Activity.DatabaseActivity">
+        </activity>
     </application>
 
 </manifest>

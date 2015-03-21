@@ -1,9 +1,11 @@
-package de.szut.passkeeper;
+package de.szut.passkeeper.Property;
+
+import de.szut.passkeeper.Interface.IListViewType;
 
 /**
  * Created by Sami.Al-Khatib on 09.02.2015.
  */
-public class UserDatabaseProperty {
+public class UserDatabaseProperty implements IListViewType {
     private int databaseId;
     private String databaseName;
     private String databasePwd;
@@ -21,6 +23,16 @@ public class UserDatabaseProperty {
     public UserDatabaseProperty(String databaseName, String databasePwd) {
         this.databaseName = databaseName;
         this.databasePwd = databasePwd;
+    }
+
+    @Override
+    public String getItemHeader() {
+        return getDatabaseName();
+    }
+
+    @Override
+    public String getItemSubHeader() {
+        return getDatabaseMdate();
     }
 
     public int getDatabaseId() {

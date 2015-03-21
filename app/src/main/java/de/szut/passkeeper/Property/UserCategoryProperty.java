@@ -1,9 +1,11 @@
-package de.szut.passkeeper;
+package de.szut.passkeeper.Property;
+
+import de.szut.passkeeper.Interface.IListViewType;
 
 /**
  * Created by Sami.Al-Khatib on 18.03.2015.
  */
-public class UserCategoryProperty {
+public class UserCategoryProperty implements IListViewType {
     private int databaseId;
     private int categoryId;
     private String categoryName;
@@ -16,6 +18,16 @@ public class UserCategoryProperty {
         this.categoryName = categoryName;
         this.categoryCdate = categoryCdate;
         this.categoryMdate = categoryMdate;
+    }
+
+    @Override
+    public String getItemHeader() {
+        return getCategoryName();
+    }
+
+    @Override
+    public String getItemSubHeader() {
+        return getCategoryMdate();
     }
 
     public int getDatabaseId() {

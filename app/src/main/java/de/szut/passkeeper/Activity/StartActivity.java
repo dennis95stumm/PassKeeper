@@ -1,4 +1,4 @@
-package de.szut.passkeeper;
+package de.szut.passkeeper.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,11 +6,15 @@ import android.os.Bundle;
 
 import java.util.Vector;
 
+import de.szut.passkeeper.Interface.IListViewType;
+import de.szut.passkeeper.Model.DatabaseOpenHelper;
+import de.szut.passkeeper.Model.DatabaseModel;
+
 
 public class StartActivity extends Activity {
 
-    private DatabaseHelper databaseHelper;
-    private Vector<UserDatabaseProperty> vectorUserDatabaseProperty;
+    private DatabaseOpenHelper databaseOpenHelper;
+    private Vector<IListViewType> vectorUserDatabaseProperty;
     private DatabaseModel databaseModel;
 
     @Override
@@ -27,7 +31,7 @@ public class StartActivity extends Activity {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else {
-            Intent intent = new Intent(this, ChooseDatabaseActivity.class);
+            Intent intent = new Intent(this, DatabaseActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }

@@ -1,4 +1,4 @@
-package de.szut.passkeeper;
+package de.szut.passkeeper.Activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -19,17 +19,25 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Vector;
 
+import de.szut.passkeeper.Interface.IListViewType;
+import de.szut.passkeeper.Utility.AlertBuilderHelper;
+import de.szut.passkeeper.Utility.CustomListViewAdapter;
+import de.szut.passkeeper.Model.DatabaseModel;
+import de.szut.passkeeper.R;
+import de.szut.passkeeper.Model.Security;
+import de.szut.passkeeper.Property.UserDatabaseProperty;
 
-public class ChooseDatabaseActivity extends Activity implements AdapterView.OnItemClickListener {
+
+public class DatabaseActivity extends Activity implements AdapterView.OnItemClickListener {
 
     private DatabaseModel databaseModel;
-    private Vector<UserDatabaseProperty> vectorUserDatabaseProperties;
-    private ListView listViewDatabase;
+    private Vector<IListViewType> vectorUserDatabaseProperties;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.choose_database_layout);
+        setContentView(R.layout.activity_listview_layout);
         this.initializeView();
     }
 
@@ -66,9 +74,11 @@ public class ChooseDatabaseActivity extends Activity implements AdapterView.OnIt
             @Override
             public void onClick(DialogInterface dialog, int which){
                 try {
-                    if (Security.getInstance().checkPassword(editText.getText().toString(), vectorUserDatabaseProperties.get(position).getDatabasePwd()))
-                        //Toast.makeText(getApplicationContext(), "YO DAWG!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(ChooseDatabaseActivity.this, StartActivity.class));
+                    if (Security.getInstance().checkPassword(editText.getText().toString(), ((UserDatabaseProperty)vectorUserDatabaseProperties.get(position)).getDatabasePwd())){
+                        Intent intent = new Intent(DatabaseActivity.this, CategoryActivity.class);
+                        intent.putExtra("databaseId", ((UserDatabaseProperty)vectorUserDatabaseProperties.get(position)).getDatabaseId());
+                        startActivity(intent);
+                    }
                 } catch (UnsupportedEncodingException exception){
                     exception.printStackTrace();
                 } catch(NoSuchAlgorithmException exception){
@@ -88,9 +98,9 @@ public class ChooseDatabaseActivity extends Activity implements AdapterView.OnIt
     private void initializeView() {
         databaseModel = new DatabaseModel(getApplicationContext());
         vectorUserDatabaseProperties = databaseModel.getUserDatabasePropertyVector();
-        listViewDatabase = (ListView) findViewById(R.id.listViewDatabase);
-        listViewDatabase.setAdapter(new CustomListViewAdapter(vectorUserDatabaseProperties, this));
-        listViewDatabase.setOnItemClickListener(this);
-        registerForContextMenu(listViewDatabase);
+        listView = (ListView) findViewById(R.id.listViewDefault);
+        listView.setAdapter(new CustomListViewAdapter(vectorUserDatabaseProperties, this));
+        listView.setOnItemClickListener(this);
+        registerForContextMenu(listView);
     }
 }

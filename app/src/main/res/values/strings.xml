@@ -13,5 +13,8 @@
     <string name="title_activity_chose_database">Choose Database</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="menu_item_title_add_database">Add a new database!</string>
+    <string name="default_category_name">Default Category</string>
+    <string name="title_activity_category">CategoryActivity</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
