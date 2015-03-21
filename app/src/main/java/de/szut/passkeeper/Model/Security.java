@@ -39,11 +39,19 @@ public class Security {
      * @param password
      * @return
      */
-    public String encryptPassword(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        MessageDigest md = MessageDigest.getInstance("SHA-512");
-        md.update(password.getBytes("UTF-8"));
+    public String encryptPassword(String password) {
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("SHA-512");
+            md.update(password.getBytes("UTF-8"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            //TODO handle exceptions
+        }
+
         byte[] digest = md.digest();
         StringBuffer result = new StringBuffer();
+
         for (byte b : digest) {
             result.append(String.format("%02x", b));
         }
@@ -55,7 +63,7 @@ public class Security {
      * @param hash
      * @return
      */
-    public boolean checkPassword(String password, String hash) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public boolean checkPassword(String password, String hash){
         String passwordHash = encryptPassword(password);
         return hash.equals(passwordHash);
     }
@@ -65,14 +73,20 @@ public class Security {
      * @param value
      * @return
      */
-    public String encryptValue(String password, String value, byte[] salt) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException, BadPaddingException, IllegalBlockSizeException, InvalidKeySpecException {
-        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
-        SecretKey tmp = factory.generateSecret(spec);
-        SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, secret);
-        byte[] encryptedValue = cipher.doFinal(value.getBytes("UTF-8"));
+    public String encryptValue(String password, String value, byte[] salt) {
+        byte[] encryptedValue = new byte[0];
+        try {
+            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+            KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
+            SecretKey tmp = factory.generateSecret(spec);
+            SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
+            Cipher cipher = Cipher.getInstance("AES");
+            cipher.init(Cipher.ENCRYPT_MODE, secret);
+            encryptedValue = cipher.doFinal(value.getBytes("UTF-8"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            //TODO handle exceptions
+        }
         byte[] encryptedValueBase64 = Base64.encode(encryptedValue, Base64.DEFAULT);
         return new String(encryptedValueBase64);
     }
@@ -82,15 +96,20 @@ public class Security {
      * @param value
      * @return
      */
-    public String decryptValue(String password, String value, byte[] salt) throws InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException, UnsupportedEncodingException, BadPaddingException, IllegalBlockSizeException, InvalidKeySpecException {
-        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
-        SecretKey tmp = factory.generateSecret(spec);
-        SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.DECRYPT_MODE, secret);
-        byte[] decodedValue = Base64.decode(value.getBytes("UTF-8"), Base64.DEFAULT);
-        byte[] decryptedValue = cipher.doFinal(decodedValue);
+    public String decryptValue(String password, String value, byte[] salt) {
+        byte[] decryptedValue = new byte[0];
+        try {
+            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+            KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
+            SecretKey tmp = factory.generateSecret(spec);
+            SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
+            Cipher cipher = Cipher.getInstance("AES");
+            cipher.init(Cipher.DECRYPT_MODE, secret);
+            byte[] decodedValue = Base64.decode(value.getBytes("UTF-8"), Base64.DEFAULT);
+            decryptedValue = cipher.doFinal(decodedValue);
+        } catch (Exception e){
+            //TODO handle exceptions
+        }
         return new String(decryptedValue);
     }
 
@@ -98,9 +117,14 @@ public class Security {
      * @return
      * @throws NoSuchAlgorithmException
      */
-    public byte[] generateSalt() throws NoSuchAlgorithmException {
+    public byte[] generateSalt(){
         byte[] salt = new byte[8];
-        SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+        SecureRandom random = null;
+        try {
+            random = SecureRandom.getInstance("SHA1PRNG");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         random.nextBytes(salt);
         return salt;
     }

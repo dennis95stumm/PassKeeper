@@ -12,24 +12,26 @@ import android.widget.EditText;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
+import de.szut.passkeeper.Interface.IActivity;
 import de.szut.passkeeper.Model.DatabaseModel;
-import de.szut.passkeeper.Property.UserDatabaseProperty;
+import de.szut.passkeeper.Property.DatabaseProperty;
 import de.szut.passkeeper.R;
 
 
-public class CreateDatabaseActivity extends Activity implements TextWatcher, View.OnClickListener {
+public class CreateDatabaseActivity extends Activity implements TextWatcher, View.OnClickListener, IActivity {
 
     private EditText editTextDatabaseName;
     private EditText editTextDatabasePwd;
     private Button buttonCreateNewDatabase;
-    private DatabaseModel databaseModel;
+
+    //TODO implement context menu
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_database_layout);
-        databaseModel = new DatabaseModel(this);
-        this.initializeView();
+        setDefaults();
+        populateView();
     }
 
     @Override
@@ -38,10 +40,10 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
             case R.id.createNewDatabaseBtn:
                 buttonCreateNewDatabase.setEnabled(false);
                 try {
-                    int databaseId = databaseModel.createPassDatabaseAndDefaultCategory(new UserDatabaseProperty(editTextDatabaseName.getText().toString(), editTextDatabasePwd.getText().toString()));
-                    Intent intent = new Intent(CreateDatabaseActivity.this, CategoryActivity.class);
-                    //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    int databaseId = new DatabaseModel(this).createPassDatabaseAndDefaultCategory(new DatabaseProperty(editTextDatabaseName.getText().toString(), editTextDatabasePwd.getText().toString()));
+                    Intent intent = new Intent(CreateDatabaseActivity.this, ListCategoryActivity.class);
                     intent.putExtra(getResources().getString(R.string.intent_extra_database_id), databaseId);
+                    intent.putExtra(getResources().getString(R.string.intent_extra_database_name), editTextDatabaseName.getText().toString());
                     startActivity(intent);
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
@@ -72,10 +74,13 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
         // NOT IN USE
     }
 
-    /**
-     *
-     */
-    private void initializeView() {
+    @Override
+    public void populateView() {
+
+    }
+
+    @Override
+    public void setDefaults() {
         editTextDatabaseName = (EditText) findViewById(R.id.newDatabaseName);
         editTextDatabasePwd = (EditText) findViewById(R.id.newDatabasePwd);
         buttonCreateNewDatabase = (Button) findViewById(R.id.createNewDatabaseBtn);
@@ -83,6 +88,5 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
         editTextDatabaseName.addTextChangedListener(this);
         editTextDatabasePwd.addTextChangedListener(this);
         buttonCreateNewDatabase.setOnClickListener(this);
-
     }
 }

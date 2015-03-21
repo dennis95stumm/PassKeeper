@@ -8,11 +8,11 @@ import android.widget.EditText;
 /**
  * Created by Sami.Al-Khatib on 17.03.2015.
  */
-public class CustomTouchListener implements View.OnTouchListener {
+public class TouchListener implements View.OnTouchListener {
 
     private EditText editText;
 
-    public CustomTouchListener(EditText editText) {
+    public TouchListener(EditText editText) {
         this.editText = editText;
     }
 
