@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="de.szut.passkeeper.Activity.DatabaseActivity">
+    <item
+        android:id="@+id/addDatabase"
+        android:title="@string/menu_item_title_add_database"
+        android:icon="@android:drawable/ic_menu_add"
+        android:showAsAction="always"></item>
+</menu>

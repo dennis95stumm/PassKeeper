@@ -1,7 +1,6 @@
-package de.szut.passkeeper;
+package de.szut.passkeeper.Utility;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,22 +8,25 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.Vector;
+
+import de.szut.passkeeper.Interface.IListViewType;
+import de.szut.passkeeper.R;
 
 
 public class CustomListViewAdapter extends BaseAdapter {
 
-    private ArrayList<UserDatabaseProperties> _data;
-    Context _c;
+    private Vector<IListViewType> vector;
+    Context context;
 
-    public CustomListViewAdapter(ArrayList<UserDatabaseProperties> data, Context c) {
-        this._data = data;
-        this._c = c;
+    public CustomListViewAdapter(Vector<IListViewType> vector, Context context) {
+        this.vector = vector;
+        this.context = context;
     }
 
     @Override
     public int getCount() {
-        return _data.size();
+        return vector.size();
     }
 
     @Override
@@ -52,21 +54,18 @@ public class CustomListViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup viewGroup) {
         View v = convertView;
         if (v == null) {
-            LayoutInflater vi = (LayoutInflater) _c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(R.layout.list_item_layout, null);
         }
 
         ImageView imageView = (ImageView) v.findViewById(R.id.icon);
-        //ImageButton imageButton = (ImageButton) v.findViewById(R.id.icon2);
-        TextView optionHeader = (TextView) v.findViewById(R.id.databaseName);
-        TextView optionDescription = (TextView) v.findViewById(R.id.databaseEditationDate);
+        TextView textViewDatabaseName = (TextView) v.findViewById(R.id.textViewHeader);
+        TextView textViewEditationDate = (TextView) v.findViewById(R.id.textViewSubHeader);
 
-        UserDatabaseProperties userDatabaseProperties = _data.get(position);
+        IListViewType IListViewType = vector.get(position);
         imageView.setImageResource(R.drawable.ic_launcher);
-        //imageButton.setImageResource(R.drawable.ic_launcher);
-        Log.d(this.getClass().getSimpleName(), String.valueOf(R.drawable.ic_launcher));
-        optionHeader.setText(userDatabaseProperties.getDatabaseName());
-        optionDescription.setText(userDatabaseProperties.getDatabaseMdate());
+        textViewDatabaseName.setText(IListViewType.getItemHeader());
+        textViewEditationDate.setText(IListViewType.getItemSubHeader());
 
         return v;
     }

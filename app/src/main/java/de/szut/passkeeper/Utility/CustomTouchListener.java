@@ -1,4 +1,4 @@
-package de.szut.passkeeper;
+package de.szut.passkeeper.Utility;
 
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;

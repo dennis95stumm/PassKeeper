@@ -2,14 +2,19 @@
 <resources>
 
     <string name="app_name">PassKeeper</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="dialog_positive_button">Ok</string>
+    <string name="dialog_title_open_database">Open Database</string>
+    <string name="dialog_message_open_database">Password please!</string>
+    <string name="dialog_negative_button">Cancel</string>
     <string name="title_activity_create_database">Create Database</string>
     <string name="hint_database_name">Database Name</string>
     <string name="hint_database_pwd">Database Password</string>
-    <string name="create_database_btn_txt">Create</string>
-    <string name="create_database_missing_letter">Database Name must have at least 1 letter and password must have at least 8 letters!</string>
+    <string name="button_create_database">Create</string>
     <string name="title_activity_chose_database">Choose Database</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="menu_item_title_add_database">Add a new database!</string>
+    <string name="default_category_name">Default Category</string>
+    <string name="title_activity_category">CategoryActivity</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

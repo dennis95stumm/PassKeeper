@@ -1,12 +1,10 @@
-package de.szut.passkeeper;
+package de.szut.passkeeper.Activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
-import android.text.method.PasswordTransformationMethod;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,20 +12,22 @@ import android.widget.EditText;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
+import de.szut.passkeeper.Model.DatabaseModel;
+import de.szut.passkeeper.R;
+import de.szut.passkeeper.Property.UserDatabaseProperty;
+
 
 public class CreateDatabaseActivity extends Activity implements TextWatcher, View.OnClickListener{
 
     private EditText editTextDatabaseName;
     private EditText editTextDatabasePwd;
     private Button buttonCreateNewDatabase;
-    private Button testButton;
     private DatabaseModel databaseModel;
-    private boolean testClicked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_database_layout);
+        setContentView(R.layout.activity_create_database_layout);
         databaseModel = new DatabaseModel(this);
         this.initializeView();
     }
@@ -38,23 +38,23 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
             case R.id.createNewDatabaseBtn:
                 buttonCreateNewDatabase.setEnabled(false);
                 try {
-                    databaseModel.createPassDatabase(new UserDatabaseProperties(editTextDatabaseName.getText().toString(), editTextDatabasePwd.getText().toString()));
+                    int databaseId = databaseModel.createPassDatabaseAndDefaultCategory(new UserDatabaseProperty(editTextDatabaseName.getText().toString(), editTextDatabasePwd.getText().toString()));
+                    Intent intent = new Intent(CreateDatabaseActivity.this, CategoryActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra("databaseId", databaseId);
+                    startActivity(intent);
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
                 break;
-            case R.id.TestButton:
-                //editTextDatabasePwd.setInputType(InputType.TYPE_CLASS_TEXT);
-                //editTextDatabasePwd.setTransformationMethod(null);
-                break;
         }
     }
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+        // NOT IN USE
     }
 
     @Override
@@ -69,18 +69,20 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
 
     @Override
     public void afterTextChanged(Editable s) {
-
+        // NOT IN USE
     }
 
+    /**
+     *
+     */
     private void initializeView() {
         editTextDatabaseName = (EditText) findViewById(R.id.newDatabaseName);
         editTextDatabasePwd = (EditText) findViewById(R.id.newDatabasePwd);
         buttonCreateNewDatabase = (Button) findViewById(R.id.createNewDatabaseBtn);
-        testButton = (Button) findViewById(R.id.TestButton);
 
         editTextDatabaseName.addTextChangedListener(this);
         editTextDatabasePwd.addTextChangedListener(this);
         buttonCreateNewDatabase.setOnClickListener(this);
-        testButton.setOnTouchListener(new CustomTouchListener(editTextDatabasePwd));
+
     }
 }
