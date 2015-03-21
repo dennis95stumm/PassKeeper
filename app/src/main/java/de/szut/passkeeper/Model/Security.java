@@ -2,18 +2,12 @@ package de.szut.passkeeper.Model;
 
 import android.util.Base64;
 
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -63,7 +57,7 @@ public class Security {
      * @param hash
      * @return
      */
-    public boolean checkPassword(String password, String hash){
+    public boolean checkPassword(String password, String hash) {
         String passwordHash = encryptPassword(password);
         return hash.equals(passwordHash);
     }
@@ -107,7 +101,7 @@ public class Security {
             cipher.init(Cipher.DECRYPT_MODE, secret);
             byte[] decodedValue = Base64.decode(value.getBytes("UTF-8"), Base64.DEFAULT);
             decryptedValue = cipher.doFinal(decodedValue);
-        } catch (Exception e){
+        } catch (Exception e) {
             //TODO handle exceptions
         }
         return new String(decryptedValue);
@@ -117,7 +111,7 @@ public class Security {
      * @return
      * @throws NoSuchAlgorithmException
      */
-    public byte[] generateSalt(){
+    public byte[] generateSalt() {
         byte[] salt = new byte[8];
         SecureRandom random = null;
         try {

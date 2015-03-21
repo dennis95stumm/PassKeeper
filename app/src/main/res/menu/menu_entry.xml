@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="de.szut.passkeeper.Activity.ListEntryActivity">
+    <item
+        android:id="@+id/addEntry"
+        android:icon="@android:drawable/ic_menu_add"
+        android:showAsAction="always"
+        android:title="@string/menu_item_title_add_entry"></item>
+</menu>

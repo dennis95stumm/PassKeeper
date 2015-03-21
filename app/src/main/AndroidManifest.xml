@@ -27,6 +27,7 @@
             android:name=".Activity.ListCategoryActivity"
             android:label="@string/title_activity_category"
             android:parentActivityName=".Activity.ListDatabaseActivity"></activity>
+        <activity android:name=".Activity.ListEntryActivity"></activity>
     </application>
 
 </manifest>

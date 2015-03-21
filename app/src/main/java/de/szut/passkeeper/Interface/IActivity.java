@@ -5,5 +5,6 @@ package de.szut.passkeeper.Interface;
  */
 public interface IActivity {
     public void setDefaults();
+
     public void populateView();
 }

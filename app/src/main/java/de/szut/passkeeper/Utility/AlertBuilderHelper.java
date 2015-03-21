@@ -21,7 +21,7 @@ public class AlertBuilderHelper extends AlertDialog.Builder {
         this.setTitle(title);
         this.setMessage(message);
 
-        if(setNegative){
+        if (setNegative) {
             this.setNegativeButton(R.string.dialog_negative_button, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
