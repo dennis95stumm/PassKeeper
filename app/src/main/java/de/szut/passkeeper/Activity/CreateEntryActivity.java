@@ -34,6 +34,7 @@ public class CreateEntryActivity extends Activity implements IActivity{
     private DatabaseModel databaseModel;
     private int databaseId;
     private int categoryId;
+    private String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +61,11 @@ public class CreateEntryActivity extends Activity implements IActivity{
             case R.id.menuItemEntrySave:
                 if(editTextEntryTitle.getText().length() != 0 && editTextEntryUsername.getText().length() != 0 & editTextEntryPwd.getText().length() != 0){
                     String username = editTextEntryUsername.getText().toString();
-                    String password = editTextEntryPwd.getText().toString();
+                    String pwd = editTextEntryPwd.getText().toString();
                     byte[] salt;
                     salt = Security.getInstance().generateSalt();
                     String hashedUsername = Security.getInstance().encryptValue(password, username, salt);
-                    String hashedPassword = Security.getInstance().encryptValue(password, username, salt);
+                    String hashedPassword = Security.getInstance().encryptValue(password, pwd, salt);
                     databaseModel.createEntry(
                             databaseId,
                             categoryId,
@@ -89,6 +90,7 @@ public class CreateEntryActivity extends Activity implements IActivity{
         getActionBar().setDisplayHomeAsUpEnabled(true);
         databaseId = getIntent().getExtras().getInt("databaseId");
         categoryId = getIntent().getExtras().getInt("categoryId");
+        password = getIntent().getExtras().getString("password");
         databaseModel = new DatabaseModel(this);
 
         editTextEntryTitle = (EditText) findViewById(R.id.editTextEntryTitle);

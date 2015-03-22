@@ -28,6 +28,7 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
     private Vector<IUserProperty> vectorCategoryProperty;
     private DatabaseModel databaseModel;
     private int databaseId;
+    private String password;
 
     //TODO implement context menu
 
@@ -74,6 +75,7 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
         intent.putExtra("categoryName", ((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryName());
         intent.putExtra("databaseId", ((CategoryProperty) vectorCategoryProperty.get(position)).getDatabaseId());
         intent.putExtra("categoryId", ((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryId());
+        intent.putExtra("password", password);
         startActivity(intent);
     }
 
@@ -82,6 +84,7 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
         setTitle(getIntent().getExtras().getString("databaseName"));
         getActionBar().setDisplayHomeAsUpEnabled(true);
         databaseId = getIntent().getExtras().getInt("databaseId");
+        password = getIntent().getExtras().getString("password");
         databaseModel = new DatabaseModel(getApplicationContext());
         listView = (ListView) findViewById(R.id.listViewDefault);
 

@@ -27,6 +27,7 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
     private DatabaseModel databaseModel;
     private int databaseId;
     private int categoryId;
+    private String password;
 
     //TODO implement context menu
 
@@ -55,6 +56,7 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
                 Intent intent = new Intent(ListEntryActivity.this, CreateEntryActivity.class);
                 intent.putExtra("databaseId", databaseId);
                 intent.putExtra("categoryId", categoryId);
+                intent.putExtra("password", password);
                 startActivity(intent);
                 break;
         }
@@ -74,6 +76,7 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
         setTitle(getIntent().getExtras().getString("categoryName"));
         databaseId = getIntent().getExtras().getInt("databaseId");
         categoryId = getIntent().getExtras().getInt("categoryId");
+        password = getIntent().getExtras().getString("password");
         listView = (ListView) findViewById(R.id.listViewDefault);
         databaseModel = new DatabaseModel(this);
     }

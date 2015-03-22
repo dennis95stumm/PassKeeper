@@ -72,11 +72,12 @@ public class Security {
      * @return
      */
     public String encryptValue(String password, String value, byte[] salt) {
+
         String encryptedValueBase64 = "";
         try {
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
             KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
-            SecretKey tmp = factory.generateSecret(spec);
+            SecretKey tmp = factory.generateSecret(spec); // TODO dies daurt zu lange und wird auch wieder beim entschlüsseln benötigt noch mal prüfen
             SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.ENCRYPT_MODE, secret);
