@@ -41,6 +41,7 @@
         android:layout_height="wrap_content"
         android:text="@string/button_create"
         android:id="@+id/buttonCreateDatabase"
+        android:enabled="false"
         android:layout_below="@+id/editTextDatabasePwd"
         android:layout_alignParentStart="true"
         android:layout_alignEnd="@+id/imageButtonDisplayPwd" />

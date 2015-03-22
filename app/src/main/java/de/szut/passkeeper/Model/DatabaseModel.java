@@ -43,10 +43,10 @@ public class DatabaseModel {
             DatabaseOpenHelper.KEY_TITLE_USER_ENTRY,
             DatabaseOpenHelper.KEY_USERNAME_USER_ENTRY,
             DatabaseOpenHelper.KEY_USERPWD_USER_ENTRY,
+            DatabaseOpenHelper.KEY_HASH_USER_ENTRY,
             DatabaseOpenHelper.KEY_NOTE_USER_ENTRY,
             DatabaseOpenHelper.KEY_CDATE_USER_ENTRY,
-            DatabaseOpenHelper.KEY_MDATE_USER_ENTRY,
-            DatabaseOpenHelper.KEY_HASH_USER_ENTRY
+            DatabaseOpenHelper.KEY_MDATE_USER_ENTRY
     };
 
     public DatabaseModel(Context context) {
@@ -134,7 +134,6 @@ public class DatabaseModel {
         contentValues.put(DatabaseOpenHelper.KEY_NAME_USER_DATABASE, databaseProperty.getDatabaseName());
         contentValues.put(DatabaseOpenHelper.KEY_PWD_USER_DATABASE, Security.getInstance().encryptPassword(databaseProperty.getDatabasePwd()));
         long databaseId = sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_DATABASE, null, contentValues);
-        //TODO find out why it is not possible to use android String resources.
         for(String defaultCategory : arrDefaultCategory){
             contentValues = new ContentValues();
             contentValues.put(DatabaseOpenHelper.KEY_ID_USER_DATABASE, databaseId);
@@ -145,12 +144,35 @@ public class DatabaseModel {
         return Integer.valueOf(String.valueOf(databaseId));
     }
 
+    /**
+     *
+     * @param databaseId
+     * @param categoryName
+     */
     public void createCategory(int databaseId, String categoryName) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DatabaseOpenHelper.KEY_ID_USER_DATABASE, String.valueOf(databaseId));
+        contentValues.put(DatabaseOpenHelper.KEY_ID_USER_DATABASE, databaseId);
         contentValues.put(DatabaseOpenHelper.KEY_NAME_USER_CATEGORY, categoryName);
-        long cateGoryId = sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_CATEGORY, null, contentValues);
-        Log.d(getClass().getSimpleName(), String.valueOf(cateGoryId));
+        sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_CATEGORY, null, contentValues);
+        databaseOpenHelper.close();
+    }
+
+    /**
+     *
+     * @param entryProperty
+     */
+    public void createEntry(EntryProperty entryProperty){
+        sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DatabaseOpenHelper.KEY_ID_USER_DATABASE, entryProperty.getDatabaseId());
+        contentValues.put(DatabaseOpenHelper.KEY_ID_USER_CATEGORY, entryProperty.getCategoryId());
+        contentValues.put(DatabaseOpenHelper.KEY_TITLE_USER_ENTRY, entryProperty.getEntryTitle());
+        contentValues.put(DatabaseOpenHelper.KEY_USERNAME_USER_ENTRY, entryProperty.getEntryUserName());
+        contentValues.put(DatabaseOpenHelper.KEY_USERPWD_USER_ENTRY, entryProperty.getEntryPwd());
+        contentValues.put(DatabaseOpenHelper.KEY_HASH_USER_ENTRY, entryProperty.getEntryHash());
+        contentValues.put(DatabaseOpenHelper.KEY_NOTE_USER_ENTRY, entryProperty.getEntryNote());
+        sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_ENTRY, null, contentValues);
+        databaseOpenHelper.close();
     }
 }

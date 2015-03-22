@@ -35,42 +35,24 @@
         android:layout_alignParentStart="true"
         android:inputType="textPassword"
         android:hint="@string/hint_entry_pwd"
-        android:layout_toStartOf="@+id/imageButton" />
+        android:layout_toStartOf="@+id/imageButtonDisplayPwd" />
 
-    <EditText
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editTextEntryPwdRepeat"
-        android:layout_below="@+id/editTextEntryPwd"
-        android:layout_alignParentStart="true"
-        android:inputType="textPassword"
-        android:hint="@string/hint_entry_pwd_repeat"
-        android:layout_alignEnd="@+id/editTextEntryPwd" />
+        android:id="@+id/imageButtonDisplayPwd"
+        android:layout_below="@+id/editTextEntryUsername"
+        android:layout_alignEnd="@+id/editTextEntryUsername"
+        android:src="@drawable/ic_action_eye"
+        android:layout_above="@+id/editTextEntryNote" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/editTextEntryNote"
-        android:layout_below="@+id/editTextEntryPwdRepeat"
         android:layout_alignParentStart="true"
         android:hint="@string/hint_entry_note"
-        android:layout_alignEnd="@+id/imageButton" />
+        android:layout_alignEnd="@+id/imageButtonDisplayPwd"
+        android:layout_below="@+id/editTextEntryPwd" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_create"
-        android:id="@+id/buttonEntryCreate"
-        android:layout_below="@+id/editTextEntryNote"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/editTextEntryNote" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButton"
-        android:layout_below="@+id/editTextEntryUsername"
-        android:layout_alignEnd="@+id/editTextEntryUsername"
-        android:src="@drawable/ic_action_eye"
-        android:layout_above="@+id/editTextEntryNote" />
 </RelativeLayout>

@@ -29,6 +29,7 @@
     <string name="menu_item_title_add_database">Add a new database!</string>
     <string name="menu_item_title_add_category">Add a new category!</string>
     <string name="menu_item_title_add_entry">Add new credentials!</string>
+    <string name="menu_item_title_save_entry">Add new credentials!</string>
 
     <string name="title_activity_category">CategoryActivity</string>
 

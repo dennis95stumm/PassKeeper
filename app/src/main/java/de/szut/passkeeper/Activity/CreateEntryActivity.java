@@ -1,15 +1,36 @@
 package de.szut.passkeeper.Activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
+
+import java.util.Vector;
 
 import de.szut.passkeeper.Interface.IActivity;
+import de.szut.passkeeper.Model.DatabaseModel;
 import de.szut.passkeeper.R;
+import de.szut.passkeeper.Utility.TouchListener;
 
-public class CreateEntryActivity extends Activity implements IActivity {
+public class CreateEntryActivity extends Activity implements IActivity{
+
+    private EditText editTextEntryTitle;
+    private EditText editTextEntryUsername;
+    private EditText editTextEntryPwd;
+    private EditText editTextEntryNote;
+    private ImageButton imageButtonDisplayPwd;
+    private DatabaseModel databaseModel;
+    private int databaseId;
+    private int categoryId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +54,33 @@ public class CreateEntryActivity extends Activity implements IActivity {
             case android.R.id.home:
                 onBackPressed();
                 break;
+            case R.id.menuItemEntrySave:
+                if(editTextEntryTitle.getText().length() != 0 && editTextEntryUsername.getText().length() != 0 & editTextEntryPwd.getText().length() != 0){
+
+                }else{
+                    Toast.makeText(this, "Titel, Username and Password must be given!", Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public void setDefaults() {
         getActionBar().setDisplayHomeAsUpEnabled(true);
+        databaseId = getIntent().getExtras().getInt("databaseId");
+        categoryId = getIntent().getExtras().getInt("categoryId");
+        databaseModel = new DatabaseModel(this);
+
+        editTextEntryTitle = (EditText) findViewById(R.id.editTextEntryTitle);
+        editTextEntryUsername = (EditText) findViewById(R.id.editTextEntryUsername);
+        editTextEntryPwd = (EditText) findViewById(R.id.editTextEntryPwd);
+        editTextEntryNote = (EditText) findViewById(R.id.editTextEntryNote);
+        imageButtonDisplayPwd = (ImageButton) findViewById(R.id.imageButtonDisplayPwd);
+
+        imageButtonDisplayPwd.setOnTouchListener(new TouchListener(editTextEntryPwd));
     }
 
     @Override

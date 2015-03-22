@@ -53,6 +53,8 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
                 break;
             case R.id.addEntry:
                 Intent intent = new Intent(ListEntryActivity.this, CreateEntryActivity.class);
+                intent.putExtra("databaseId", databaseId);
+                intent.putExtra("categoryId", categoryId);
                 startActivity(intent);
                 break;
         }
