@@ -2,12 +2,18 @@ package de.szut.passkeeper.Model;
 
 import android.util.Base64;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -34,20 +40,18 @@ public class Security {
      * @return
      */
     public String encryptPassword(String password) {
-        MessageDigest md = null;
-        try {
-            md = MessageDigest.getInstance("SHA-512");
-            md.update(password.getBytes("UTF-8"));
-        } catch (Exception e) {
-            e.printStackTrace();
-            //TODO handle exceptions
-        }
-
-        byte[] digest = md.digest();
         StringBuffer result = new StringBuffer();
-
-        for (byte b : digest) {
-            result.append(String.format("%02x", b));
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            md.update(password.getBytes("UTF-8"));
+            byte[] digest = md.digest();
+            for (byte b : digest) {
+                result.append(String.format("%02x", b));
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
         return result.toString();
     }
@@ -68,7 +72,7 @@ public class Security {
      * @return
      */
     public String encryptValue(String password, String value, byte[] salt) {
-        byte[] encryptedValue = new byte[0];
+        String encryptedValueBase64 = "";
         try {
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
             KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
@@ -76,13 +80,25 @@ public class Security {
             SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.ENCRYPT_MODE, secret);
-            encryptedValue = cipher.doFinal(value.getBytes("UTF-8"));
-        } catch (Exception e) {
+            byte[] encryptedValue = cipher.doFinal(value.getBytes("UTF-8"));
+            byte[] encryptedValueBase64Bytes = Base64.encode(encryptedValue, Base64.DEFAULT);
+            encryptedValueBase64 = new String(encryptedValueBase64Bytes);
+        } catch (NoSuchPaddingException e) {
             e.printStackTrace();
-            //TODO handle exceptions
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
         }
-        byte[] encryptedValueBase64 = Base64.encode(encryptedValue, Base64.DEFAULT);
-        return new String(encryptedValueBase64);
+        return encryptedValueBase64;
     }
 
     /**
@@ -91,7 +107,7 @@ public class Security {
      * @return
      */
     public String decryptValue(String password, String value, byte[] salt) {
-        byte[] decryptedValue = new byte[0];
+        String decryptedValue = "";
         try {
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
             KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
@@ -100,11 +116,24 @@ public class Security {
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.DECRYPT_MODE, secret);
             byte[] decodedValue = Base64.decode(value.getBytes("UTF-8"), Base64.DEFAULT);
-            decryptedValue = cipher.doFinal(decodedValue);
-        } catch (Exception e) {
-            //TODO handle exceptions
+            byte[] decryptedValueBytes = cipher.doFinal(decodedValue);
+            decryptedValue = new String(decryptedValueBytes);
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
         }
-        return new String(decryptedValue);
+        return decryptedValue;
     }
 
     /**
@@ -113,13 +142,12 @@ public class Security {
      */
     public byte[] generateSalt() {
         byte[] salt = new byte[8];
-        SecureRandom random = null;
         try {
-            random = SecureRandom.getInstance("SHA1PRNG");
+            SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+            random.nextBytes(salt);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        random.nextBytes(salt);
         return salt;
     }
 }
