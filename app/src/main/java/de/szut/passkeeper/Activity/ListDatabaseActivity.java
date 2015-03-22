@@ -56,9 +56,10 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.addDatabase) {
-            startActivity(new Intent(this, CreateDatabaseActivity.class));
+        switch(item.getItemId()){
+            case R.id.addDatabase:
+                startActivity(new Intent(this, CreateDatabaseActivity.class));
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -78,8 +79,8 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
                 dialog.dismiss();
                 if (Security.getInstance().checkPassword(editText.getText().toString(), ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabasePwd())) {
                     Intent intent = new Intent(ListDatabaseActivity.this, ListCategoryActivity.class);
-                    intent.putExtra(getResources().getString(R.string.intent_extra_database_name), ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseName());
-                    intent.putExtra(getResources().getString(R.string.intent_extra_database_id), ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId());
+                    intent.putExtra("databaseName", ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseName());
+                    intent.putExtra("databaseId", ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId());
                     startActivity(intent);
                 }
             }

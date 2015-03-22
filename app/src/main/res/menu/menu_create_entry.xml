@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="de.szut.passkeeper.Activity.CreateEntryActivity">
+    <item
+        android:id="@+id/menuItemEntrySave"
+        android:icon="@android:drawable/ic_menu_save"
+        android:showAsAction="always"
+        android:title="@string/menu_item_title_save_entry"
+        ></item>
+</menu>

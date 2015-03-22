@@ -43,10 +43,10 @@ public class DatabaseModel {
             DatabaseOpenHelper.KEY_TITLE_USER_ENTRY,
             DatabaseOpenHelper.KEY_USERNAME_USER_ENTRY,
             DatabaseOpenHelper.KEY_USERPWD_USER_ENTRY,
+            DatabaseOpenHelper.KEY_HASH_USER_ENTRY,
             DatabaseOpenHelper.KEY_NOTE_USER_ENTRY,
             DatabaseOpenHelper.KEY_CDATE_USER_ENTRY,
-            DatabaseOpenHelper.KEY_MDATE_USER_ENTRY,
-            DatabaseOpenHelper.KEY_HASH_USER_ENTRY
+            DatabaseOpenHelper.KEY_MDATE_USER_ENTRY
     };
 
     public DatabaseModel(Context context) {
@@ -128,27 +128,57 @@ public class DatabaseModel {
      * @throws NoSuchAlgorithmException
      * @throws UnsupportedEncodingException
      */
-    public int createPassDatabaseAndDefaultCategory(DatabaseProperty databaseProperty) {
+    public int createPassDatabaseAndDefaultCategory(DatabaseProperty databaseProperty, String[] arrDefaultCategory) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseOpenHelper.KEY_NAME_USER_DATABASE, databaseProperty.getDatabaseName());
         contentValues.put(DatabaseOpenHelper.KEY_PWD_USER_DATABASE, Security.getInstance().encryptPassword(databaseProperty.getDatabasePwd()));
         long databaseId = sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_DATABASE, null, contentValues);
-        contentValues = new ContentValues();
-        contentValues.put(DatabaseOpenHelper.KEY_ID_USER_DATABASE, databaseId);
-        //TODO find out why it is not possible to use android String resources.
-        contentValues.put(DatabaseOpenHelper.KEY_NAME_USER_CATEGORY, "Default Category");
-        sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_CATEGORY, null, contentValues);
+        for(String defaultCategory : arrDefaultCategory){
+            contentValues = new ContentValues();
+            contentValues.put(DatabaseOpenHelper.KEY_ID_USER_DATABASE, databaseId);
+            contentValues.put(DatabaseOpenHelper.KEY_NAME_USER_CATEGORY, defaultCategory);
+            sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_CATEGORY, null, contentValues);
+        }
         databaseOpenHelper.close();
         return Integer.valueOf(String.valueOf(databaseId));
     }
 
+    /**
+     *
+     * @param databaseId
+     * @param categoryName
+     */
     public void createCategory(int databaseId, String categoryName) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DatabaseOpenHelper.KEY_ID_USER_DATABASE, String.valueOf(databaseId));
+        contentValues.put(DatabaseOpenHelper.KEY_ID_USER_DATABASE, databaseId);
         contentValues.put(DatabaseOpenHelper.KEY_NAME_USER_CATEGORY, categoryName);
-        long cateGoryId = sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_CATEGORY, null, contentValues);
-        Log.d(getClass().getSimpleName(), String.valueOf(cateGoryId));
+        sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_CATEGORY, null, contentValues);
+        databaseOpenHelper.close();
+    }
+
+    /**
+     *
+     * @param databaseId
+     * @param categoryId
+     * @param title
+     * @param username
+     * @param password
+     * @param hash
+     * @param note
+     */
+    public void createEntry(int databaseId, int categoryId, String title, String username, String password, String hash, String note){
+        sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DatabaseOpenHelper.KEY_ID_USER_DATABASE, databaseId);
+        contentValues.put(DatabaseOpenHelper.KEY_ID_USER_CATEGORY, categoryId);
+        contentValues.put(DatabaseOpenHelper.KEY_TITLE_USER_ENTRY, title);
+        contentValues.put(DatabaseOpenHelper.KEY_USERNAME_USER_ENTRY, username);
+        contentValues.put(DatabaseOpenHelper.KEY_USERPWD_USER_ENTRY, password);
+        contentValues.put(DatabaseOpenHelper.KEY_HASH_USER_ENTRY, hash);
+        contentValues.put(DatabaseOpenHelper.KEY_NOTE_USER_ENTRY, note);
+        sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_ENTRY, null, contentValues);
+        databaseOpenHelper.close();
     }
 }

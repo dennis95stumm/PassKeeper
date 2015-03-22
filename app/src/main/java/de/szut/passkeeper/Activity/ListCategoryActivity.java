@@ -17,6 +17,7 @@ import de.szut.passkeeper.Interface.IActivity;
 import de.szut.passkeeper.Interface.IUserProperty;
 import de.szut.passkeeper.Model.DatabaseModel;
 import de.szut.passkeeper.Property.CategoryProperty;
+import de.szut.passkeeper.Property.EntryProperty;
 import de.szut.passkeeper.R;
 import de.szut.passkeeper.Utility.AlertBuilderHelper;
 import de.szut.passkeeper.Utility.ListViewAdapter;
@@ -48,44 +49,39 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.addCategory) {
-            AlertBuilderHelper alertDialog = new AlertBuilderHelper(this, R.string.dialog_title_add_category, R.string.dialog_message_add_category, true);
-            final EditText editText = new EditText(this);
-            editText.setHint(R.string.hint_category_name);
-            alertDialog.setView(editText);
-            alertDialog.setPositiveButton(R.string.dialog_positive_button, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    databaseModel.createCategory(databaseId, editText.getText().toString());
-                    populateView();
-                }
-            });
-            alertDialog.show();
+        switch(item.getItemId()){
+            case R.id.addCategory:
+                AlertBuilderHelper alertDialog = new AlertBuilderHelper(this, R.string.dialog_title_add_category, R.string.dialog_message_add_category, true);
+                final EditText editText = new EditText(this);
+                editText.setHint(R.string.hint_category_name);
+                alertDialog.setView(editText);
+                alertDialog.setPositiveButton(R.string.dialog_positive_button, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        databaseModel.createCategory(databaseId, editText.getText().toString());
+                        populateView();
+                    }
+                });
+                alertDialog.show();
+                break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(ListCategoryActivity.this, ListEntryActivity.class);
-        //TODO stop using damn resource-strings for variables
-        intent.putExtra(getResources().getString(R.string.intent_extra_database_id), ((CategoryProperty) vectorCategoryProperty.get(position)).getDatabaseId());
-        intent.putExtra(getResources().getString(R.string.intent_extra_category_id), ((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryId());
+        intent.putExtra("categoryName", ((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryName());
+        intent.putExtra("databaseId", ((CategoryProperty) vectorCategoryProperty.get(position)).getDatabaseId());
+        intent.putExtra("categoryId", ((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryId());
         startActivity(intent);
     }
 
     @Override
     public void setDefaults() {
-        setTitle(getIntent().getExtras().getString(getResources().getString(R.string.intent_extra_database_name)));
+        setTitle(getIntent().getExtras().getString("databaseName"));
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        databaseId = getIntent().getExtras().getInt(getResources().getString(R.string.intent_extra_database_id));
+        databaseId = getIntent().getExtras().getInt("databaseId");
         databaseModel = new DatabaseModel(getApplicationContext());
         listView = (ListView) findViewById(R.id.listViewDefault);
 
