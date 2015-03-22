@@ -160,18 +160,24 @@ public class DatabaseModel {
 
     /**
      *
-     * @param entryProperty
+     * @param databaseId
+     * @param categoryId
+     * @param title
+     * @param username
+     * @param password
+     * @param hash
+     * @param note
      */
-    public void createEntry(EntryProperty entryProperty){
+    public void createEntry(int databaseId, int categoryId, String title, String username, String password, String hash, String note){
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DatabaseOpenHelper.KEY_ID_USER_DATABASE, entryProperty.getDatabaseId());
-        contentValues.put(DatabaseOpenHelper.KEY_ID_USER_CATEGORY, entryProperty.getCategoryId());
-        contentValues.put(DatabaseOpenHelper.KEY_TITLE_USER_ENTRY, entryProperty.getEntryTitle());
-        contentValues.put(DatabaseOpenHelper.KEY_USERNAME_USER_ENTRY, entryProperty.getEntryUserName());
-        contentValues.put(DatabaseOpenHelper.KEY_USERPWD_USER_ENTRY, entryProperty.getEntryPwd());
-        contentValues.put(DatabaseOpenHelper.KEY_HASH_USER_ENTRY, entryProperty.getEntryHash());
-        contentValues.put(DatabaseOpenHelper.KEY_NOTE_USER_ENTRY, entryProperty.getEntryNote());
+        contentValues.put(DatabaseOpenHelper.KEY_ID_USER_DATABASE, databaseId);
+        contentValues.put(DatabaseOpenHelper.KEY_ID_USER_CATEGORY, categoryId);
+        contentValues.put(DatabaseOpenHelper.KEY_TITLE_USER_ENTRY, title);
+        contentValues.put(DatabaseOpenHelper.KEY_USERNAME_USER_ENTRY, username);
+        contentValues.put(DatabaseOpenHelper.KEY_USERPWD_USER_ENTRY, password);
+        contentValues.put(DatabaseOpenHelper.KEY_HASH_USER_ENTRY, hash);
+        contentValues.put(DatabaseOpenHelper.KEY_NOTE_USER_ENTRY, note);
         sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_ENTRY, null, contentValues);
         databaseOpenHelper.close();
     }

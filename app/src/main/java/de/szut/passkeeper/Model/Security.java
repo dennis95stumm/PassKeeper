@@ -64,10 +64,10 @@ public class Security {
 
     /**
      * @param password
-     * @param value
+     * @param username
      * @return
      */
-    public String encryptValue(String password, String value, byte[] salt) {
+    public String encryptValue(String password, String username, byte[] salt) {
         byte[] encryptedValue = new byte[0];
         try {
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
@@ -76,7 +76,7 @@ public class Security {
             SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.ENCRYPT_MODE, secret);
-            encryptedValue = cipher.doFinal(value.getBytes("UTF-8"));
+            encryptedValue = cipher.doFinal(username.getBytes("UTF-8"));
         } catch (Exception e) {
             e.printStackTrace();
             //TODO handle exceptions
@@ -87,10 +87,10 @@ public class Security {
 
     /**
      * @param password
-     * @param value
+     * @param username
      * @return
      */
-    public String decryptValue(String password, String value, byte[] salt) {
+    public String decryptValue(String password, String username, byte[] salt) {
         byte[] decryptedValue = new byte[0];
         try {
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
@@ -99,7 +99,7 @@ public class Security {
             SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.DECRYPT_MODE, secret);
-            byte[] decodedValue = Base64.decode(value.getBytes("UTF-8"), Base64.DEFAULT);
+            byte[] decodedValue = Base64.decode(username.getBytes("UTF-8"), Base64.DEFAULT);
             decryptedValue = cipher.doFinal(decodedValue);
         } catch (Exception e) {
             //TODO handle exceptions

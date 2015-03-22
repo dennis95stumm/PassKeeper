@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +19,8 @@ import java.util.Vector;
 
 import de.szut.passkeeper.Interface.IActivity;
 import de.szut.passkeeper.Model.DatabaseModel;
+import de.szut.passkeeper.Model.Security;
+import de.szut.passkeeper.Property.EntryProperty;
 import de.szut.passkeeper.R;
 import de.szut.passkeeper.Utility.TouchListener;
 
@@ -56,7 +59,21 @@ public class CreateEntryActivity extends Activity implements IActivity{
                 break;
             case R.id.menuItemEntrySave:
                 if(editTextEntryTitle.getText().length() != 0 && editTextEntryUsername.getText().length() != 0 & editTextEntryPwd.getText().length() != 0){
-
+                    String username = editTextEntryUsername.getText().toString();
+                    String password = editTextEntryPwd.getText().toString();
+                    byte[] salt;
+                    salt = Security.getInstance().generateSalt();
+                    String hashedUsername = Security.getInstance().encryptValue(password, username, salt);
+                    String hashedPassword = Security.getInstance().encryptValue(password, username, salt);
+                    databaseModel.createEntry(
+                            databaseId,
+                            categoryId,
+                            editTextEntryTitle.getText().toString(),
+                            hashedUsername,
+                            hashedPassword,
+                            Base64.encodeToString(salt, Base64.DEFAULT),
+                            editTextEntryNote.getText().toString()
+                    );
                 }else{
                     Toast.makeText(this, "Titel, Username and Password must be given!", Toast.LENGTH_SHORT).show();
                 }
