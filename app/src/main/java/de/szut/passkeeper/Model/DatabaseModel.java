@@ -84,8 +84,8 @@ public class DatabaseModel {
         sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
         Vector<IUserProperty> vectorUserCategoryProperty = new Vector<>();
         Cursor cursor = sqLiteDatabase.query(DatabaseOpenHelper.TABLE_USER_CATEGORY, passCategoryColumns, DatabaseOpenHelper.KEY_ID_USER_DATABASE + " = ?", new String[]{String.valueOf(databaseId)}, null, null, null);
-        //Log.d(this.getClass().getSimpleName(), String.valueOf(cursor.getCount()));
         while (cursor.moveToNext()) {
+            Log.d(getClass().getSimpleName(), "Selcted Categoryid: " + cursor.getInt(0));
             vectorUserCategoryProperty.add(new CategoryProperty(
                     cursor.getInt(0),
                     cursor.getInt(1),
@@ -122,6 +122,37 @@ public class DatabaseModel {
         return vectorUserEntryProperty;
     }
 
+    public String getUserDatabaseName(int databaseId){
+        sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
+        String databaseName = null;
+        Cursor cursor = sqLiteDatabase.query(DatabaseOpenHelper.TABLE_USER_DATABASE, passDatabaseColumns, DatabaseOpenHelper.KEY_ID_USER_DATABASE + " = ?", new String[]{String.valueOf(databaseId)}, null, null, null);
+        if(cursor != null){
+            cursor.moveToFirst();
+            databaseName = cursor.getString(1);
+            Log.d(getClass().getSimpleName(), "ID: " + String.valueOf(databaseId));
+            Log.d(getClass().getSimpleName(), "Databasename: " + databaseName);
+            cursor.close();
+        }
+        databaseOpenHelper.close();
+
+        return databaseName;
+    }
+
+    public String getUserCategoryName(int categoryId){
+        sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
+        String categoryName = null;
+        Cursor cursor = sqLiteDatabase.query(DatabaseOpenHelper.TABLE_USER_CATEGORY, passCategoryColumns, DatabaseOpenHelper.KEY_ID_USER_CATEGORY + " = ?", new String[]{String.valueOf(categoryId)}, null, null, null);
+        if(cursor != null){
+            cursor.moveToFirst();
+            categoryName = cursor.getString(2);
+            Log.d(getClass().getSimpleName(), "ID: " + String.valueOf(categoryId));
+            Log.d(getClass().getSimpleName(), "Category: " + categoryName);
+            cursor.close();
+        }
+        databaseOpenHelper.close();
+        return categoryName;
+    }
+
     /**
      * @param databaseProperty
      * @return
@@ -138,7 +169,8 @@ public class DatabaseModel {
             contentValues = new ContentValues();
             contentValues.put(DatabaseOpenHelper.KEY_ID_USER_DATABASE, databaseId);
             contentValues.put(DatabaseOpenHelper.KEY_NAME_USER_CATEGORY, defaultCategory);
-            sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_CATEGORY, null, contentValues);
+            long id = sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_CATEGORY, null, contentValues);
+            Log.d(getClass().getSimpleName(), "Insert ID: " + String.valueOf(id));
         }
         databaseOpenHelper.close();
         return Integer.valueOf(String.valueOf(databaseId));
@@ -154,7 +186,8 @@ public class DatabaseModel {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseOpenHelper.KEY_ID_USER_DATABASE, databaseId);
         contentValues.put(DatabaseOpenHelper.KEY_NAME_USER_CATEGORY, categoryName);
-        sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_CATEGORY, null, contentValues);
+        long id = sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_CATEGORY, null, contentValues);
+        Log.d(getClass().getSimpleName(), "Insert ID: " + String.valueOf(id));
         databaseOpenHelper.close();
     }
 

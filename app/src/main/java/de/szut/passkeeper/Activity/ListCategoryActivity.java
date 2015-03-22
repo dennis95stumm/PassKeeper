@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.Vector;
 
@@ -71,7 +72,6 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(ListCategoryActivity.this, ListEntryActivity.class);
-        intent.putExtra("categoryName", ((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryName());
         intent.putExtra("databaseId", ((CategoryProperty) vectorCategoryProperty.get(position)).getDatabaseId());
         intent.putExtra("categoryId", ((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryId());
         startActivity(intent);
@@ -79,10 +79,10 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
 
     @Override
     public void setDefaults() {
-        setTitle(getIntent().getExtras().getString("databaseName"));
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        databaseId = getIntent().getExtras().getInt("databaseId");
         databaseModel = new DatabaseModel(getApplicationContext());
+        databaseId = getIntent().getExtras().getInt("databaseId");
+        setTitle(databaseModel.getUserDatabaseName(databaseId));
         listView = (ListView) findViewById(R.id.listViewDefault);
 
     }
@@ -93,5 +93,9 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
         listView.setAdapter(new ListViewAdapter(vectorCategoryProperty, this));
         listView.setOnItemClickListener(this);
         registerForContextMenu(listView);
+
+        for(IUserProperty iUserProperty : vectorCategoryProperty){
+            Toast.makeText(this, "ID: " + String.valueOf(((CategoryProperty)iUserProperty).getCategoryName()), Toast.LENGTH_SHORT).show();
+        }
     }
 }

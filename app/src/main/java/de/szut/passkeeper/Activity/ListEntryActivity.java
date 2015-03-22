@@ -70,12 +70,12 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
 
     @Override
     public void setDefaults() {
+        databaseModel = new DatabaseModel(this);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle(getIntent().getExtras().getString("categoryName"));
         databaseId = getIntent().getExtras().getInt("databaseId");
         categoryId = getIntent().getExtras().getInt("categoryId");
+        setTitle(databaseModel.getUserCategoryName(categoryId));
         listView = (ListView) findViewById(R.id.listViewDefault);
-        databaseModel = new DatabaseModel(this);
     }
 
     @Override

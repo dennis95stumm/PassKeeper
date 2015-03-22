@@ -1,6 +1,8 @@
 package de.szut.passkeeper.Activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -31,6 +33,7 @@ public class CreateEntryActivity extends Activity implements IActivity{
     private EditText editTextEntryPwd;
     private EditText editTextEntryNote;
     private ImageButton imageButtonDisplayPwd;
+    private ProgressDialog progressDialog;
     private DatabaseModel databaseModel;
     private int databaseId;
     private int categoryId;
@@ -59,21 +62,7 @@ public class CreateEntryActivity extends Activity implements IActivity{
                 break;
             case R.id.menuItemEntrySave:
                 if(editTextEntryTitle.getText().length() != 0 && editTextEntryUsername.getText().length() != 0 & editTextEntryPwd.getText().length() != 0){
-                    String username = editTextEntryUsername.getText().toString();
-                    String password = editTextEntryPwd.getText().toString();
-                    byte[] salt;
-                    salt = Security.getInstance().generateSalt();
-                    String hashedUsername = Security.getInstance().encryptValue(password, username, salt);
-                    String hashedPassword = Security.getInstance().encryptValue(password, username, salt);
-                    databaseModel.createEntry(
-                            databaseId,
-                            categoryId,
-                            editTextEntryTitle.getText().toString(),
-                            hashedUsername,
-                            hashedPassword,
-                            Base64.encodeToString(salt, Base64.DEFAULT),
-                            editTextEntryNote.getText().toString()
-                    );
+                    new Tasker().execute();
                 }else{
                     Toast.makeText(this, "Titel, Username and Password must be given!", Toast.LENGTH_SHORT).show();
                 }
@@ -103,5 +92,46 @@ public class CreateEntryActivity extends Activity implements IActivity{
     @Override
     public void populateView() {
 
+    }
+
+
+    private class Tasker extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(CreateEntryActivity.this);
+            progressDialog.setMessage("Please wait...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            if(progressDialog.isShowing()){
+                progressDialog.dismiss();
+            }
+            Toast.makeText(CreateEntryActivity.this, "Finished", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            String username = editTextEntryUsername.getText().toString();
+            String password = editTextEntryPwd.getText().toString();
+            byte[] salt;
+            salt = Security.getInstance().generateSalt();
+            String hashedUsername = Security.getInstance().encryptValue(password, username, salt);
+            String hashedPassword = Security.getInstance().encryptValue(password, username, salt);
+            databaseModel.createEntry(
+                    databaseId,
+                    categoryId,
+                    editTextEntryTitle.getText().toString(),
+                    hashedUsername,
+                    hashedPassword,
+                    Base64.encodeToString(salt, Base64.DEFAULT),
+                    editTextEntryNote.getText().toString()
+            );
+            return null;
+        }
     }
 }

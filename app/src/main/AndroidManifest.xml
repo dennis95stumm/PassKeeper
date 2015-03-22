@@ -32,6 +32,10 @@
             android:name=".Activity.CreateEntryActivity"
             android:label="@string/title_activity_create_entry" >
         </activity>
+        <activity
+            android:name=".Activity.ProgressActivity"
+            android:label="@string/title_activity_progress" >
+        </activity>
     </application>
 
 </manifest>

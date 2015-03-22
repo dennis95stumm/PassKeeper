@@ -43,7 +43,7 @@
         android:id="@+id/imageButtonDisplayPwd"
         android:layout_below="@+id/editTextEntryUsername"
         android:layout_alignEnd="@+id/editTextEntryUsername"
-        android:src="@drawable/ic_action_eye"
+        android:src="@android:drawable/ic_menu_view"
         android:layout_above="@+id/editTextEntryNote" />
 
     <EditText

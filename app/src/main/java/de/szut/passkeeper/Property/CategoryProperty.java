@@ -12,9 +12,9 @@ public class CategoryProperty implements IUserProperty {
     private String categoryCdate;
     private String categoryMdate;
 
-    public CategoryProperty(int databaseId, int categoryId, String categoryName, String categoryCdate, String categoryMdate) {
-        this.databaseId = databaseId;
+    public CategoryProperty( int categoryId, int databaseId, String categoryName, String categoryCdate, String categoryMdate) {
         this.categoryId = categoryId;
+        this.databaseId = databaseId;
         this.categoryName = categoryName;
         this.categoryCdate = categoryCdate;
         this.categoryMdate = categoryMdate;

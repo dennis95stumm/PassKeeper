@@ -58,7 +58,7 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
         // as you specify a parent activity in AndroidManifest.xml.
         switch(item.getItemId()){
             case R.id.addDatabase:
-                startActivity(new Intent(this, CreateDatabaseActivity.class));
+                startActivity(new Intent(ListDatabaseActivity.this, CreateDatabaseActivity.class));
                 break;
         }
 
@@ -79,7 +79,6 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
                 dialog.dismiss();
                 if (Security.getInstance().checkPassword(editText.getText().toString(), ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabasePwd())) {
                     Intent intent = new Intent(ListDatabaseActivity.this, ListCategoryActivity.class);
-                    intent.putExtra("databaseName", ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseName());
                     intent.putExtra("databaseId", ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId());
                     startActivity(intent);
                 }

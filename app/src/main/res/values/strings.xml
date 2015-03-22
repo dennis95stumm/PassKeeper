@@ -38,4 +38,8 @@
         <item>Networking</item>
         <item>Shopping</item>
     </array>
+    <string name="title_activity_progress">ProgressActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 </resources>
