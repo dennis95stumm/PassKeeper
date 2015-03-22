@@ -128,17 +128,19 @@ public class DatabaseModel {
      * @throws NoSuchAlgorithmException
      * @throws UnsupportedEncodingException
      */
-    public int createPassDatabaseAndDefaultCategory(DatabaseProperty databaseProperty) {
+    public int createPassDatabaseAndDefaultCategory(DatabaseProperty databaseProperty, String[] arrDefaultCategory) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseOpenHelper.KEY_NAME_USER_DATABASE, databaseProperty.getDatabaseName());
         contentValues.put(DatabaseOpenHelper.KEY_PWD_USER_DATABASE, Security.getInstance().encryptPassword(databaseProperty.getDatabasePwd()));
         long databaseId = sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_DATABASE, null, contentValues);
-        contentValues = new ContentValues();
-        contentValues.put(DatabaseOpenHelper.KEY_ID_USER_DATABASE, databaseId);
         //TODO find out why it is not possible to use android String resources.
-        contentValues.put(DatabaseOpenHelper.KEY_NAME_USER_CATEGORY, "Default Category");
-        sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_CATEGORY, null, contentValues);
+        for(String defaultCategory : arrDefaultCategory){
+            contentValues = new ContentValues();
+            contentValues.put(DatabaseOpenHelper.KEY_ID_USER_DATABASE, databaseId);
+            contentValues.put(DatabaseOpenHelper.KEY_NAME_USER_CATEGORY, defaultCategory);
+            sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_CATEGORY, null, contentValues);
+        }
         databaseOpenHelper.close();
         return Integer.valueOf(String.valueOf(databaseId));
     }

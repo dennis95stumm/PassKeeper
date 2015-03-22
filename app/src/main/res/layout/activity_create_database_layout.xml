@@ -6,27 +6,42 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
 
-    <EditText
-        android:id="@+id/newDatabaseName"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/hint_database_name"
-        android:maxLength="16" />
 
     <EditText
-        android:id="@+id/newDatabasePwd"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/newDatabaseName"
-        android:hint="@string/hint_database_pwd"
+        android:id="@+id/editTextDatabaseName"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:hint="@string/hint_database_name" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextDatabasePwd"
+        android:layout_below="@+id/editTextDatabaseName"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/imageButtonDisplayPwd"
         android:inputType="textPassword"
-        android:maxLength="16" />
+        android:hint="@string/hint_database_pwd" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButtonDisplayPwd"
+        android:layout_alignBottom="@+id/editTextDatabasePwd"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/editTextDatabasePwd"
+        android:contentDescription="@string/image_button_description_show_pwd"
+        android:src="@drawable/ic_action_eye"/>
 
     <Button
-        android:id="@+id/createNewDatabaseBtn"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/newDatabasePwd"
-        android:enabled="false"
-        android:text="@string/button_create_database" />
+        android:text="@string/button_create"
+        android:id="@+id/buttonCreateDatabase"
+        android:layout_below="@+id/editTextDatabasePwd"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/imageButtonDisplayPwd" />
 </RelativeLayout>

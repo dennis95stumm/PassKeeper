@@ -8,11 +8,13 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import de.szut.passkeeper.Interface.IActivity;
 import de.szut.passkeeper.Model.DatabaseModel;
 import de.szut.passkeeper.Property.DatabaseProperty;
 import de.szut.passkeeper.R;
+import de.szut.passkeeper.Utility.TouchListener;
 
 
 public class CreateDatabaseActivity extends Activity implements TextWatcher, View.OnClickListener, IActivity {
@@ -20,8 +22,7 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
     private EditText editTextDatabaseName;
     private EditText editTextDatabasePwd;
     private Button buttonCreateNewDatabase;
-
-    //TODO implement context menu
+    private ImageButton imageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +35,12 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.createNewDatabaseBtn:
+            case R.id.buttonCreateDatabase:
                 buttonCreateNewDatabase.setEnabled(false);
-                int databaseId = new DatabaseModel(this).createPassDatabaseAndDefaultCategory(new DatabaseProperty(editTextDatabaseName.getText().toString(), editTextDatabasePwd.getText().toString()));
+                int databaseId = new DatabaseModel(this).createPassDatabaseAndDefaultCategory(new DatabaseProperty(editTextDatabaseName.getText().toString(), editTextDatabasePwd.getText().toString()), getResources().getStringArray(R.array.array_default_category_name));
                 Intent intent = new Intent(CreateDatabaseActivity.this, ListCategoryActivity.class);
-                intent.putExtra(getResources().getString(R.string.intent_extra_database_id), databaseId);
-                intent.putExtra(getResources().getString(R.string.intent_extra_database_name), editTextDatabaseName.getText().toString());
+                intent.putExtra("databaseId", databaseId);
+                intent.putExtra("databaseName", editTextDatabaseName.getText().toString());
                 startActivity(intent);
                 break;
         }
@@ -72,12 +73,14 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
 
     @Override
     public void setDefaults() {
-        editTextDatabaseName = (EditText) findViewById(R.id.newDatabaseName);
-        editTextDatabasePwd = (EditText) findViewById(R.id.newDatabasePwd);
-        buttonCreateNewDatabase = (Button) findViewById(R.id.createNewDatabaseBtn);
+        editTextDatabaseName = (EditText) findViewById(R.id.editTextDatabaseName);
+        editTextDatabasePwd = (EditText) findViewById(R.id.editTextDatabasePwd);
+        imageButton = (ImageButton) findViewById(R.id.imageButtonDisplayPwd);
+        buttonCreateNewDatabase = (Button) findViewById(R.id.buttonCreateDatabase);
 
         editTextDatabaseName.addTextChangedListener(this);
         editTextDatabasePwd.addTextChangedListener(this);
+        imageButton.setOnTouchListener(new TouchListener(editTextDatabasePwd));
         buttonCreateNewDatabase.setOnClickListener(this);
     }
 }

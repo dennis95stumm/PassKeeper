@@ -9,6 +9,10 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
+    // Database Version and Name
+    private static final int DB_VERSION = 1;
+    private static final String DB_NAME = "PassDatabase";
+
     // Table
     public static final String TABLE_USER_DATABASE = "pass_database";
     public static final String TABLE_USER_CATEGORY = "pass_category";
@@ -71,9 +75,6 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                     + "FOREIGN KEY (" + KEY_ID_USER_DATABASE + ") REFERENCES " + TABLE_USER_DATABASE + "(" + KEY_ID_USER_DATABASE + ") ON DELETE CASCADE\n"
                     + "FOREIGN KEY (" + KEY_ID_USER_CATEGORY + ") REFERENCES " + TABLE_USER_ENTRY + "(" + KEY_ID_USER_CATEGORY + ") ON DELETE CASCADE\n" +
                     ")";
-    // Database Version and Name
-    private static final int DB_VERSION = 1;
-    private static final String DB_NAME = "PassDatabase";
 
 
     /**
