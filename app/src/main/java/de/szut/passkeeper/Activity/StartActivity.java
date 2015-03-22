@@ -3,29 +3,39 @@ package de.szut.passkeeper.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
+import android.os.Handler;
+import android.os.Message;
 
 import java.util.Vector;
 
 import de.szut.passkeeper.Interface.IUserProperty;
-import de.szut.passkeeper.Model.DatabaseModel;
-import de.szut.passkeeper.Model.DatabaseOpenHelper;
+import de.szut.passkeeper.R;
+import de.szut.passkeeper.Utility.DataLoaderTask;
 
 
 public class StartActivity extends Activity {
-
-    private DatabaseOpenHelper databaseOpenHelper;
     private Vector<IUserProperty> vectorUserDatabaseProperty;
-    private DatabaseModel databaseModel;
+    private Handler mHandler;
+    public static final int TASK_COMPLETE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setStartActivity();
+        setContentView(R.layout.splash_screen_layout);
+        mHandler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message inputMessage) {
+                DataLoaderTask task = (DataLoaderTask)inputMessage.obj;
+                vectorUserDatabaseProperty = task.getPropertyVector();
+                setStartActivity();
+            }
+        };
+        DataLoaderTask dataLoaderTask = new DataLoaderTask(this);
+        dataLoaderTask.startTask();
     }
 
     private void setStartActivity() {
-        databaseModel = new DatabaseModel(getApplicationContext());
-        vectorUserDatabaseProperty = databaseModel.getUserDatabasePropertyVector();
         if (vectorUserDatabaseProperty.size() == 0) {
             Intent intent = new Intent(this, CreateDatabaseActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -34,6 +44,15 @@ public class StartActivity extends Activity {
             Intent intent = new Intent(this, ListDatabaseActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+        }
+    }
+
+    public void handleState(DataLoaderTask dataLoaderTask, int state) {
+        switch (state) {
+            case TASK_COMPLETE:
+                Message completeMessage = mHandler.obtainMessage(state, dataLoaderTask);
+                completeMessage.sendToTarget();
+                break;
         }
     }
 }

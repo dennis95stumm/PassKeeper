@@ -24,5 +24,6 @@
     <string name="intent_extra_database_name">databaseName</string>
     <string name="intent_extra_category_id">categoryId</string>
     <string name="intent_extra_category_name">categoryName</string>
+    <string name="loading">Loading! Please wait...</string>
 
 </resources>
