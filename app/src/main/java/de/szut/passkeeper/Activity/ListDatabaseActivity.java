@@ -75,13 +75,13 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
         alertDialog.setPositiveButton(R.string.dialog_positive_button, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-            dialog.dismiss();
-            if (Security.getInstance().checkPassword(editText.getText().toString(), ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabasePwd())) {
-                Intent intent = new Intent(ListDatabaseActivity.this, ListCategoryActivity.class);
-                intent.putExtra(getResources().getString(R.string.intent_extra_database_name), ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseName());
-                intent.putExtra(getResources().getString(R.string.intent_extra_database_id), ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId());
-                startActivity(intent);
-            }
+                dialog.dismiss();
+                if (Security.getInstance().checkPassword(editText.getText().toString(), ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabasePwd())) {
+                    Intent intent = new Intent(ListDatabaseActivity.this, ListCategoryActivity.class);
+                    intent.putExtra(getResources().getString(R.string.intent_extra_database_name), ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseName());
+                    intent.putExtra(getResources().getString(R.string.intent_extra_database_id), ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId());
+                    startActivity(intent);
+                }
             }
         });
         alertDialog.show();

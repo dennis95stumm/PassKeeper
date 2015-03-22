@@ -2,6 +2,7 @@ package de.szut.passkeeper.Activity;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +16,7 @@ import java.util.Vector;
 import de.szut.passkeeper.Interface.IActivity;
 import de.szut.passkeeper.Interface.IUserProperty;
 import de.szut.passkeeper.Model.DatabaseModel;
+import de.szut.passkeeper.Property.CategoryProperty;
 import de.szut.passkeeper.R;
 import de.szut.passkeeper.Utility.AlertBuilderHelper;
 import de.szut.passkeeper.Utility.ListViewAdapter;
@@ -72,12 +74,17 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        Intent intent = new Intent(ListCategoryActivity.this, ListEntryActivity.class);
+        //TODO stop using damn resource-strings for variables
+        intent.putExtra(getResources().getString(R.string.intent_extra_database_id), ((CategoryProperty) vectorCategoryProperty.get(position)).getDatabaseId());
+        intent.putExtra(getResources().getString(R.string.intent_extra_category_id), ((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryId());
+        startActivity(intent);
     }
 
     @Override
     public void setDefaults() {
         setTitle(getIntent().getExtras().getString(getResources().getString(R.string.intent_extra_database_name)));
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         databaseId = getIntent().getExtras().getInt(getResources().getString(R.string.intent_extra_database_id));
         databaseModel = new DatabaseModel(getApplicationContext());
         listView = (ListView) findViewById(R.id.listViewDefault);
@@ -86,7 +93,6 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
 
     @Override
     public void populateView() {
-        getActionBar().setDisplayHomeAsUpEnabled(true);
         vectorCategoryProperty = databaseModel.getUserCategoryPropertyVector(databaseId);
         listView.setAdapter(new ListViewAdapter(vectorCategoryProperty, this));
         listView.setOnItemClickListener(this);

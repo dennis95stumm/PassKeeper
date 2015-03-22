@@ -5,5 +5,6 @@ package de.szut.passkeeper.Interface;
  */
 public interface IUserProperty {
     public String getItemHeader();
+
     public String getItemSubHeader();
 }

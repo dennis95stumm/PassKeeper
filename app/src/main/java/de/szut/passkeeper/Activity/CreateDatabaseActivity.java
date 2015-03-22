@@ -9,9 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-
 import de.szut.passkeeper.Interface.IActivity;
 import de.szut.passkeeper.Model.DatabaseModel;
 import de.szut.passkeeper.Property.DatabaseProperty;
@@ -39,17 +36,11 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
         switch (v.getId()) {
             case R.id.createNewDatabaseBtn:
                 buttonCreateNewDatabase.setEnabled(false);
-                try {
-                    int databaseId = new DatabaseModel(this).createPassDatabaseAndDefaultCategory(new DatabaseProperty(editTextDatabaseName.getText().toString(), editTextDatabasePwd.getText().toString()));
-                    Intent intent = new Intent(CreateDatabaseActivity.this, ListCategoryActivity.class);
-                    intent.putExtra(getResources().getString(R.string.intent_extra_database_id), databaseId);
-                    intent.putExtra(getResources().getString(R.string.intent_extra_database_name), editTextDatabaseName.getText().toString());
-                    startActivity(intent);
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
+                int databaseId = new DatabaseModel(this).createPassDatabaseAndDefaultCategory(new DatabaseProperty(editTextDatabaseName.getText().toString(), editTextDatabasePwd.getText().toString()));
+                Intent intent = new Intent(CreateDatabaseActivity.this, ListCategoryActivity.class);
+                intent.putExtra(getResources().getString(R.string.intent_extra_database_id), databaseId);
+                intent.putExtra(getResources().getString(R.string.intent_extra_database_name), editTextDatabaseName.getText().toString());
+                startActivity(intent);
                 break;
         }
     }

@@ -99,11 +99,11 @@ public class DatabaseModel {
         return vectorUserCategoryProperty;
     }
 
-    public Vector<IUserProperty> getUserEntryVector(int databaseId, int categoryId){
+    public Vector<IUserProperty> getUserEntryVector(int databaseId, int categoryId) {
         sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
         Vector<IUserProperty> vectorUserEntryProperty = new Vector<>();
-        Cursor cursor = sqLiteDatabase.query(DatabaseOpenHelper.TABLE_USER_ENTRY, passEntryColumns, DatabaseOpenHelper.KEY_ID_USER_DATABASE + " = ? AND " + DatabaseOpenHelper.KEY_ID_USER_CATEGORY  + " = ?", new String[]{String.valueOf(databaseId), String.valueOf(categoryId)}, null, null, null);
-        while(cursor.moveToNext()){
+        Cursor cursor = sqLiteDatabase.query(DatabaseOpenHelper.TABLE_USER_ENTRY, passEntryColumns, DatabaseOpenHelper.KEY_ID_USER_DATABASE + " = ? AND " + DatabaseOpenHelper.KEY_ID_USER_CATEGORY + " = ?", new String[]{String.valueOf(databaseId), String.valueOf(categoryId)}, null, null, null);
+        while (cursor.moveToNext()) {
             vectorUserEntryProperty.add(new EntryProperty(
                     cursor.getInt(0),
                     cursor.getInt(1),
@@ -128,7 +128,7 @@ public class DatabaseModel {
      * @throws NoSuchAlgorithmException
      * @throws UnsupportedEncodingException
      */
-    public int createPassDatabaseAndDefaultCategory(DatabaseProperty databaseProperty) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    public int createPassDatabaseAndDefaultCategory(DatabaseProperty databaseProperty) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseOpenHelper.KEY_NAME_USER_DATABASE, databaseProperty.getDatabaseName());
@@ -143,7 +143,7 @@ public class DatabaseModel {
         return Integer.valueOf(String.valueOf(databaseId));
     }
 
-    public void createCategory(int databaseId, String categoryName){
+    public void createCategory(int databaseId, String categoryName) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseOpenHelper.KEY_ID_USER_DATABASE, String.valueOf(databaseId));
