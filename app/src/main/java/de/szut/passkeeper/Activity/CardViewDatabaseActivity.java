@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.AdapterView;
 
 import java.util.Vector;
 
@@ -18,7 +16,7 @@ import de.szut.passkeeper.Utility.CardViewAdapter;
 /**
  * Created by Sami.Al-Khatib on 24.03.2015.
  */
-public class CardViewDatabaseActivity extends Activity implements IActivity{
+public class CardViewDatabaseActivity extends Activity implements IActivity {
     private RecyclerView recyclerView;
     private DatabaseModel databaseModel;
     private Vector<IUserProperty> vectorUserProperty;

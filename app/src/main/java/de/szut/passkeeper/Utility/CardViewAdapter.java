@@ -1,15 +1,12 @@
 package de.szut.passkeeper.Utility;
 
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Vector;
 
@@ -49,7 +46,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.UserPr
         protected TextView textViewSubHeader;
         protected ImageView imageView;
 
-        public UserPropertyViewHolder(View view){
+        public UserPropertyViewHolder(View view) {
             super(view);
             imageView = (ImageView) view.findViewById(R.id.imageViewCard);
             textViewHeader = (TextView) view.findViewById(R.id.textViewHeaderCard);

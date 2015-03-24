@@ -5,6 +5,5 @@
         android:id="@+id/menuItemEntrySave"
         android:icon="@android:drawable/ic_menu_save"
         android:showAsAction="always"
-        android:title="@string/menu_item_title_save_entry"
-        ></item>
+        android:title="@string/menu_item_title_save_entry"></item>
 </menu>
