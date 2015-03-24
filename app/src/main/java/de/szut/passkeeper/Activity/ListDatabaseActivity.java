@@ -47,7 +47,7 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_database, menu);
+        getMenuInflater().inflate(R.menu.create_database_menu, menu);
         return true;
     }
 

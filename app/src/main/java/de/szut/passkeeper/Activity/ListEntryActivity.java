@@ -41,7 +41,7 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_entry, menu);
+        getMenuInflater().inflate(R.menu.entry_list_menu, menu);
         return true;
     }
 

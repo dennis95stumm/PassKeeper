@@ -18,7 +18,6 @@ import de.szut.passkeeper.Interface.IActivity;
 import de.szut.passkeeper.Interface.IUserProperty;
 import de.szut.passkeeper.Model.DatabaseModel;
 import de.szut.passkeeper.Property.CategoryProperty;
-import de.szut.passkeeper.Property.EntryProperty;
 import de.szut.passkeeper.R;
 import de.szut.passkeeper.Utility.AlertBuilderHelper;
 import de.szut.passkeeper.Utility.ListViewAdapter;
@@ -44,7 +43,7 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_category, menu);
+        getMenuInflater().inflate(R.menu.category_list_menu, menu);
         return true;
     }
 

@@ -36,6 +36,10 @@
             android:name=".Activity.ProgressActivity"
             android:label="@string/title_activity_progress" >
         </activity>
+        <activity
+            android:name=".Activity.EntryFragmentActivity"
+            android:label="@string/title_activity_entry_fragment" >
+        </activity>
     </application>
 
 </manifest>

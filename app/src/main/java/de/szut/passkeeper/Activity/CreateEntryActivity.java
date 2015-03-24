@@ -2,27 +2,19 @@ package de.szut.passkeeper.Activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import java.util.Vector;
-
 import de.szut.passkeeper.Interface.IActivity;
 import de.szut.passkeeper.Model.DatabaseModel;
 import de.szut.passkeeper.Model.Security;
-import de.szut.passkeeper.Property.EntryProperty;
 import de.szut.passkeeper.R;
 import de.szut.passkeeper.Utility.TouchListener;
 
@@ -50,7 +42,7 @@ public class CreateEntryActivity extends Activity implements IActivity{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_create_entry, menu);
+        getMenuInflater().inflate(R.menu.create_entry_menu, menu);
         return true;
     }
 
@@ -95,7 +87,7 @@ public class CreateEntryActivity extends Activity implements IActivity{
     }
 
 
-    private class Tasker extends AsyncTask<Void, Void, Void> {
+    private class Tasker extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -106,22 +98,28 @@ public class CreateEntryActivity extends Activity implements IActivity{
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(String aString) {
+            super.onPostExecute(aString);
             if(progressDialog.isShowing()){
                 progressDialog.dismiss();
             }
-            Toast.makeText(CreateEntryActivity.this, "Finished", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(CreateEntryActivity.this, ListEntryActivity.class);
+            intent.putExtra("databaseId", databaseId);
+            intent.putExtra("categoryId", categoryId);
+            startActivity(intent);
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected String doInBackground(String... params) {
+            publishProgress("Generating hash");
             String username = editTextEntryUsername.getText().toString();
             String password = editTextEntryPwd.getText().toString();
             byte[] salt;
+            publishProgress("Encrypting data");
             salt = Security.getInstance().generateSalt();
             String hashedUsername = Security.getInstance().encryptValue(password, username, salt);
             String hashedPassword = Security.getInstance().encryptValue(password, username, salt);
+            publishProgress("Writing data");
             databaseModel.createEntry(
                     databaseId,
                     categoryId,
@@ -132,6 +130,12 @@ public class CreateEntryActivity extends Activity implements IActivity{
                     editTextEntryNote.getText().toString()
             );
             return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            progressDialog.setMessage(values[0]);
         }
     }
 }
