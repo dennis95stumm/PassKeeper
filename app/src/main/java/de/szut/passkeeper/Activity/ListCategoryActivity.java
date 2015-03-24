@@ -23,6 +23,7 @@ import de.szut.passkeeper.Utility.AlertBuilderHelper;
 import de.szut.passkeeper.Utility.ListViewAdapter;
 
 public class ListCategoryActivity extends Activity implements AdapterView.OnItemClickListener, IActivity {
+    //TODO implement floating image button
 
     private ListView listView;
     private Vector<IUserProperty> vectorCategoryProperty;

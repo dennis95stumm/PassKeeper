@@ -29,6 +29,7 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
     private int categoryId;
 
     //TODO implement context menu
+    //TODO implement floating image button
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -28,6 +28,7 @@ import de.szut.passkeeper.Utility.ListViewAdapter;
 
 
 public class ListDatabaseActivity extends Activity implements AdapterView.OnItemClickListener, IActivity {
+    //TODO implement floating image button
 
     private DatabaseModel databaseModel;
     private Vector<IUserProperty> vectorUserDatabaseProperties;
