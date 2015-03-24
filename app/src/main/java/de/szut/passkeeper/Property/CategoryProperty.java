@@ -1,6 +1,7 @@
 package de.szut.passkeeper.Property;
 
 import de.szut.passkeeper.Interface.IUserProperty;
+import de.szut.passkeeper.R;
 
 /**
  * Created by Sami.Al-Khatib on 18.03.2015.
@@ -28,6 +29,11 @@ public class CategoryProperty implements IUserProperty {
     @Override
     public String getItemSubHeader() {
         return getCategoryMdate();
+    }
+
+    @Override
+    public int getItemImage() {
+        return R.drawable.ic_launcher;
     }
 
     public int getDatabaseId() {

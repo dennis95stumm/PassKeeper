@@ -1,6 +1,7 @@
 package de.szut.passkeeper.Property;
 
 import de.szut.passkeeper.Interface.IUserProperty;
+import de.szut.passkeeper.R;
 
 /**
  * Created by Sami.Al-Khatib on 21.03.2015.
@@ -39,6 +40,11 @@ public class EntryProperty implements IUserProperty {
     @Override
     public String getItemSubHeader() {
         return getEntryMDate();
+    }
+
+    @Override
+    public int getItemImage() {
+        return R.drawable.ic_launcher;
     }
 
     public int getDatabaseId() {

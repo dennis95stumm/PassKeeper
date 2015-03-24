@@ -32,6 +32,7 @@ public class StartActivity extends Activity {
             startActivity(intent);
         } else {
             Intent intent = new Intent(this, ListDatabaseActivity.class);
+            //Intent intent = new Intent(StartActivity.this, CardViewDatabaseActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }

@@ -1,6 +1,9 @@
 package de.szut.passkeeper.Property;
 
+import android.media.Image;
+
 import de.szut.passkeeper.Interface.IUserProperty;
+import de.szut.passkeeper.R;
 
 /**
  * Created by Sami.Al-Khatib on 09.02.2015.
@@ -33,6 +36,11 @@ public class DatabaseProperty implements IUserProperty {
     @Override
     public String getItemSubHeader() {
         return getDatabaseMdate();
+    }
+
+    @Override
+    public int getItemImage() {
+        return R.drawable.ic_database;
     }
 
     public int getDatabaseId() {

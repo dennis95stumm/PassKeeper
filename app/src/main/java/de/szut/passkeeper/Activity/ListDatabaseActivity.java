@@ -59,6 +59,7 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
         switch(item.getItemId()){
             case R.id.addDatabase:
                 startActivity(new Intent(ListDatabaseActivity.this, CreateDatabaseActivity.class));
+                //startActivity(new Intent(ListDatabaseActivity.this, CardViewDatabaseActivity.class));
                 break;
         }
 
