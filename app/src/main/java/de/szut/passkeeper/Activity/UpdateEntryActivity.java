@@ -19,8 +19,9 @@ import de.szut.passkeeper.Property.EntryProperty;
 import de.szut.passkeeper.R;
 import de.szut.passkeeper.Utility.TouchListener;
 
-public class CreateEntryActivity extends Activity implements IActivity {
+public class UpdateEntryActivity extends Activity implements IActivity {
 
+    private EntryProperty entryProperty;
     private EditText editTextEntryTitle;
     private EditText editTextEntryUsername;
     private EditText editTextEntryPwd;
@@ -34,7 +35,7 @@ public class CreateEntryActivity extends Activity implements IActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_entry_layout);
+        setContentView(R.layout.activity_update_entry_layout);
         setDefaults();
         populateView();
     }
@@ -43,7 +44,7 @@ public class CreateEntryActivity extends Activity implements IActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.create_entry_menu, menu);
+        getMenuInflater().inflate(R.menu.update_entry_menu, menu);
         return true;
     }
 
@@ -68,7 +69,7 @@ public class CreateEntryActivity extends Activity implements IActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(CreateEntryActivity.this, ListEntryActivity.class)
+        Intent intent = new Intent(UpdateEntryActivity.this, ListEntryActivity.class)
                 .putExtra("databaseId", databaseId)
                 .putExtra("categoryId", categoryId);
         startActivity(intent);
@@ -81,14 +82,13 @@ public class CreateEntryActivity extends Activity implements IActivity {
         databaseId = getIntent().getExtras().getInt("databaseId");
         categoryId = getIntent().getExtras().getInt("categoryId");
         databaseModel = new DatabaseModel(this);
-
         editTextEntryTitle = (EditText) findViewById(R.id.editTextEntryTitle);
         editTextEntryUsername = (EditText) findViewById(R.id.editTextEntryUsername);
         editTextEntryPwd = (EditText) findViewById(R.id.editTextEntryPwd);
         editTextEntryNote = (EditText) findViewById(R.id.editTextEntryNote);
         imageButtonDisplayPwd = (ImageButton) findViewById(R.id.imageButtonDisplayPwd);
-
         imageButtonDisplayPwd.setOnTouchListener(new TouchListener(editTextEntryPwd));
+        //entryProperty =
     }
 
     @Override
@@ -100,8 +100,8 @@ public class CreateEntryActivity extends Activity implements IActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(CreateEntryActivity.this);
-            progressDialog.setMessage("Please wait...");
+            progressDialog = new ProgressDialog(UpdateEntryActivity.this);
+            progressDialog.setMessage(getResources().getString(R.string.dialog_loading_message_encrypting_data));
             progressDialog.setCancelable(false);
             progressDialog.show();
         }
@@ -114,6 +114,7 @@ public class CreateEntryActivity extends Activity implements IActivity {
             salt = Security.getInstance().generateSalt();
             String hashedUsername = Security.getInstance().encryptValue(password, username, salt);
             String hashedPassword = Security.getInstance().encryptValue(password, username, salt);
+            progressDialog.setMessage(getResources().getString(R.string.dialog_loading_message_saving_data));
             databaseModel.createUserEntry(new EntryProperty(
                             databaseId,
                             categoryId,
@@ -132,6 +133,11 @@ public class CreateEntryActivity extends Activity implements IActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             if (progressDialog.isShowing()) {
+                try {
+                    progressDialog.wait(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 progressDialog.dismiss();
             }
             onBackPressed();

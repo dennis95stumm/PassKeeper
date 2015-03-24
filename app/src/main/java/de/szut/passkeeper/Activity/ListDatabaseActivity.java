@@ -80,8 +80,8 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 if (Security.getInstance().checkPassword(editText.getText().toString(), ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabasePwd())) {
-                    Intent intent = new Intent(ListDatabaseActivity.this, ListCategoryActivity.class);
-                    intent.putExtra("databaseId", ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId());
+                    Intent intent = new Intent(ListDatabaseActivity.this, ListCategoryActivity.class)
+                            .putExtra("databaseId", ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId());
                     startActivity(intent);
                 }
             }

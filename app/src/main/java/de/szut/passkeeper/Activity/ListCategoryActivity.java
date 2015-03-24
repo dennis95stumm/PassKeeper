@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.Vector;
 
@@ -28,6 +27,7 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
     private ListView listView;
     private Vector<IUserProperty> vectorCategoryProperty;
     private DatabaseModel databaseModel;
+    private ListViewAdapter listViewAdapter;
     private int databaseId;
 
     //TODO implement context menu
@@ -51,6 +51,9 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
             case R.id.addCategory:
                 AlertBuilderHelper alertDialog = new AlertBuilderHelper(this, R.string.dialog_title_add_category, R.string.dialog_message_add_category, true);
                 final EditText editText = new EditText(this);
@@ -59,8 +62,9 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
                 alertDialog.setPositiveButton(R.string.dialog_positive_button, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        databaseModel.createUserCategory(new CategoryProperty(databaseId, editText.getText().toString(), R.drawable.ic_folder));
-                        populateView();
+                        int categoryId = databaseModel.createUserCategory(new CategoryProperty(databaseId, editText.getText().toString(), R.drawable.ic_folder));
+                        vectorCategoryProperty.add(databaseModel.getUserCategoryProperty(categoryId));
+                        listViewAdapter.notifyDataSetChanged();
                     }
                 });
                 alertDialog.show();
@@ -71,9 +75,9 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(ListCategoryActivity.this, ListEntryActivity.class);
-        intent.putExtra("databaseId", ((CategoryProperty) vectorCategoryProperty.get(position)).getDatabaseId());
-        intent.putExtra("categoryId", ((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryId());
+        Intent intent = new Intent(ListCategoryActivity.this, ListEntryActivity.class)
+                .putExtra("databaseId", ((CategoryProperty) vectorCategoryProperty.get(position)).getDatabaseId())
+                .putExtra("categoryId", ((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryId());
         startActivity(intent);
     }
 
@@ -90,7 +94,8 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
     @Override
     public void populateView() {
         vectorCategoryProperty = databaseModel.getUserCategoryPropertyVector(databaseId);
-        listView.setAdapter(new ListViewAdapter(vectorCategoryProperty, this));
+        listViewAdapter = new ListViewAdapter(vectorCategoryProperty, this);
+        listView.setAdapter(listViewAdapter);
         listView.setOnItemClickListener(this);
         registerForContextMenu(listView);
     }

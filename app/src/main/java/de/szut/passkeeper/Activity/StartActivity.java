@@ -27,14 +27,15 @@ public class StartActivity extends Activity {
         databaseModel = new DatabaseModel(getApplicationContext());
         vectorUserDatabaseProperty = databaseModel.getUserDatabasePropertyVector();
         if (vectorUserDatabaseProperty.size() == 0) {
-            Intent intent = new Intent(this, CreateDatabaseActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            Intent intent = new Intent(this, CreateDatabaseActivity.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+            finish();
         } else {
-            Intent intent = new Intent(this, ListDatabaseActivity.class);
-            //Intent intent = new Intent(StartActivity.this, CardViewDatabaseActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            Intent intent = new Intent(this, ListDatabaseActivity.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+            finish();
         }
     }
 }

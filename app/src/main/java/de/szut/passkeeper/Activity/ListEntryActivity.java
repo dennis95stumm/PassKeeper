@@ -25,6 +25,7 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
     private ListView listView;
     private Vector<IUserProperty> vectorEntryPropery;
     private DatabaseModel databaseModel;
+    private ListViewAdapter listViewAdapter;
     private int databaseId;
     private int categoryId;
 
@@ -38,6 +39,16 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
         setDefaults();
         populateView();
     }
+
+    /*
+    @Override
+    protected void onResume() {
+        super.onResume();
+        vectorEntryPropery.clear();
+        vectorEntryPropery = databaseModel.getUserEntryVector(databaseId, categoryId);
+        listViewAdapter.notifyDataSetChanged();
+    }
+    */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -53,10 +64,11 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
                 onBackPressed();
                 break;
             case R.id.addEntry:
-                Intent intent = new Intent(ListEntryActivity.this, CreateEntryActivity.class);
-                intent.putExtra("databaseId", databaseId);
-                intent.putExtra("categoryId", categoryId);
-                startActivity(intent);
+                Intent intentCreateEntryActivity = new Intent(ListEntryActivity.this, CreateEntryActivity.class)
+                        .putExtra("databaseId", databaseId)
+                        .putExtra("categoryId", categoryId);
+                startActivity(intentCreateEntryActivity);
+                finish();
                 break;
         }
 
@@ -82,7 +94,8 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
     @Override
     public void populateView() {
         vectorEntryPropery = databaseModel.getUserEntryVector(databaseId, categoryId);
-        listView.setAdapter(new ListViewAdapter(vectorEntryPropery, this));
+        listViewAdapter = new ListViewAdapter(vectorEntryPropery, this);
+        listView.setAdapter(listViewAdapter);
         listView.setOnItemClickListener(this);
         registerForContextMenu(listView);
     }

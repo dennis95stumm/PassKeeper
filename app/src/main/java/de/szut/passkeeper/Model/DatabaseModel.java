@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -90,7 +89,6 @@ public class DatabaseModel {
         Vector<IUserProperty> vectorUserCategoryProperty = new Vector<>();
         Cursor cursor = sqLiteDatabase.query(DatabaseOpenHelper.TABLE_USER_CATEGORY, passCategoryColumns, DatabaseOpenHelper.KEY_ID_USER_DATABASE + " = ?", new String[]{String.valueOf(databaseId)}, null, null, null);
         while (cursor.moveToNext()) {
-            Log.d(getClass().getSimpleName(), "Selcted Categoryid: " + cursor.getInt(0));
             vectorUserCategoryProperty.add(new CategoryProperty(
                     cursor.getInt(0),
                     cursor.getInt(1),
@@ -129,6 +127,31 @@ public class DatabaseModel {
         return vectorUserEntryProperty;
     }
 
+    public CategoryProperty getUserCategoryProperty(int categoryId) {
+        sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
+        CategoryProperty categoryProperty = null;
+        Cursor cursor = sqLiteDatabase.query(DatabaseOpenHelper.TABLE_USER_CATEGORY, passCategoryColumns, DatabaseOpenHelper.KEY_ID_USER_CATEGORY + " = ?", new String[]{String.valueOf(categoryId)}, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            categoryProperty = new CategoryProperty(
+                    cursor.getInt(0),
+                    cursor.getInt(1),
+                    cursor.getString(2),
+                    cursor.getInt(3),
+                    cursor.getString(4),
+                    cursor.getString(5)
+            );
+        }
+        return categoryProperty;
+    }
+
+    public EntryProperty getUserEntryProperty(int entryId){
+        sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
+        EntryProperty entryProperty = null;
+        //Cursor cursor = sqLiteDatabase.query(DatabaseOpenHelper.TABLE_USER_ENTRY, passEntryColumns, Datat)
+        return entryProperty;
+    }
+
     public String getUserDatabaseName(int databaseId) {
         sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
         String databaseName = null;
@@ -136,8 +159,6 @@ public class DatabaseModel {
         if (cursor != null) {
             cursor.moveToFirst();
             databaseName = cursor.getString(1);
-            Log.d(getClass().getSimpleName(), "ID: " + String.valueOf(databaseId));
-            Log.d(getClass().getSimpleName(), "Databasename: " + databaseName);
             cursor.close();
         }
         databaseOpenHelper.close();
@@ -152,8 +173,6 @@ public class DatabaseModel {
         if (cursor != null) {
             cursor.moveToFirst();
             categoryName = cursor.getString(2);
-            Log.d(getClass().getSimpleName(), "ID: " + String.valueOf(categoryId));
-            Log.d(getClass().getSimpleName(), "Category: " + categoryName);
             cursor.close();
         }
         databaseOpenHelper.close();
@@ -174,25 +193,24 @@ public class DatabaseModel {
         contentValues.put(DatabaseOpenHelper.KEY_ICON_USER_DATABASE, databaseProperty.getDatabaseIconId());
         long databaseId = sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_DATABASE, null, contentValues);
         databaseOpenHelper.close();
-        Log.d(getClass().getSimpleName() + " Databaseid: ", String.valueOf(databaseId));
         for (String defaultCategory : arrDefaultCategory) {
             createUserCategory(new CategoryProperty(Integer.valueOf(String.valueOf(databaseId)), defaultCategory, R.drawable.ic_folder));
         }
-        return Integer.valueOf(String.valueOf(databaseId));
+        return (int) databaseId;
     }
 
     /**
      * @param categoryProperty
      */
-    public void createUserCategory(CategoryProperty categoryProperty) {
+    public int createUserCategory(CategoryProperty categoryProperty) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
-        Log.d(getClass().getSimpleName() + " Databaseid: ", String.valueOf(categoryProperty.getDatabaseId()));
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseOpenHelper.KEY_ID_USER_DATABASE, categoryProperty.getDatabaseId());
         contentValues.put(DatabaseOpenHelper.KEY_NAME_USER_CATEGORY, categoryProperty.getCategoryName());
         contentValues.put(DatabaseOpenHelper.KEY_ICON_USER_CATEGORY, categoryProperty.getCategoryIconId());
-        sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_CATEGORY, null, contentValues);
+        long categoryId = sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_CATEGORY, null, contentValues);
         databaseOpenHelper.close();
+        return (int) categoryId;
     }
 
     /**
