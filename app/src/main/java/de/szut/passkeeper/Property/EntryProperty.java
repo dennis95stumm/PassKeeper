@@ -44,7 +44,7 @@ public class EntryProperty implements IUserProperty {
 
     @Override
     public int getItemImage() {
-        return R.drawable.ic_launcher;
+        return R.drawable.ic_lock;
     }
 
     public int getDatabaseId() {

@@ -33,7 +33,7 @@ public class CategoryProperty implements IUserProperty {
 
     @Override
     public int getItemImage() {
-        return R.drawable.ic_launcher;
+        return R.drawable.ic_folder;
     }
 
     public int getDatabaseId() {
