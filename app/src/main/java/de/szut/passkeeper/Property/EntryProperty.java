@@ -15,10 +15,11 @@ public class EntryProperty implements IUserProperty {
     private String entryPwd;
     private String entryHash;
     private String entryNote;
+    private int entryIconId;
     private String entryCDate;
     private String entryMDate;
 
-    public EntryProperty(int databaseId, int categoryId, int entryId, String entryTitle, String entryUserName, String entryPwd, String entryHash, String entryNote, String entryCDate, String entryMDate) {
+    public EntryProperty(int databaseId, int categoryId, int entryId, String entryTitle, String entryUserName, String entryPwd, String entryHash, String entryNote, int entryIconId, String entryCDate, String entryMDate) {
         this.entryId = entryId;
         this.databaseId = databaseId;
         this.categoryId = categoryId;
@@ -27,8 +28,20 @@ public class EntryProperty implements IUserProperty {
         this.entryPwd = entryPwd;
         this.entryHash = entryHash;
         this.entryNote = entryNote;
+        this.entryIconId = entryIconId;
         this.entryCDate = entryCDate;
         this.entryMDate = entryMDate;
+    }
+
+    public EntryProperty(int databaseId, int categoryId, String entryTitle, String entryUserName, String entryPwd, String entryHash, String entryNote, int entryIconId) {
+        this.databaseId = databaseId;
+        this.categoryId = categoryId;
+        this.entryTitle = entryTitle;
+        this.entryUserName = entryUserName;
+        this.entryPwd = entryPwd;
+        this.entryHash = entryHash;
+        this.entryNote = entryNote;
+        this.entryIconId = entryIconId;
     }
 
     @Override
@@ -39,6 +52,11 @@ public class EntryProperty implements IUserProperty {
     @Override
     public String getItemSubHeader() {
         return getEntryMDate();
+    }
+
+    @Override
+    public int getItemImage() {
+        return getEntryIconId();
     }
 
     public int getDatabaseId() {
@@ -71,6 +89,10 @@ public class EntryProperty implements IUserProperty {
 
     public String getEntryNote() {
         return entryNote;
+    }
+
+    public int getEntryIconId() {
+        return entryIconId;
     }
 
     public String getEntryCDate() {

@@ -63,7 +63,7 @@ public class ListViewAdapter extends BaseAdapter {
         TextView textViewEditationDate = (TextView) v.findViewById(R.id.textViewSubHeader);
 
         IUserProperty IUserProperty = vector.get(position);
-        imageView.setImageResource(R.drawable.ic_launcher);
+        imageView.setImageResource(IUserProperty.getItemImage());
         textViewDatabaseName.setText(IUserProperty.getItemHeader());
         textViewEditationDate.setText(IUserProperty.getItemSubHeader());
 

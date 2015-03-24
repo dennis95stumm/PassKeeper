@@ -23,6 +23,7 @@ import de.szut.passkeeper.Utility.AlertBuilderHelper;
 import de.szut.passkeeper.Utility.ListViewAdapter;
 
 public class ListCategoryActivity extends Activity implements AdapterView.OnItemClickListener, IActivity {
+    //TODO implement floating image button
 
     private ListView listView;
     private Vector<IUserProperty> vectorCategoryProperty;
@@ -49,7 +50,7 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.addCategory:
                 AlertBuilderHelper alertDialog = new AlertBuilderHelper(this, R.string.dialog_title_add_category, R.string.dialog_message_add_category, true);
                 final EditText editText = new EditText(this);
@@ -58,7 +59,7 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
                 alertDialog.setPositiveButton(R.string.dialog_positive_button, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        databaseModel.createCategory(databaseId, editText.getText().toString());
+                        databaseModel.createUserCategory(new CategoryProperty(databaseId, editText.getText().toString(), R.drawable.ic_folder));
                         populateView();
                     }
                 });
@@ -93,8 +94,8 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
         listView.setOnItemClickListener(this);
         registerForContextMenu(listView);
 
-        for(IUserProperty iUserProperty : vectorCategoryProperty){
-            Toast.makeText(this, "ID: " + String.valueOf(((CategoryProperty)iUserProperty).getCategoryName()), Toast.LENGTH_SHORT).show();
+        for (IUserProperty iUserProperty : vectorCategoryProperty) {
+            Toast.makeText(this, "ID: " + String.valueOf(((CategoryProperty) iUserProperty).getCategoryName()), Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -37,7 +37,7 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
         switch (v.getId()) {
             case R.id.buttonCreateDatabase:
                 buttonCreateNewDatabase.setEnabled(false);
-                int databaseId = new DatabaseModel(this).createPassDatabaseAndDefaultCategory(new DatabaseProperty(editTextDatabaseName.getText().toString(), editTextDatabasePwd.getText().toString()), getResources().getStringArray(R.array.array_default_category_name));
+                int databaseId = new DatabaseModel(this).createUserDatabase(new DatabaseProperty(editTextDatabaseName.getText().toString(), editTextDatabasePwd.getText().toString(), R.drawable.ic_database), getResources().getStringArray(R.array.array_default_category_name));
                 Intent intent = new Intent(CreateDatabaseActivity.this, ListCategoryActivity.class);
                 intent.putExtra("databaseId", databaseId);
                 intent.putExtra("databaseName", editTextDatabaseName.getText().toString());

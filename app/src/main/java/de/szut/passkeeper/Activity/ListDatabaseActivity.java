@@ -28,6 +28,7 @@ import de.szut.passkeeper.Utility.ListViewAdapter;
 
 
 public class ListDatabaseActivity extends Activity implements AdapterView.OnItemClickListener, IActivity {
+    //TODO implement floating image button
 
     private DatabaseModel databaseModel;
     private Vector<IUserProperty> vectorUserDatabaseProperties;
@@ -56,9 +57,10 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.addDatabase:
                 startActivity(new Intent(ListDatabaseActivity.this, CreateDatabaseActivity.class));
+                //startActivity(new Intent(ListDatabaseActivity.this, CardViewDatabaseActivity.class));
                 break;
         }
 

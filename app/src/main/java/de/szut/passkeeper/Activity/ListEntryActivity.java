@@ -29,6 +29,7 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
     private int categoryId;
 
     //TODO implement context menu
+    //TODO implement floating image button
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 break;
