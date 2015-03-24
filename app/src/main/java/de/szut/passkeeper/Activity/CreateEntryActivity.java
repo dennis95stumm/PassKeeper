@@ -50,7 +50,7 @@ public class CreateEntryActivity extends Activity implements IActivity{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_create_entry, menu);
+        getMenuInflater().inflate(R.menu.create_entry_menu, menu);
         return true;
     }
 
@@ -122,14 +122,16 @@ public class CreateEntryActivity extends Activity implements IActivity{
             salt = Security.getInstance().generateSalt();
             String hashedUsername = Security.getInstance().encryptValue(password, username, salt);
             String hashedPassword = Security.getInstance().encryptValue(password, username, salt);
-            databaseModel.createEntry(
-                    databaseId,
-                    categoryId,
-                    editTextEntryTitle.getText().toString(),
-                    hashedUsername,
-                    hashedPassword,
-                    Base64.encodeToString(salt, Base64.DEFAULT),
-                    editTextEntryNote.getText().toString()
+            databaseModel.createUserEntry(new EntryProperty(
+                            databaseId,
+                            categoryId,
+                            editTextEntryTitle.getText().toString(),
+                            hashedUsername,
+                            hashedPassword,
+                            Base64.encodeToString(salt, Base64.DEFAULT),
+                            editTextEntryNote.getText().toString(),
+                            R.drawable.ic_lock
+                    )
             );
             return null;
         }

@@ -93,9 +93,5 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
         listView.setAdapter(new ListViewAdapter(vectorCategoryProperty, this));
         listView.setOnItemClickListener(this);
         registerForContextMenu(listView);
-
-        for (IUserProperty iUserProperty : vectorCategoryProperty) {
-            Toast.makeText(this, "ID: " + String.valueOf(((CategoryProperty) iUserProperty).getCategoryName()), Toast.LENGTH_SHORT).show();
-        }
     }
 }
