@@ -149,7 +149,6 @@ public class DatabaseModel {
     }
 
     public EntryProperty getUserEntryProperty(int entryId) {
-        Log.d(getClass().getSimpleName() + " EntyId is: ", String.valueOf(entryId));
         sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
         EntryProperty entryProperty = null;
         Cursor cursor = sqLiteDatabase.query(DatabaseOpenHelper.TABLE_USER_ENTRY, passEntryColumns, DatabaseOpenHelper.KEY_ID_USER_ENTRY + " = ? ", new String[]{String.valueOf(entryId)}, null, null, null);
@@ -239,6 +238,7 @@ public class DatabaseModel {
      */
     public void createUserEntry(EntryProperty entryProperty) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
+        Log.d(getClass().getSimpleName(), entryProperty.getEntryHash());
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseOpenHelper.KEY_ID_USER_DATABASE, entryProperty.getDatabaseId());
         contentValues.put(DatabaseOpenHelper.KEY_ID_USER_CATEGORY, entryProperty.getCategoryId());

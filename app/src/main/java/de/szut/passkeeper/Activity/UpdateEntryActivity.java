@@ -101,7 +101,7 @@ public class UpdateEntryActivity extends Activity implements IActivity {
         editTextEntryPwd = (EditText) findViewById(R.id.editTextEntryPwd);
         editTextEntryNote = (EditText) findViewById(R.id.editTextEntryNote);
         imageButtonDisplayPwd = (ImageButton) findViewById(R.id.imageButtonDisplayPwd);
-        Log.d(getClass().getSimpleName() + " USER NULL? ", String.valueOf(decryptedUserName == null));
+        Toast.makeText(this, entryProperty.getEntryHash(), Toast.LENGTH_SHORT).show();
         editTextEntryTitle.setText(entryProperty.getEntryTitle());
         editTextEntryUsername.setText(decryptedUserName);
         editTextEntryPwd.setText(decryptedUserPwd);
@@ -112,7 +112,8 @@ public class UpdateEntryActivity extends Activity implements IActivity {
     public void decryptData() {
         String username = entryProperty.getEntryUserName();
         String password = entryProperty.getEntryPwd();
-        byte[] salt = Base64.decode(entryProperty.getEntryHash(), Base64.DEFAULT);
+        byte[] salt;
+        salt = Base64.decode(entryProperty.getEntryHash(), Base64.DEFAULT);
         decryptedUserName = Security.getInstance().decryptValue(password, username, salt);
         decryptedUserPwd = Security.getInstance().decryptValue(password, username, salt);
     }
