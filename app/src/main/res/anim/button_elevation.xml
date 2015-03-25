@@ -6,7 +6,7 @@
             android:duration="@android:integer/config_shortAnimTime"
             android:valueFrom="@dimen/elevation_low"
             android:valueTo="@dimen/elevation_high"
-            android:valueType="floatType"/>
+            android:valueType="floatType" />
     </item>
     <item>
         <objectAnimator
@@ -14,6 +14,6 @@
             android:duration="@android:integer/config_shortAnimTime"
             android:valueFrom="@dimen/elevation_high"
             android:valueTo="@dimen/elevation_low"
-            android:valueType="floatType"/>
+            android:valueType="floatType" />
     </item>
 </selector>

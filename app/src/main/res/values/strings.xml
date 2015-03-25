@@ -10,6 +10,7 @@
     <string name="dialog_message_add_category">Create a new category!</string>
     <string name="dialog_negative_button">Cancel</string>
     <string name="dialog_loading_message_encrypting_data">Encrypting data...</string>
+    <string name="dialog_loading_message_decrypting_data">Decrypting data...</string>
     <string name="dialog_loading_message_saving_data">Persisting data...</string>
 
     <string name="title_activity_create_database">Create Database</string>

@@ -15,6 +15,7 @@ import java.util.Vector;
 import de.szut.passkeeper.Interface.IActivity;
 import de.szut.passkeeper.Interface.IUserProperty;
 import de.szut.passkeeper.Model.DatabaseModel;
+import de.szut.passkeeper.Property.EntryProperty;
 import de.szut.passkeeper.R;
 import de.szut.passkeeper.Utility.ListViewAdapter;
 
@@ -42,17 +43,6 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
         populateView();
     }
 
-
-    /*
-    @Override
-    protected void onResume() {
-        super.onResume();
-        vectorEntryPropery.clear();
-        vectorEntryPropery = databaseModel.getUserEntryVector(databaseId, categoryId);
-        listViewAdapter.notifyDataSetChanged();
-    }
-    */
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -73,12 +63,17 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        Intent intent = new Intent(ListEntryActivity.this, UpdateEntryActivity.class)
+                .putExtra("databaseId", databaseId)
+                .putExtra("categoryId", categoryId)
+                .putExtra("entryId", ((EntryProperty) vectorEntryPropery.get(position)).getEntryId());
+        startActivity(intent);
+        finish();
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.imageButtonFab:
                 Intent intentCreateEntryActivity = new Intent(ListEntryActivity.this, CreateEntryActivity.class)
                         .putExtra("databaseId", databaseId)
@@ -95,13 +90,13 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
         getActionBar().setDisplayHomeAsUpEnabled(true);
         databaseId = getIntent().getExtras().getInt("databaseId");
         categoryId = getIntent().getExtras().getInt("categoryId");
-        setTitle(databaseModel.getUserCategoryName(categoryId));
-        listView = (ListView) findViewById(R.id.listViewDefault);
-        imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
     }
 
     @Override
     public void populateView() {
+        setTitle(databaseModel.getUserCategoryName(categoryId));
+        listView = (ListView) findViewById(R.id.listViewDefault);
+        imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
         vectorEntryPropery = databaseModel.getUserEntryVector(databaseId, categoryId);
         listViewAdapter = new ListViewAdapter(vectorEntryPropery, this);
         listView.setAdapter(listViewAdapter);

@@ -19,10 +19,10 @@ public class EntryProperty implements IUserProperty {
     private String entryCDate;
     private String entryMDate;
 
-    public EntryProperty(int databaseId, int categoryId, int entryId, String entryTitle, String entryUserName, String entryPwd, String entryHash, String entryNote, int entryIconId, String entryCDate, String entryMDate) {
+    public EntryProperty(int entryId, int categoryId, int databaseId, String entryTitle, String entryUserName, String entryPwd, String entryHash, String entryNote, int entryIconId, String entryCDate, String entryMDate) {
         this.entryId = entryId;
-        this.databaseId = databaseId;
         this.categoryId = categoryId;
+        this.databaseId = databaseId;
         this.entryTitle = entryTitle;
         this.entryUserName = entryUserName;
         this.entryPwd = entryPwd;

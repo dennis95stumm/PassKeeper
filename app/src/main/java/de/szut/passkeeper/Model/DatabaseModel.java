@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -40,8 +41,8 @@ public class DatabaseModel {
 
     private String[] passEntryColumns = {
             DatabaseOpenHelper.KEY_ID_USER_ENTRY,
-            DatabaseOpenHelper.KEY_ID_USER_DATABASE,
             DatabaseOpenHelper.KEY_ID_USER_CATEGORY,
+            DatabaseOpenHelper.KEY_ID_USER_DATABASE,
             DatabaseOpenHelper.KEY_TITLE_USER_ENTRY,
             DatabaseOpenHelper.KEY_USERNAME_USER_ENTRY,
             DatabaseOpenHelper.KEY_USERPWD_USER_ENTRY,
@@ -141,14 +142,35 @@ public class DatabaseModel {
                     cursor.getString(4),
                     cursor.getString(5)
             );
+            cursor.close();
         }
+        sqLiteDatabase.close();
         return categoryProperty;
     }
 
-    public EntryProperty getUserEntryProperty(int entryId){
+    public EntryProperty getUserEntryProperty(int entryId) {
+        Log.d(getClass().getSimpleName() + " EntyId is: ", String.valueOf(entryId));
         sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
         EntryProperty entryProperty = null;
-        //Cursor cursor = sqLiteDatabase.query(DatabaseOpenHelper.TABLE_USER_ENTRY, passEntryColumns, Datat)
+        Cursor cursor = sqLiteDatabase.query(DatabaseOpenHelper.TABLE_USER_ENTRY, passEntryColumns, DatabaseOpenHelper.KEY_ID_USER_ENTRY + " = ? ", new String[]{String.valueOf(entryId)}, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            entryProperty = new EntryProperty(
+                    cursor.getInt(0),
+                    cursor.getInt(1),
+                    cursor.getInt(2),
+                    cursor.getString(3),
+                    cursor.getString(4),
+                    cursor.getString(5),
+                    cursor.getString(6),
+                    cursor.getString(7),
+                    cursor.getInt(8),
+                    cursor.getString(9),
+                    cursor.getString(10)
+            );
+            cursor.close();
+        }
+        sqLiteDatabase.close();
         return entryProperty;
     }
 
@@ -162,7 +184,6 @@ public class DatabaseModel {
             cursor.close();
         }
         databaseOpenHelper.close();
-
         return databaseName;
     }
 

@@ -70,7 +70,7 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.imageButtonFab:
                 AlertBuilderHelper alertDialog = new AlertBuilderHelper(this, R.string.dialog_title_add_category, R.string.dialog_message_add_category, true);
                 final EditText editText = new EditText(this);

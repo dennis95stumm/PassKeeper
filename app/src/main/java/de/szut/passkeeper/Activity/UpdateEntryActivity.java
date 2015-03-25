@@ -6,11 +6,14 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import java.util.concurrent.CountDownLatch;
 
 import de.szut.passkeeper.Interface.IActivity;
 import de.szut.passkeeper.Model.DatabaseModel;
@@ -31,12 +34,16 @@ public class UpdateEntryActivity extends Activity implements IActivity {
     private DatabaseModel databaseModel;
     private int databaseId;
     private int categoryId;
+    private int entryId;
+    private String decryptedUserName;
+    private String decryptedUserPwd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_entry_layout);
         setDefaults();
+        final BackgroundTask backgroundTask = new BackgroundTask();
+        backgroundTask.execute(true);
         populateView();
     }
 
@@ -56,7 +63,7 @@ public class UpdateEntryActivity extends Activity implements IActivity {
                 break;
             case R.id.menuItemEntrySave:
                 if (editTextEntryTitle.getText().length() != 0 && editTextEntryUsername.getText().length() != 0 & editTextEntryPwd.getText().length() != 0) {
-                    new Tasker().execute();
+                    new BackgroundTask().execute();
                 } else {
                     Toast.makeText(this, "Titel, Username and Password must be given!", Toast.LENGTH_SHORT).show();
                 }
@@ -81,66 +88,60 @@ public class UpdateEntryActivity extends Activity implements IActivity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
         databaseId = getIntent().getExtras().getInt("databaseId");
         categoryId = getIntent().getExtras().getInt("categoryId");
+        entryId = getIntent().getExtras().getInt("entryId");
         databaseModel = new DatabaseModel(this);
+        entryProperty = databaseModel.getUserEntryProperty(entryId);
+    }
+
+    @Override
+    public void populateView() {
+        setContentView(R.layout.activity_update_entry_layout);
         editTextEntryTitle = (EditText) findViewById(R.id.editTextEntryTitle);
         editTextEntryUsername = (EditText) findViewById(R.id.editTextEntryUsername);
         editTextEntryPwd = (EditText) findViewById(R.id.editTextEntryPwd);
         editTextEntryNote = (EditText) findViewById(R.id.editTextEntryNote);
         imageButtonDisplayPwd = (ImageButton) findViewById(R.id.imageButtonDisplayPwd);
+        Log.d(getClass().getSimpleName() + " USER NULL? ", String.valueOf(decryptedUserName == null));
+        editTextEntryTitle.setText(entryProperty.getEntryTitle());
+        editTextEntryUsername.setText(decryptedUserName);
+        editTextEntryPwd.setText(decryptedUserPwd);
+        editTextEntryNote.setText(entryProperty.getEntryNote());
         imageButtonDisplayPwd.setOnTouchListener(new TouchListener(editTextEntryPwd));
-        //entryProperty =
     }
 
-    @Override
-    public void populateView() {
-
+    public void decryptData() {
+        String username = entryProperty.getEntryUserName();
+        String password = entryProperty.getEntryPwd();
+        byte[] salt = Base64.decode(entryProperty.getEntryHash(), Base64.DEFAULT);
+        decryptedUserName = Security.getInstance().decryptValue(password, username, salt);
+        decryptedUserPwd = Security.getInstance().decryptValue(password, username, salt);
     }
 
-    private class Tasker extends AsyncTask<Void, Void, Void> {
+    private class BackgroundTask extends AsyncTask<Boolean, Boolean, Boolean> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog = new ProgressDialog(UpdateEntryActivity.this);
-            progressDialog.setMessage(getResources().getString(R.string.dialog_loading_message_encrypting_data));
+            progressDialog.setMessage(getResources().getString(R.string.dialog_loading_message_decrypting_data));
             progressDialog.setCancelable(false);
             progressDialog.show();
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
-            String username = editTextEntryUsername.getText().toString();
-            String password = editTextEntryPwd.getText().toString();
-            byte[] salt;
-            salt = Security.getInstance().generateSalt();
-            String hashedUsername = Security.getInstance().encryptValue(password, username, salt);
-            String hashedPassword = Security.getInstance().encryptValue(password, username, salt);
-            progressDialog.setMessage(getResources().getString(R.string.dialog_loading_message_saving_data));
-            databaseModel.createUserEntry(new EntryProperty(
-                            databaseId,
-                            categoryId,
-                            editTextEntryTitle.getText().toString(),
-                            hashedUsername,
-                            hashedPassword,
-                            Base64.encodeToString(salt, Base64.DEFAULT),
-                            editTextEntryNote.getText().toString(),
-                            R.drawable.ic_lock
-                    )
-            );
+        protected Boolean doInBackground(Boolean... params) {
+            if (params[0]) {
+                decryptData();
+            }
             return null;
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
             if (progressDialog.isShowing()) {
-                try {
-                    progressDialog.wait(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 progressDialog.dismiss();
             }
-            onBackPressed();
+            Toast.makeText(UpdateEntryActivity.this, decryptedUserName, Toast.LENGTH_SHORT).show();
         }
     }
 }

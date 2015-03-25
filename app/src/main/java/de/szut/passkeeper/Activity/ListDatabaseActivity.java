@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -22,7 +21,6 @@ import java.util.Vector;
 import de.szut.passkeeper.Interface.IActivity;
 import de.szut.passkeeper.Interface.IUserProperty;
 import de.szut.passkeeper.Model.DatabaseModel;
-import de.szut.passkeeper.Model.Security;
 import de.szut.passkeeper.Property.DatabaseProperty;
 import de.szut.passkeeper.R;
 import de.szut.passkeeper.Utility.AlertBuilderHelper;
@@ -66,6 +64,12 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
         return super.onOptionsItemSelected(item);
     }
 
+    /*
+        if (Security.getInstance().checkPassword(editText.getText().toString(), ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabasePwd())) {
+
+        }
+    */
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
         final AlertDialog.Builder alertDialog = new AlertBuilderHelper(this, R.string.dialog_title_open_database, R.string.dialog_message_open_database, true);
@@ -78,11 +82,10 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                if (Security.getInstance().checkPassword(editText.getText().toString(), ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabasePwd())) {
-                    Intent intent = new Intent(ListDatabaseActivity.this, ListCategoryActivity.class)
-                            .putExtra("databaseId", ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId());
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(ListDatabaseActivity.this, ListCategoryActivity.class)
+                        .putExtra("databaseId", ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId());
+                startActivity(intent);
+
             }
         });
         alertDialog.show();
@@ -90,7 +93,7 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.imageButtonFab:
                 startActivity(new Intent(ListDatabaseActivity.this, CreateDatabaseActivity.class));
                 break;

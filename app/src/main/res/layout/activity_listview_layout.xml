@@ -23,6 +23,6 @@
         android:src="@drawable/ic_fab_add"
         android:tint="@android:color/white"
         android:elevation="@dimen/elevation_low"
-        android:stateListAnimator="@anim/button_elevation"/>
+        android:stateListAnimator="@anim/button_elevation" />
 
 </RelativeLayout>
