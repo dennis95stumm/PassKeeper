@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.util.Vector;
@@ -21,7 +22,7 @@ import de.szut.passkeeper.R;
 import de.szut.passkeeper.Utility.AlertBuilderHelper;
 import de.szut.passkeeper.Utility.ListViewAdapter;
 
-public class ListCategoryActivity extends Activity implements AdapterView.OnItemClickListener, IActivity {
+public class ListCategoryActivity extends Activity implements AdapterView.OnItemClickListener, IActivity, View.OnClickListener {
     //TODO implement floating image button
 
     private ListView listView;
@@ -29,6 +30,7 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
     private DatabaseModel databaseModel;
     private ListViewAdapter listViewAdapter;
     private int databaseId;
+    private ImageButton imageButtonFab;
 
     //TODO implement context menu
 
@@ -54,7 +56,22 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
             case android.R.id.home:
                 onBackPressed();
                 break;
-            case R.id.addCategory:
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(ListCategoryActivity.this, ListEntryActivity.class)
+                .putExtra("databaseId", ((CategoryProperty) vectorCategoryProperty.get(position)).getDatabaseId())
+                .putExtra("categoryId", ((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryId());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.imageButtonFab:
                 AlertBuilderHelper alertDialog = new AlertBuilderHelper(this, R.string.dialog_title_add_category, R.string.dialog_message_add_category, true);
                 final EditText editText = new EditText(this);
                 editText.setHint(R.string.hint_category_name);
@@ -70,15 +87,6 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
                 alertDialog.show();
                 break;
         }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(ListCategoryActivity.this, ListEntryActivity.class)
-                .putExtra("databaseId", ((CategoryProperty) vectorCategoryProperty.get(position)).getDatabaseId())
-                .putExtra("categoryId", ((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryId());
-        startActivity(intent);
     }
 
     @Override
@@ -88,7 +96,7 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
         databaseId = getIntent().getExtras().getInt("databaseId");
         setTitle(databaseModel.getUserDatabaseName(databaseId));
         listView = (ListView) findViewById(R.id.listViewDefault);
-
+        imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
     }
 
     @Override
@@ -97,6 +105,7 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
         listViewAdapter = new ListViewAdapter(vectorCategoryProperty, this);
         listView.setAdapter(listViewAdapter);
         listView.setOnItemClickListener(this);
+        imageButtonFab.setOnClickListener(this);
         registerForContextMenu(listView);
     }
 }

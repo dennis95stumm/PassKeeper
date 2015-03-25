@@ -11,7 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -27,12 +29,13 @@ import de.szut.passkeeper.Utility.AlertBuilderHelper;
 import de.szut.passkeeper.Utility.ListViewAdapter;
 
 
-public class ListDatabaseActivity extends Activity implements AdapterView.OnItemClickListener, IActivity {
+public class ListDatabaseActivity extends Activity implements AdapterView.OnItemClickListener, IActivity, View.OnClickListener {
     //TODO implement floating image button
 
     private DatabaseModel databaseModel;
     private Vector<IUserProperty> vectorUserDatabaseProperties;
     private ListView listView;
+    private ImageButton imageButtonFab;
 
     //TODO implement context menu
 
@@ -58,10 +61,6 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
-            case R.id.addDatabase:
-                startActivity(new Intent(ListDatabaseActivity.this, CreateDatabaseActivity.class));
-                //startActivity(new Intent(ListDatabaseActivity.this, CardViewDatabaseActivity.class));
-                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -90,6 +89,15 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
     }
 
     @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.imageButtonFab:
+                startActivity(new Intent(ListDatabaseActivity.this, CreateDatabaseActivity.class));
+                break;
+        }
+    }
+
+    @Override
     public boolean onContextItemSelected(MenuItem item) {
         Toast.makeText(getApplicationContext(), "Context Menu", Toast.LENGTH_SHORT).show();
         return super.onContextItemSelected(item);
@@ -99,6 +107,7 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
     public void setDefaults() {
         listView = (ListView) findViewById(R.id.listViewDefault);
         databaseModel = new DatabaseModel(getApplicationContext());
+        imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
     }
 
     @Override
@@ -106,6 +115,7 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
         vectorUserDatabaseProperties = databaseModel.getUserDatabasePropertyVector();
         listView.setAdapter(new ListViewAdapter(vectorUserDatabaseProperties, this));
         listView.setOnItemClickListener(this);
+        imageButtonFab.setOnClickListener(this);
         registerForContextMenu(listView);
     }
 }

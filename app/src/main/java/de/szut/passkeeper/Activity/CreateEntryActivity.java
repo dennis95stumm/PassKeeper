@@ -87,7 +87,6 @@ public class CreateEntryActivity extends Activity implements IActivity {
         editTextEntryPwd = (EditText) findViewById(R.id.editTextEntryPwd);
         editTextEntryNote = (EditText) findViewById(R.id.editTextEntryNote);
         imageButtonDisplayPwd = (ImageButton) findViewById(R.id.imageButtonDisplayPwd);
-
         imageButtonDisplayPwd.setOnTouchListener(new TouchListener(editTextEntryPwd));
     }
 
@@ -101,9 +100,15 @@ public class CreateEntryActivity extends Activity implements IActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog = new ProgressDialog(CreateEntryActivity.this);
-            progressDialog.setMessage("Please wait...");
+            progressDialog.setMessage(getResources().getString(R.string.dialog_loading_message_encrypting_data));
             progressDialog.setCancelable(false);
             progressDialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+            progressDialog.setMessage(getResources().getString(R.string.dialog_loading_message_saving_data));
         }
 
         @Override
@@ -114,6 +119,7 @@ public class CreateEntryActivity extends Activity implements IActivity {
             salt = Security.getInstance().generateSalt();
             String hashedUsername = Security.getInstance().encryptValue(password, username, salt);
             String hashedPassword = Security.getInstance().encryptValue(password, username, salt);
+            publishProgress();
             databaseModel.createUserEntry(new EntryProperty(
                             databaseId,
                             categoryId,

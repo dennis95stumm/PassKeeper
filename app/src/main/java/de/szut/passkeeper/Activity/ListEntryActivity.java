@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.util.Vector;
@@ -20,7 +21,7 @@ import de.szut.passkeeper.Utility.ListViewAdapter;
 /**
  * Created by Sami.Al-Khatib on 21.03.2015.
  */
-public class ListEntryActivity extends Activity implements AdapterView.OnItemClickListener, IActivity {
+public class ListEntryActivity extends Activity implements AdapterView.OnItemClickListener, IActivity, View.OnClickListener {
 
     private ListView listView;
     private Vector<IUserProperty> vectorEntryPropery;
@@ -28,6 +29,7 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
     private ListViewAdapter listViewAdapter;
     private int databaseId;
     private int categoryId;
+    private ImageButton imageButtonFab;
 
     //TODO implement context menu
     //TODO implement floating image button
@@ -39,6 +41,7 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
         setDefaults();
         populateView();
     }
+
 
     /*
     @Override
@@ -63,13 +66,6 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
             case android.R.id.home:
                 onBackPressed();
                 break;
-            case R.id.addEntry:
-                Intent intentCreateEntryActivity = new Intent(ListEntryActivity.this, CreateEntryActivity.class)
-                        .putExtra("databaseId", databaseId)
-                        .putExtra("categoryId", categoryId);
-                startActivity(intentCreateEntryActivity);
-                finish();
-                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -80,6 +76,18 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.imageButtonFab:
+                Intent intentCreateEntryActivity = new Intent(ListEntryActivity.this, CreateEntryActivity.class)
+                        .putExtra("databaseId", databaseId)
+                        .putExtra("categoryId", categoryId);
+                startActivity(intentCreateEntryActivity);
+                finish();
+                break;
+        }
+    }
 
     @Override
     public void setDefaults() {
@@ -89,6 +97,7 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
         categoryId = getIntent().getExtras().getInt("categoryId");
         setTitle(databaseModel.getUserCategoryName(categoryId));
         listView = (ListView) findViewById(R.id.listViewDefault);
+        imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
     }
 
     @Override
@@ -97,6 +106,7 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
         listViewAdapter = new ListViewAdapter(vectorEntryPropery, this);
         listView.setAdapter(listViewAdapter);
         listView.setOnItemClickListener(this);
+        imageButtonFab.setOnClickListener(this);
         registerForContextMenu(listView);
     }
 }
