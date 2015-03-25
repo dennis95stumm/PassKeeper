@@ -1,9 +1,11 @@
 <resources>
 
-    <style name="MaterialLightTheme" parent="android:Theme.Material.Light.DarkActionBar"></style>
+    <style name="MaterialLightTheme" parent="android:Theme.Material.Light.DarkActionBar">
+        <!--<item name="android:navigationBarColor">@color/color</item>-->
+    </style>
 
     <style name="MaterLightNoActionBar" parent="android:Theme.Material.NoActionBar">
-       <!--
+        <!--
         <item name="colorPrimary">@colorPrimary</item>
         <item name="colorPrimaryDark">@colorPrimaryDark</item>
         <<item name="android:navigationBarColor">@color/primary</item>

@@ -13,7 +13,7 @@
     <string name="dialog_loading_message_saving_data">Persisting data...</string>
 
     <string name="title_activity_create_database">Create Database</string>
-    <string name="title_activity_chose_database">Choose Database</string>
+    <string name="title_activity_chose_database">Databases</string>
     <string name="title_activity_create_entry">Create Entry</string>
 
     <string name="hint_database_name">Database Name</string>
