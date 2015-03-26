@@ -30,6 +30,7 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
     private ListViewAdapter listViewAdapter;
     private int databaseId;
     private int categoryId;
+    private String databasePwd;
     private ImageButton imageButtonFab;
 
     //TODO implement context menu
@@ -63,11 +64,13 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(ListEntryActivity.this, UpdateEntryActivity.class)
+        Intent intentUpdateEntryActivity = new Intent(ListEntryActivity.this, UpdateEntryActivity.class)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 .putExtra("databaseId", databaseId)
                 .putExtra("categoryId", categoryId)
-                .putExtra("entryId", ((EntryProperty) vectorEntryPropery.get(position)).getEntryId());
-        startActivity(intent);
+                .putExtra("entryId", ((EntryProperty) vectorEntryPropery.get(position)).getEntryId())
+                .putExtra("databasePwd", databasePwd);
+        startActivity(intentUpdateEntryActivity);
         finish();
     }
 
@@ -77,7 +80,8 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
             case R.id.imageButtonFab:
                 Intent intentCreateEntryActivity = new Intent(ListEntryActivity.this, CreateEntryActivity.class)
                         .putExtra("databaseId", databaseId)
-                        .putExtra("categoryId", categoryId);
+                        .putExtra("categoryId", categoryId)
+                        .putExtra("databasePwd", databasePwd);
                 startActivity(intentCreateEntryActivity);
                 finish();
                 break;
@@ -90,6 +94,7 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
         getActionBar().setDisplayHomeAsUpEnabled(true);
         databaseId = getIntent().getExtras().getInt("databaseId");
         categoryId = getIntent().getExtras().getInt("categoryId");
+        databasePwd = getIntent().getExtras().getString("databasePwd");
     }
 
     @Override

@@ -238,17 +238,28 @@ public class DatabaseModel {
      */
     public void createUserEntry(EntryProperty entryProperty) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
-        Log.d(getClass().getSimpleName(), entryProperty.getEntryHash());
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseOpenHelper.KEY_ID_USER_DATABASE, entryProperty.getDatabaseId());
         contentValues.put(DatabaseOpenHelper.KEY_ID_USER_CATEGORY, entryProperty.getCategoryId());
         contentValues.put(DatabaseOpenHelper.KEY_TITLE_USER_ENTRY, entryProperty.getEntryTitle());
-        contentValues.put(DatabaseOpenHelper.KEY_USERNAME_USER_ENTRY, entryProperty.getEntryUserName());
+        contentValues.put(DatabaseOpenHelper.KEY_USERNAME_USER_ENTRY, entryProperty.getEntryUsername());
         contentValues.put(DatabaseOpenHelper.KEY_USERPWD_USER_ENTRY, entryProperty.getEntryPwd());
         contentValues.put(DatabaseOpenHelper.KEY_HASH_USER_ENTRY, entryProperty.getEntryHash());
         contentValues.put(DatabaseOpenHelper.KEY_NOTE_USER_ENTRY, entryProperty.getEntryNote());
         contentValues.put(DatabaseOpenHelper.KEY_ICON_USER_ENTRY, entryProperty.getEntryIconId());
         sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_ENTRY, null, contentValues);
+        databaseOpenHelper.close();
+    }
+
+    public void updateUserEntry(EntryProperty entryProperty){
+        sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DatabaseOpenHelper.KEY_TITLE_USER_ENTRY, entryProperty.getEntryTitle());
+        contentValues.put(DatabaseOpenHelper.KEY_USERNAME_USER_ENTRY, entryProperty.getEntryUsername());
+        contentValues.put(DatabaseOpenHelper.KEY_USERPWD_USER_ENTRY, entryProperty.getEntryPwd());
+        contentValues.put(DatabaseOpenHelper.KEY_HASH_USER_ENTRY, entryProperty.getEntryHash());
+        contentValues.put(DatabaseOpenHelper.KEY_MDATE_USER_ENTRY, entryProperty.getEntryMDate());
+        sqLiteDatabase.update(DatabaseOpenHelper.TABLE_USER_ENTRY, contentValues, DatabaseOpenHelper.KEY_ID_USER_ENTRY + " = ?", new String[]{String.valueOf(entryProperty.getEntryId())});
         databaseOpenHelper.close();
     }
 }

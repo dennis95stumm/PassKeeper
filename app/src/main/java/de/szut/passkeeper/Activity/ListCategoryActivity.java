@@ -31,6 +31,7 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
     private ListViewAdapter listViewAdapter;
     private int databaseId;
     private ImageButton imageButtonFab;
+    private String databasePwd;
 
     //TODO implement context menu
 
@@ -62,10 +63,11 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(ListCategoryActivity.this, ListEntryActivity.class)
+        Intent intentListEntryActivity = new Intent(ListCategoryActivity.this, ListEntryActivity.class)
                 .putExtra("databaseId", ((CategoryProperty) vectorCategoryProperty.get(position)).getDatabaseId())
-                .putExtra("categoryId", ((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryId());
-        startActivity(intent);
+                .putExtra("categoryId", ((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryId())
+                .putExtra("databasePwd", databasePwd);
+        startActivity(intentListEntryActivity);
     }
 
     @Override
@@ -94,6 +96,7 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
         getActionBar().setDisplayHomeAsUpEnabled(true);
         databaseModel = new DatabaseModel(getApplicationContext());
         databaseId = getIntent().getExtras().getInt("databaseId");
+        databasePwd = getIntent().getExtras().getString("databasePwd");
         setTitle(databaseModel.getUserDatabaseName(databaseId));
         listView = (ListView) findViewById(R.id.listViewDefault);
         imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);

@@ -21,6 +21,7 @@ import java.util.Vector;
 import de.szut.passkeeper.Interface.IActivity;
 import de.szut.passkeeper.Interface.IUserProperty;
 import de.szut.passkeeper.Model.DatabaseModel;
+import de.szut.passkeeper.Model.Security;
 import de.szut.passkeeper.Property.DatabaseProperty;
 import de.szut.passkeeper.R;
 import de.szut.passkeeper.Utility.AlertBuilderHelper;
@@ -47,11 +48,6 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
 
 
 
-    /*
-        if (Security.getInstance().checkPassword(editText.getText().toString(), ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabasePwd())) {
-
-        }
-    */
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -65,10 +61,12 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                Intent intent = new Intent(ListDatabaseActivity.this, ListCategoryActivity.class)
-                        .putExtra("databaseId", ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId());
-                startActivity(intent);
-
+                if (Security.getInstance().checkPassword(editText.getText().toString(), ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabasePwd())) {
+                    Intent intentListCategoryActivity = new Intent(ListDatabaseActivity.this, ListCategoryActivity.class)
+                            .putExtra("databaseId", ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId())
+                            .putExtra("databasePwd", editText.getText().toString());
+                    startActivity(intentListCategoryActivity);
+                }
             }
         });
         alertDialog.show();
