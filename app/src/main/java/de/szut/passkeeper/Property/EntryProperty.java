@@ -11,7 +11,7 @@ public class EntryProperty implements IUserProperty {
     private int categoryId;
     private int entryId;
     private String entryTitle;
-    private String entryUserName;
+    private String entryUsername;
     private String entryPwd;
     private String entryHash;
     private String entryNote;
@@ -19,12 +19,12 @@ public class EntryProperty implements IUserProperty {
     private String entryCDate;
     private String entryMDate;
 
-    public EntryProperty(int entryId, int categoryId, int databaseId, String entryTitle, String entryUserName, String entryPwd, String entryHash, String entryNote, int entryIconId, String entryCDate, String entryMDate) {
+    public EntryProperty(int entryId, int categoryId, int databaseId, String entryTitle, String entryUsername, String entryPwd, String entryHash, String entryNote, int entryIconId, String entryCDate, String entryMDate) {
         this.entryId = entryId;
         this.categoryId = categoryId;
         this.databaseId = databaseId;
         this.entryTitle = entryTitle;
-        this.entryUserName = entryUserName;
+        this.entryUsername = entryUsername;
         this.entryPwd = entryPwd;
         this.entryHash = entryHash;
         this.entryNote = entryNote;
@@ -33,15 +33,25 @@ public class EntryProperty implements IUserProperty {
         this.entryMDate = entryMDate;
     }
 
-    public EntryProperty(int databaseId, int categoryId, String entryTitle, String entryUserName, String entryPwd, String entryHash, String entryNote, int entryIconId) {
+    public EntryProperty(int databaseId, int categoryId, String entryTitle, String entryUsername, String entryPwd, String entryHash, String entryNote, int entryIconId) {
         this.databaseId = databaseId;
         this.categoryId = categoryId;
         this.entryTitle = entryTitle;
-        this.entryUserName = entryUserName;
+        this.entryUsername = entryUsername;
         this.entryPwd = entryPwd;
         this.entryHash = entryHash;
         this.entryNote = entryNote;
         this.entryIconId = entryIconId;
+    }
+
+    public EntryProperty(int entryId, String entryTitle, String entryUsername, String entryPwd, String entryHash, String entryNote, String entryMDate){
+        this.entryId = entryId;
+        this.entryTitle = entryTitle;
+        this.entryUsername = entryUsername;
+        this.entryPwd = entryPwd;
+        this.entryHash = entryHash;
+        this.entryNote = entryNote;
+        this.entryMDate = entryMDate;
     }
 
     @Override
@@ -75,8 +85,8 @@ public class EntryProperty implements IUserProperty {
         return entryTitle;
     }
 
-    public String getEntryUserName() {
-        return entryUserName;
+    public String getEntryUsername() {
+        return entryUsername;
     }
 
     public String getEntryPwd() {

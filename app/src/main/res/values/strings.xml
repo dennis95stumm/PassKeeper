@@ -30,6 +30,7 @@
     <string name="hint_entry_note">Notes</string>
 
     <string name="button_create">Create</string>
+    <string name="textview_modified">modified on:</string>
 
     <string name="image_button_description_show_pwd">Show Password</string>
 

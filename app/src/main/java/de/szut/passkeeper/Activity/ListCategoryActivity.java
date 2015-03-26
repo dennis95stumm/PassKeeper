@@ -63,11 +63,11 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(ListCategoryActivity.this, ListEntryActivity.class)
+        Intent intentListEntryActivity = new Intent(ListCategoryActivity.this, ListEntryActivity.class)
                 .putExtra("databaseId", ((CategoryProperty) vectorCategoryProperty.get(position)).getDatabaseId())
                 .putExtra("categoryId", ((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryId())
                 .putExtra("databasePwd", databasePwd);
-        startActivity(intent);
+        startActivity(intentListEntryActivity);
     }
 
     @Override

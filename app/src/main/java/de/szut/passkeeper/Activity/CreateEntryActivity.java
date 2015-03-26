@@ -69,10 +69,10 @@ public class CreateEntryActivity extends Activity implements IActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(CreateEntryActivity.this, ListEntryActivity.class)
+        Intent intentListEntryAcitvity = new Intent(CreateEntryActivity.this, ListEntryActivity.class)
                 .putExtra("databaseId", databaseId)
                 .putExtra("categoryId", categoryId);
-        startActivity(intent);
+        startActivity(intentListEntryAcitvity);
         finish();
     }
 

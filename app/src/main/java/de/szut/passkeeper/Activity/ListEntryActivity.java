@@ -64,12 +64,13 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(ListEntryActivity.this, UpdateEntryActivity.class)
+        Intent intentUpdateEntryActivity = new Intent(ListEntryActivity.this, UpdateEntryActivity.class)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 .putExtra("databaseId", databaseId)
                 .putExtra("categoryId", categoryId)
                 .putExtra("entryId", ((EntryProperty) vectorEntryPropery.get(position)).getEntryId())
                 .putExtra("databasePwd", databasePwd);
-        startActivity(intent);
+        startActivity(intentUpdateEntryActivity);
         finish();
     }
 
