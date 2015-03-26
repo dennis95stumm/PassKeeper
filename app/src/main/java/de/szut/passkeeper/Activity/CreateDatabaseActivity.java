@@ -42,8 +42,9 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
                 Intent intent = new Intent(CreateDatabaseActivity.this, ListCategoryActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
                         .putExtra("databaseId", databaseId)
-                        .putExtra("databaseName", databaseModel.getUserDatabaseName(databaseId));
+                        .putExtra("databasePwd", editTextDatabasePwd.getText().toString());
                 startActivity(intent);
+                finish();
                 break;
         }
     }

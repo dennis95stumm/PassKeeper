@@ -7,13 +7,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.Vector;
@@ -21,6 +25,7 @@ import java.util.Vector;
 import de.szut.passkeeper.Interface.IActivity;
 import de.szut.passkeeper.Interface.IUserProperty;
 import de.szut.passkeeper.Model.DatabaseModel;
+import de.szut.passkeeper.Model.Security;
 import de.szut.passkeeper.Property.DatabaseProperty;
 import de.szut.passkeeper.R;
 import de.szut.passkeeper.Utility.AlertBuilderHelper;
@@ -64,11 +69,6 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
         return super.onOptionsItemSelected(item);
     }
 
-    /*
-        if (Security.getInstance().checkPassword(editText.getText().toString(), ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabasePwd())) {
-
-        }
-    */
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -82,10 +82,12 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                Intent intent = new Intent(ListDatabaseActivity.this, ListCategoryActivity.class)
-                        .putExtra("databaseId", ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId());
-                startActivity(intent);
-
+                if (Security.getInstance().checkPassword(editText.getText().toString(), ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabasePwd())) {
+                    Intent intent = new Intent(ListDatabaseActivity.this, ListCategoryActivity.class)
+                            .putExtra("databaseId", ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId())
+                            .putExtra("databasePwd", editText.getText().toString());
+                    startActivity(intent);
+                }
             }
         });
         alertDialog.show();

@@ -6,14 +6,17 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import java.util.concurrent.CountDownLatch;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import de.szut.passkeeper.Interface.IActivity;
 import de.szut.passkeeper.Model.DatabaseModel;
@@ -37,14 +40,16 @@ public class UpdateEntryActivity extends Activity implements IActivity {
     private int entryId;
     private String decryptedUserName;
     private String decryptedUserPwd;
+    private String databasePwd;
+    private BackgroundTask backgroundTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setDefaults();
-        final BackgroundTask backgroundTask = new BackgroundTask();
+        backgroundTask = new BackgroundTask();
         backgroundTask.execute(true);
-        populateView();
+        setContentView(R.layout.activity_update_entry_layout);
     }
 
 
@@ -88,6 +93,7 @@ public class UpdateEntryActivity extends Activity implements IActivity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
         databaseId = getIntent().getExtras().getInt("databaseId");
         categoryId = getIntent().getExtras().getInt("categoryId");
+        databasePwd = getIntent().getExtras().getString("databasePwd");
         entryId = getIntent().getExtras().getInt("entryId");
         databaseModel = new DatabaseModel(this);
         entryProperty = databaseModel.getUserEntryProperty(entryId);
@@ -95,7 +101,6 @@ public class UpdateEntryActivity extends Activity implements IActivity {
 
     @Override
     public void populateView() {
-        setContentView(R.layout.activity_update_entry_layout);
         editTextEntryTitle = (EditText) findViewById(R.id.editTextEntryTitle);
         editTextEntryUsername = (EditText) findViewById(R.id.editTextEntryUsername);
         editTextEntryPwd = (EditText) findViewById(R.id.editTextEntryPwd);
@@ -114,8 +119,9 @@ public class UpdateEntryActivity extends Activity implements IActivity {
         String password = entryProperty.getEntryPwd();
         byte[] salt;
         salt = Base64.decode(entryProperty.getEntryHash(), Base64.DEFAULT);
-        decryptedUserName = Security.getInstance().decryptValue(password, username, salt);
-        decryptedUserPwd = Security.getInstance().decryptValue(password, username, salt);
+        decryptedUserName = Security.getInstance().decryptValue(databasePwd, username, salt);
+        decryptedUserPwd = Security.getInstance().decryptValue(databasePwd, password, salt);
+        progressDialog.dismiss();
     }
 
     private class BackgroundTask extends AsyncTask<Boolean, Boolean, Boolean> {
@@ -142,7 +148,7 @@ public class UpdateEntryActivity extends Activity implements IActivity {
             if (progressDialog.isShowing()) {
                 progressDialog.dismiss();
             }
-            Toast.makeText(UpdateEntryActivity.this, decryptedUserName, Toast.LENGTH_SHORT).show();
+           populateView();
         }
     }
 }

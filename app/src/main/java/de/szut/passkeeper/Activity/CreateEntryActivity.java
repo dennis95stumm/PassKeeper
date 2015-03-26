@@ -30,6 +30,7 @@ public class CreateEntryActivity extends Activity implements IActivity {
     private DatabaseModel databaseModel;
     private int databaseId;
     private int categoryId;
+    private String databasePwd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,7 @@ public class CreateEntryActivity extends Activity implements IActivity {
                 break;
             case R.id.menuItemEntrySave:
                 if (editTextEntryTitle.getText().length() != 0 && editTextEntryUsername.getText().length() != 0 & editTextEntryPwd.getText().length() != 0) {
-                    new Tasker().execute();
+                    new BackgroundTask().execute();
                 } else {
                     Toast.makeText(this, "Titel, Username and Password must be given!", Toast.LENGTH_SHORT).show();
                 }
@@ -80,6 +81,7 @@ public class CreateEntryActivity extends Activity implements IActivity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
         databaseId = getIntent().getExtras().getInt("databaseId");
         categoryId = getIntent().getExtras().getInt("categoryId");
+        databasePwd = getIntent().getExtras().getString("databasePwd");
         databaseModel = new DatabaseModel(this);
 
         editTextEntryTitle = (EditText) findViewById(R.id.editTextEntryTitle);
@@ -95,7 +97,7 @@ public class CreateEntryActivity extends Activity implements IActivity {
 
     }
 
-    private class Tasker extends AsyncTask<Void, Void, Void> {
+    private class BackgroundTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -117,8 +119,8 @@ public class CreateEntryActivity extends Activity implements IActivity {
             String password = editTextEntryPwd.getText().toString();
             byte[] salt;
             salt = Security.getInstance().generateSalt();
-            String hashedUsername = Security.getInstance().encryptValue(password, username, salt);
-            String hashedPassword = Security.getInstance().encryptValue(password, username, salt);
+            String hashedUsername = Security.getInstance().encryptValue(databasePwd, username, salt);
+            String hashedPassword = Security.getInstance().encryptValue(databasePwd, password, salt);
             publishProgress();
             databaseModel.createUserEntry(new EntryProperty(
                             databaseId,
