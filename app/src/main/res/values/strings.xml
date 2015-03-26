@@ -26,8 +26,6 @@
     <string name="hint_entry_pwd_repeat">Repeat Password</string>
     <string name="hint_entry_note">Notes</string>
 
-    <string name="button_create">Create</string>
-
     <string name="image_button_description_show_pwd">Show Password</string>
 
     <string name="menu_item_title_add_database">Add a new database!</string>

@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import de.szut.passkeeper.Interface.IActivity;
 import de.szut.passkeeper.Model.DatabaseModel;
@@ -30,6 +33,31 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
         setContentView(R.layout.activity_create_database_layout);
         setDefaults();
         populateView();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.create_database_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        switch (item.getItemId()) {
+            case R.id.menuItemDatabaseSave:
+                if(editTextDatabaseName.getText().length() != 0 && editTextDatabasePwd.getText().length() >= 8){
+
+                }else{
+                    Toast.makeText()
+                }
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
