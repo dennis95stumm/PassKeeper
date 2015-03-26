@@ -54,11 +54,11 @@ public class CreateEntryActivity extends Activity implements IActivity {
             case android.R.id.home:
                 onBackPressed();
                 break;
-            case R.id.menuItemEntrySave:
-                if (editTextEntryTitle.getText().length() != 0 && editTextEntryUsername.getText().length() != 0 & editTextEntryPwd.getText().length() != 0) {
+            case R.id.createEntry:
+                if (editTextEntryTitle.getText().length() != 0 && editTextEntryPwd.getText().length() != 0) {
                     new BackgroundTask().execute();
                 } else {
-                    Toast.makeText(this, "Titel, Username and Password must be given!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.toast_entry_required_message, Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -73,7 +73,7 @@ public class CreateEntryActivity extends Activity implements IActivity {
                 .putExtra("databaseId", databaseId)
                 .putExtra("categoryId", categoryId);
         startActivity(intent);
-
+        finish();
     }
 
     @Override

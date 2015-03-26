@@ -12,12 +12,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
 import de.szut.passkeeper.Interface.IActivity;
 import de.szut.passkeeper.Model.DatabaseModel;
 import de.szut.passkeeper.Model.Security;
@@ -38,20 +32,24 @@ public class UpdateEntryActivity extends Activity implements IActivity {
     private int databaseId;
     private int categoryId;
     private int entryId;
-    private String decryptedUserName;
+    private String decryptedUsername;
     private String decryptedUserPwd;
     private String databasePwd;
-    private BackgroundTask backgroundTask;
+    private boolean hasDecrypted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setDefaults();
-        backgroundTask = new BackgroundTask();
-        backgroundTask.execute(true);
         setContentView(R.layout.activity_update_entry_layout);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        new BackgroundTask().execute();
+        Toast.makeText(UpdateEntryActivity.this, String.valueOf(hasDecrypted), Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -66,11 +64,11 @@ public class UpdateEntryActivity extends Activity implements IActivity {
             case android.R.id.home:
                 onBackPressed();
                 break;
-            case R.id.menuItemEntrySave:
-                if (editTextEntryTitle.getText().length() != 0 && editTextEntryUsername.getText().length() != 0 & editTextEntryPwd.getText().length() != 0) {
+            case R.id.updateEntry:
+                if (editTextEntryTitle.getText().length() != 0 && editTextEntryPwd.getText().length() != 0) {
                     new BackgroundTask().execute();
                 } else {
-                    Toast.makeText(this, "Titel, Username and Password must be given!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.toast_entry_required_message, Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -81,11 +79,12 @@ public class UpdateEntryActivity extends Activity implements IActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        hasDecrypted = !hasDecrypted;
         Intent intent = new Intent(UpdateEntryActivity.this, ListEntryActivity.class)
                 .putExtra("databaseId", databaseId)
                 .putExtra("categoryId", categoryId);
         startActivity(intent);
-
+        finish();
     }
 
     @Override
@@ -106,49 +105,68 @@ public class UpdateEntryActivity extends Activity implements IActivity {
         editTextEntryPwd = (EditText) findViewById(R.id.editTextEntryPwd);
         editTextEntryNote = (EditText) findViewById(R.id.editTextEntryNote);
         imageButtonDisplayPwd = (ImageButton) findViewById(R.id.imageButtonDisplayPwd);
-        Toast.makeText(this, entryProperty.getEntryHash(), Toast.LENGTH_SHORT).show();
         editTextEntryTitle.setText(entryProperty.getEntryTitle());
-        editTextEntryUsername.setText(decryptedUserName);
+        editTextEntryUsername.setText(decryptedUsername);
         editTextEntryPwd.setText(decryptedUserPwd);
         editTextEntryNote.setText(entryProperty.getEntryNote());
         imageButtonDisplayPwd.setOnTouchListener(new TouchListener(editTextEntryPwd));
     }
 
-    public void decryptData() {
+    private void decryptData() {
         String username = entryProperty.getEntryUserName();
         String password = entryProperty.getEntryPwd();
         byte[] salt;
         salt = Base64.decode(entryProperty.getEntryHash(), Base64.DEFAULT);
-        decryptedUserName = Security.getInstance().decryptValue(databasePwd, username, salt);
+        decryptedUsername = Security.getInstance().decryptValue(databasePwd, username, salt);
         decryptedUserPwd = Security.getInstance().decryptValue(databasePwd, password, salt);
-        progressDialog.dismiss();
     }
 
-    private class BackgroundTask extends AsyncTask<Boolean, Boolean, Boolean> {
+    private void encryptData() {
+        String username = editTextEntryUsername.getText().toString();
+        String password = editTextEntryPwd.getText().toString();
+        byte[] salt;
+        salt = Security.getInstance().generateSalt();
+        String encryptedUsername = Security.getInstance().decryptValue(databasePwd, username, salt);
+        String encryptedPassword = Security.getInstance().decryptValue(databasePwd, password, salt);
+    }
+
+    private class BackgroundTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            Toast.makeText(UpdateEntryActivity.this, "Starting Task", Toast.LENGTH_SHORT).show();
             progressDialog = new ProgressDialog(UpdateEntryActivity.this);
-            progressDialog.setMessage(getResources().getString(R.string.dialog_loading_message_decrypting_data));
+            if (!hasDecrypted) {
+                progressDialog.setMessage(getResources().getString(R.string.dialog_loading_message_decrypting_data));
+            } else {
+                progressDialog.setMessage(getResources().getString(R.string.dialog_loading_message_encrypting_data));
+            }
             progressDialog.setCancelable(false);
             progressDialog.show();
         }
 
         @Override
-        protected Boolean doInBackground(Boolean... params) {
-            if (params[0]) {
+        protected Void doInBackground(Void... params) {
+            if (!hasDecrypted) {
                 decryptData();
+            } else {
+                encryptData();
             }
             return null;
         }
 
         @Override
-        protected void onPostExecute(Boolean aBoolean) {
+        protected void onPostExecute(Void aBoolean) {
             super.onPostExecute(aBoolean);
             if (progressDialog.isShowing()) {
                 progressDialog.dismiss();
             }
-           populateView();
+            if (!hasDecrypted) {
+                populateView();
+                hasDecrypted = !hasDecrypted;
+            } else {
+                Toast.makeText(UpdateEntryActivity.this, "Finished", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }
