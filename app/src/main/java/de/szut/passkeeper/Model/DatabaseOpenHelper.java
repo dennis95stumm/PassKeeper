@@ -18,8 +18,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     public static final String KEY_NAME_USER_DATABASE = "pass_database_name";
     public static final String KEY_PWD_USER_DATABASE = "pass_database_pwd";
     public static final String KEY_ICON_USER_DATABASE = "pass_database_icon";
-    public static final String KEY_CDATE_USER_DATABASE = "pass_database_cdate";
-    public static final String KEY_MDATE_USER_DATABASE = "pass_database_mdate";
+    public static final String KEY_MODIFY_DATE_USER_DATABASE = "pass_database_mdate";
     //
     private static final String CREATE_USER_DATABASE_TABLE_SQL =
             "CREATE TABLE " + TABLE_USER_DATABASE +
@@ -28,15 +27,13 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                     + KEY_NAME_USER_DATABASE + " TEXT NOT NULL,\n"
                     + KEY_PWD_USER_DATABASE + " TEXT NOT NULL,\n"
                     + KEY_ICON_USER_DATABASE + " INTEGER,\n"
-                    + KEY_CDATE_USER_DATABASE + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"
-                    + KEY_MDATE_USER_DATABASE + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n" +
+                    + KEY_MODIFY_DATE_USER_DATABASE + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n" +
                     ")";
     // Columns of pass_category table
     public static final String KEY_ID_USER_CATEGORY = "pass_category_id";
     public static final String KEY_NAME_USER_CATEGORY = "pass_category_name";
     public static final String KEY_ICON_USER_CATEGORY = "pass_category_icon";
-    public static final String KEY_CDATE_USER_CATEGORY = "pass_category_cdate";
-    public static final String KEY_MDATE_USER_CATEGORY = "pass_category_mdate";
+    public static final String KEY_MODIFY_DATE_USER_CATEGORY = "pass_category_mdate";
     //
     private static final String CREATE_USER_CATEGORY_TABLE_SQL =
             "CREATE TABLE " + TABLE_USER_CATEGORY +
@@ -45,8 +42,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                     + KEY_ID_USER_DATABASE + " INTEGER NOT NULL,\n"
                     + KEY_NAME_USER_CATEGORY + " TEXT NOT NULL,\n"
                     + KEY_ICON_USER_CATEGORY + " INTEGER,\n"
-                    + KEY_CDATE_USER_CATEGORY + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"
-                    + KEY_MDATE_USER_CATEGORY + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"
+                    + KEY_MODIFY_DATE_USER_CATEGORY + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"
                     + " FOREIGN KEY (" + KEY_ID_USER_DATABASE + ") REFERENCES " + TABLE_USER_DATABASE + "(" + KEY_ID_USER_DATABASE + ") ON DELETE CASCADE\n" +
                     ")";
     // Columns of pass_entry table
@@ -57,8 +53,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     public static final String KEY_HASH_USER_ENTRY = "pass_entry_hash";
     public static final String KEY_NOTE_USER_ENTRY = "pass_entry_note";
     public static final String KEY_ICON_USER_ENTRY = "pass_entry_icon";
-    public static final String KEY_CDATE_USER_ENTRY = "pass_entry_cdate";
-    public static final String KEY_MDATE_USER_ENTRY = "pass_entry_mdate";
+    public static final String KEY_MODIFY_DATE_USER_ENTRY = "pass_entry_mdate";
     // CREATE STATEMENTS FOR TABLES
     private static final String CREATE_USER_ENTRY_TABLE_SQL =
             "CREATE TABLE " + TABLE_USER_ENTRY +
@@ -72,8 +67,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                     + KEY_HASH_USER_ENTRY + " TEXT,\n"
                     + KEY_NOTE_USER_ENTRY + " TEXT,\n"
                     + KEY_ICON_USER_ENTRY + " INTEGER,\n"
-                    + KEY_CDATE_USER_ENTRY + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"
-                    + KEY_MDATE_USER_ENTRY + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"
+                    + KEY_MODIFY_DATE_USER_ENTRY + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"
                     + "FOREIGN KEY (" + KEY_ID_USER_DATABASE + ") REFERENCES " + TABLE_USER_DATABASE + "(" + KEY_ID_USER_DATABASE + ") ON DELETE CASCADE\n"
                     + "FOREIGN KEY (" + KEY_ID_USER_CATEGORY + ") REFERENCES " + TABLE_USER_ENTRY + "(" + KEY_ID_USER_CATEGORY + ") ON DELETE CASCADE\n" +
                     ")";

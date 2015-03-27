@@ -13,7 +13,6 @@
             android:theme="@style/MaterLightNoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -23,11 +22,18 @@
         <activity
             android:name=".Activity.ListDatabaseActivity"
             android:label="@string/title_activity_choose_database" />
-        <activity android:name=".Activity.ListCategoryActivity" />
-        <activity android:name=".Activity.ListEntryActivity" />
-        <activity android:name=".Activity.CreateEntryActivity" android:label="@string/title_activity_create_entry" />
-        <activity android:name=".Activity.UpdateEntryActivity" android:label="@string/title_activity_update_entry" />
-        <activity android:name=".Activity.CardViewDatabaseActivity" />
+        <activity
+            android:name=".Activity.ListCategoryActivity"
+            />
+        <activity
+            android:name=".Activity.ListEntryActivity"
+            />
+        <activity android:name=".Activity.CreateEntryActivity"
+            android:label="@string/title_activity_create_entry"
+            />
+        <activity android:name=".Activity.UpdateEntryActivity"
+            android:label="@string/title_activity_update_entry"
+            />
     </application>
 
 </manifest>

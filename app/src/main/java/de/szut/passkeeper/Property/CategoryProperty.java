@@ -10,16 +10,14 @@ public class CategoryProperty implements IUserProperty {
     private int categoryId;
     private String categoryName;
     private int categoryIconId;
-    private String categoryCdate;
-    private String categoryMdate;
+    private String categoryModifyDate;
 
-    public CategoryProperty(int categoryId, int databaseId, String categoryName, int categoryIconId, String categoryCdate, String categoryMdate) {
+    public CategoryProperty(int categoryId, int databaseId, String categoryName, int categoryIconId, String categoryModifyDate) {
         this.categoryId = categoryId;
         this.databaseId = databaseId;
         this.categoryName = categoryName;
         this.categoryIconId = categoryIconId;
-        this.categoryCdate = categoryCdate;
-        this.categoryMdate = categoryMdate;
+        this.categoryModifyDate = categoryModifyDate;
     }
 
     public CategoryProperty(int databaseId, String categoryName, int categoryIconId) {
@@ -35,7 +33,7 @@ public class CategoryProperty implements IUserProperty {
 
     @Override
     public String getItemSubHeader() {
-        return getCategoryMdate();
+        return getCategoryModifyDate();
     }
 
     @Override
@@ -59,11 +57,7 @@ public class CategoryProperty implements IUserProperty {
         return categoryIconId;
     }
 
-    public String getCategoryCdate() {
-        return categoryCdate;
-    }
-
-    public String getCategoryMdate() {
-        return categoryMdate;
+    public String getCategoryModifyDate() {
+        return categoryModifyDate;
     }
 }

@@ -10,16 +10,14 @@ public class DatabaseProperty implements IUserProperty {
     private String databaseName;
     private String databasePwd;
     private int databaseIconId;
-    private String databaseCdate;
-    private String databaseMdate;
+    private String databaseModifyDate;
 
-    public DatabaseProperty(int databaseId, String databaseName, String databasePwd, int databaseIconId, String databaseCdate, String databaseMdate) {
+    public DatabaseProperty(int databaseId, String databaseName, String databasePwd, int databaseIconId, String databaseModifyDate) {
         this.databaseId = databaseId;
         this.databaseName = databaseName;
         this.databasePwd = databasePwd;
         this.databaseIconId = databaseIconId;
-        this.databaseCdate = databaseCdate;
-        this.databaseMdate = databaseMdate;
+        this.databaseModifyDate = databaseModifyDate;
     }
 
     public DatabaseProperty(String databaseName, String databasePwd, int databaseIconId) {
@@ -35,7 +33,7 @@ public class DatabaseProperty implements IUserProperty {
 
     @Override
     public String getItemSubHeader() {
-        return getDatabaseMdate();
+        return getDatabaseModifyDate();
     }
 
     @Override
@@ -59,11 +57,7 @@ public class DatabaseProperty implements IUserProperty {
         return databaseIconId;
     }
 
-    public String getDatabaseCdate() {
-        return databaseCdate;
-    }
-
-    public String getDatabaseMdate() {
-        return databaseMdate;
+    public String getDatabaseModifyDate() {
+        return databaseModifyDate;
     }
 }

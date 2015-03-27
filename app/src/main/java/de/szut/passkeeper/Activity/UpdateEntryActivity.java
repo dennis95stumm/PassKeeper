@@ -43,7 +43,6 @@ public class UpdateEntryActivity extends Activity implements IActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setDefaults();
-        setContentView(R.layout.activity_update_entry_layout);
         new BackgroundTask().execute();
     }
 
@@ -65,7 +64,7 @@ public class UpdateEntryActivity extends Activity implements IActivity {
                     hasDecrypted = !hasDecrypted;
                     new BackgroundTask().execute();
                 } else {
-                    Toast.makeText(this, R.string.toast_entry_required_message, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this, R.string.toast_entry_required_message, Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -74,24 +73,11 @@ public class UpdateEntryActivity extends Activity implements IActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        System.gc();
-        Intent intentListEntryActivity = new Intent(UpdateEntryActivity.this, ListEntryActivity.class)
-                .putExtra("databaseId", databaseId)
-                .putExtra("categoryId", categoryId)
-                .putExtra("databasePwd", databasePwd);
-        startActivity(intentListEntryActivity);
-        finish();
-    }
-
-    @Override
     public void setDefaults() {
         getActionBar().setDisplayHomeAsUpEnabled(true);
         databaseId = getIntent().getExtras().getInt("databaseId");
         categoryId = getIntent().getExtras().getInt("categoryId");
         databasePwd = getIntent().getExtras().getString("databasePwd");
-        Toast.makeText(this, databasePwd, Toast.LENGTH_SHORT).show();
         entryId = getIntent().getExtras().getInt("entryId");
         hasDecrypted = false;
         databaseModel = new DatabaseModel(this);
@@ -100,6 +86,7 @@ public class UpdateEntryActivity extends Activity implements IActivity {
 
     @Override
     public void populateView() {
+        setContentView(R.layout.activity_update_entry_layout);
         editTextEntryTitle = (EditText) findViewById(R.id.editTextEntryTitle);
         editTextEntryUsername = (EditText) findViewById(R.id.editTextEntryUsername);
         editTextEntryPwd = (EditText) findViewById(R.id.editTextEntryPwd);
@@ -134,8 +121,7 @@ public class UpdateEntryActivity extends Activity implements IActivity {
                 encryptedUsername,
                 encryptedPassword,
                 Base64.encodeToString(salt, Base64.DEFAULT),
-                editTextEntryNote.getText().toString(),
-                "UPDATING DATE DOES NOT WORK YET."
+                editTextEntryNote.getText().toString()
         );
     }
 
@@ -143,8 +129,10 @@ public class UpdateEntryActivity extends Activity implements IActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            /*
             Toast.makeText(UpdateEntryActivity.this, "Starting Task", Toast.LENGTH_SHORT).show();
             Toast.makeText(UpdateEntryActivity.this, String.valueOf(hasDecrypted), Toast.LENGTH_SHORT).show();
+            */
             progressDialog = new ProgressDialog(UpdateEntryActivity.this);
             if (!hasDecrypted) {
                 progressDialog.setMessage(getResources().getString(R.string.dialog_loading_message_decrypting_data));
@@ -171,7 +159,7 @@ public class UpdateEntryActivity extends Activity implements IActivity {
             if (progressDialog.isShowing()) {
                 progressDialog.dismiss();
             }
-            Toast.makeText(UpdateEntryActivity.this, "Finished", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(UpdateEntryActivity.this, "Finished", Toast.LENGTH_SHORT).show();
             if (!hasDecrypted) {
                 populateView();
             } else {

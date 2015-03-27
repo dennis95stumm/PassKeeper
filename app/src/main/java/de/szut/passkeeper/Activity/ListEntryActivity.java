@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.Vector;
 
@@ -34,14 +35,21 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
     private ImageButton imageButtonFab;
 
     //TODO implement context menu
-    //TODO implement floating image button
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listview_layout);
-        setDefaults();
-        populateView();
+        if(savedInstanceState == null)
+            setDefaults();
+            populateView();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Toast.makeText(ListEntryActivity.this, "Restarted...", Toast.LENGTH_SHORT).show();
+        vectorEntryPropery = databaseModel.getUserEntryVector(databaseId, categoryId);
+        listViewAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -65,13 +73,11 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intentUpdateEntryActivity = new Intent(ListEntryActivity.this, UpdateEntryActivity.class)
-                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 .putExtra("databaseId", databaseId)
                 .putExtra("categoryId", categoryId)
                 .putExtra("entryId", ((EntryProperty) vectorEntryPropery.get(position)).getEntryId())
                 .putExtra("databasePwd", databasePwd);
         startActivity(intentUpdateEntryActivity);
-        finish();
     }
 
     @Override
@@ -83,27 +89,27 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
                         .putExtra("categoryId", categoryId)
                         .putExtra("databasePwd", databasePwd);
                 startActivity(intentCreateEntryActivity);
-                finish();
                 break;
         }
     }
 
     @Override
     public void setDefaults() {
-        databaseModel = new DatabaseModel(this);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         databaseId = getIntent().getExtras().getInt("databaseId");
         categoryId = getIntent().getExtras().getInt("categoryId");
         databasePwd = getIntent().getExtras().getString("databasePwd");
+        databaseModel = new DatabaseModel(this);
+        vectorEntryPropery = databaseModel.getUserEntryVector(databaseId, categoryId);
     }
 
     @Override
     public void populateView() {
         setTitle(databaseModel.getUserCategoryName(categoryId));
+        setContentView(R.layout.activity_listview_layout);
         listView = (ListView) findViewById(R.id.listViewDefault);
         imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
-        vectorEntryPropery = databaseModel.getUserEntryVector(databaseId, categoryId);
-        listViewAdapter = new ListViewAdapter(vectorEntryPropery, this);
+        listViewAdapter = new ListViewAdapter(ListEntryActivity.this, vectorEntryPropery);
         listView.setAdapter(listViewAdapter);
         listView.setOnItemClickListener(this);
         imageButtonFab.setOnClickListener(this);

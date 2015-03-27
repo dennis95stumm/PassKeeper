@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -14,7 +13,6 @@ import de.szut.passkeeper.Interface.IUserProperty;
 import de.szut.passkeeper.Property.CategoryProperty;
 import de.szut.passkeeper.Property.DatabaseProperty;
 import de.szut.passkeeper.Property.EntryProperty;
-import de.szut.passkeeper.R;
 
 /**
  * Created by Sami.Al-Khatib on 10.02.2015.
@@ -27,16 +25,14 @@ public class DatabaseModel {
             DatabaseOpenHelper.KEY_NAME_USER_DATABASE,
             DatabaseOpenHelper.KEY_PWD_USER_DATABASE,
             DatabaseOpenHelper.KEY_ICON_USER_DATABASE,
-            DatabaseOpenHelper.KEY_CDATE_USER_DATABASE,
-            DatabaseOpenHelper.KEY_MDATE_USER_DATABASE
+            DatabaseOpenHelper.KEY_MODIFY_DATE_USER_DATABASE
     };
     private String[] passCategoryColumns = {
             DatabaseOpenHelper.KEY_ID_USER_CATEGORY,
             DatabaseOpenHelper.KEY_ID_USER_DATABASE,
             DatabaseOpenHelper.KEY_NAME_USER_CATEGORY,
             DatabaseOpenHelper.KEY_ICON_USER_CATEGORY,
-            DatabaseOpenHelper.KEY_CDATE_USER_CATEGORY,
-            DatabaseOpenHelper.KEY_MDATE_USER_CATEGORY
+            DatabaseOpenHelper.KEY_MODIFY_DATE_USER_CATEGORY
     };
 
     private String[] passEntryColumns = {
@@ -49,8 +45,7 @@ public class DatabaseModel {
             DatabaseOpenHelper.KEY_HASH_USER_ENTRY,
             DatabaseOpenHelper.KEY_NOTE_USER_ENTRY,
             DatabaseOpenHelper.KEY_ICON_USER_ENTRY,
-            DatabaseOpenHelper.KEY_CDATE_USER_ENTRY,
-            DatabaseOpenHelper.KEY_MDATE_USER_ENTRY
+            DatabaseOpenHelper.KEY_MODIFY_DATE_USER_ENTRY
     };
 
     public DatabaseModel(Context context) {
@@ -71,8 +66,7 @@ public class DatabaseModel {
                             cursor.getString(1),
                             cursor.getString(2),
                             cursor.getInt(3),
-                            cursor.getString(4),
-                            cursor.getString(5)
+                            cursor.getString(4)
                     )
             );
         }
@@ -95,8 +89,7 @@ public class DatabaseModel {
                     cursor.getInt(1),
                     cursor.getString(2),
                     cursor.getInt(3),
-                    cursor.getString(4),
-                    cursor.getString(5)
+                    cursor.getString(4)
             ));
         }
         cursor.close();
@@ -119,8 +112,7 @@ public class DatabaseModel {
                     cursor.getString(6),
                     cursor.getString(7),
                     cursor.getInt(8),
-                    cursor.getString(9),
-                    cursor.getString(10)
+                    cursor.getString(9)
             ));
         }
         cursor.close();
@@ -139,8 +131,7 @@ public class DatabaseModel {
                     cursor.getInt(1),
                     cursor.getString(2),
                     cursor.getInt(3),
-                    cursor.getString(4),
-                    cursor.getString(5)
+                    cursor.getString(4)
             );
             cursor.close();
         }
@@ -164,8 +155,7 @@ public class DatabaseModel {
                     cursor.getString(6),
                     cursor.getString(7),
                     cursor.getInt(8),
-                    cursor.getString(9),
-                    cursor.getString(10)
+                    cursor.getString(9)
             );
             cursor.close();
         }
@@ -205,7 +195,7 @@ public class DatabaseModel {
      * @throws NoSuchAlgorithmException
      * @throws UnsupportedEncodingException
      */
-    public int createUserDatabase(DatabaseProperty databaseProperty, String[] arrDefaultCategory) {
+    public int createUserDatabase(DatabaseProperty databaseProperty) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseOpenHelper.KEY_NAME_USER_DATABASE, databaseProperty.getDatabaseName());
@@ -213,9 +203,6 @@ public class DatabaseModel {
         contentValues.put(DatabaseOpenHelper.KEY_ICON_USER_DATABASE, databaseProperty.getDatabaseIconId());
         long databaseId = sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_DATABASE, null, contentValues);
         databaseOpenHelper.close();
-        for (String defaultCategory : arrDefaultCategory) {
-            createUserCategory(new CategoryProperty(Integer.valueOf(String.valueOf(databaseId)), defaultCategory, R.drawable.ic_folder));
-        }
         return (int) databaseId;
     }
 
@@ -258,8 +245,14 @@ public class DatabaseModel {
         contentValues.put(DatabaseOpenHelper.KEY_USERNAME_USER_ENTRY, entryProperty.getEntryUsername());
         contentValues.put(DatabaseOpenHelper.KEY_USERPWD_USER_ENTRY, entryProperty.getEntryPwd());
         contentValues.put(DatabaseOpenHelper.KEY_HASH_USER_ENTRY, entryProperty.getEntryHash());
-        contentValues.put(DatabaseOpenHelper.KEY_MDATE_USER_ENTRY, entryProperty.getEntryMDate());
         sqLiteDatabase.update(DatabaseOpenHelper.TABLE_USER_ENTRY, contentValues, DatabaseOpenHelper.KEY_ID_USER_ENTRY + " = ?", new String[]{String.valueOf(entryProperty.getEntryId())});
+        String rawSql = "UPDATE " +
+                DatabaseOpenHelper.TABLE_USER_ENTRY
+                + " SET " + DatabaseOpenHelper.KEY_MODIFY_DATE_USER_ENTRY
+                + " = CURRENT_TIMESTAMP WHERE " + DatabaseOpenHelper.KEY_ID_USER_ENTRY + " = ?";
+        Cursor cursor = sqLiteDatabase.rawQuery(rawSql, new String[]{String.valueOf(entryProperty.getEntryId())});
+        cursor.moveToFirst();
+        cursor.close();
         databaseOpenHelper.close();
     }
 }

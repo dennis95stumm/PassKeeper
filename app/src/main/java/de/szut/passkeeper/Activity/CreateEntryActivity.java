@@ -35,7 +35,6 @@ public class CreateEntryActivity extends Activity implements IActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_entry_layout);
         setDefaults();
         populateView();
     }
@@ -58,7 +57,7 @@ public class CreateEntryActivity extends Activity implements IActivity {
                 if (editTextEntryTitle.getText().length() != 0 && editTextEntryPwd.getText().length() != 0) {
                     new BackgroundTask().execute();
                 } else {
-                    Toast.makeText(this, R.string.toast_entry_required_message, Toast.LENGTH_SHORT).show();
+                    //TODO SHOW ALERTDIALOG
                 }
                 break;
         }
@@ -69,11 +68,7 @@ public class CreateEntryActivity extends Activity implements IActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intentListEntryAcitvity = new Intent(CreateEntryActivity.this, ListEntryActivity.class)
-                .putExtra("databaseId", databaseId)
-                .putExtra("categoryId", categoryId);
-        startActivity(intentListEntryAcitvity);
-        finish();
+
     }
 
     @Override
@@ -83,18 +78,17 @@ public class CreateEntryActivity extends Activity implements IActivity {
         categoryId = getIntent().getExtras().getInt("categoryId");
         databasePwd = getIntent().getExtras().getString("databasePwd");
         databaseModel = new DatabaseModel(this);
+    }
 
+    @Override
+    public void populateView() {
+        setContentView(R.layout.activity_create_entry_layout);
         editTextEntryTitle = (EditText) findViewById(R.id.editTextEntryTitle);
         editTextEntryUsername = (EditText) findViewById(R.id.editTextEntryUsername);
         editTextEntryPwd = (EditText) findViewById(R.id.editTextEntryPwd);
         editTextEntryNote = (EditText) findViewById(R.id.editTextEntryNote);
         imageButtonDisplayPwd = (ImageButton) findViewById(R.id.imageButtonDisplayPwd);
         imageButtonDisplayPwd.setOnTouchListener(new TouchListener(editTextEntryPwd));
-    }
-
-    @Override
-    public void populateView() {
-
     }
 
     private class BackgroundTask extends AsyncTask<Void, Void, Void> {
@@ -108,12 +102,6 @@ public class CreateEntryActivity extends Activity implements IActivity {
         }
 
         @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-            progressDialog.setMessage(getResources().getString(R.string.dialog_loading_message_saving_data));
-        }
-
-        @Override
         protected Void doInBackground(Void... params) {
             String username = editTextEntryUsername.getText().toString();
             String password = editTextEntryPwd.getText().toString();
@@ -121,7 +109,6 @@ public class CreateEntryActivity extends Activity implements IActivity {
             salt = Security.getInstance().generateSalt();
             String hashedUsername = Security.getInstance().encryptValue(databasePwd, username, salt);
             String hashedPassword = Security.getInstance().encryptValue(databasePwd, password, salt);
-            publishProgress();
             databaseModel.createUserEntry(new EntryProperty(
                             databaseId,
                             categoryId,

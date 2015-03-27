@@ -24,9 +24,9 @@ public class ListViewAdapter extends BaseAdapter {
     Context context;
     private Vector<IUserProperty> vector;
 
-    public ListViewAdapter(Vector<IUserProperty> vector, Context context) {
-        this.vector = vector;
+    public ListViewAdapter(Context context, Vector<IUserProperty> vector) {
         this.context = context;
+        this.vector = vector;
     }
 
     @Override

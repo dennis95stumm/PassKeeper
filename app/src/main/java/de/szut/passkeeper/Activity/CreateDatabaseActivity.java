@@ -15,22 +15,22 @@ import android.widget.Toast;
 
 import de.szut.passkeeper.Interface.IActivity;
 import de.szut.passkeeper.Model.DatabaseModel;
+import de.szut.passkeeper.Property.CategoryProperty;
 import de.szut.passkeeper.Property.DatabaseProperty;
 import de.szut.passkeeper.R;
+import de.szut.passkeeper.Utility.AlertBuilderHelper;
 import de.szut.passkeeper.Utility.TouchListener;
 
 
-public class CreateDatabaseActivity extends Activity implements TextWatcher, View.OnClickListener, IActivity {
+public class CreateDatabaseActivity extends Activity implements IActivity {
 
     private EditText editTextDatabaseName;
     private EditText editTextDatabasePwd;
-    private Button buttonCreateNewDatabase;
     private ImageButton imageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_database_layout);
         setDefaults();
         populateView();
     }
@@ -50,9 +50,25 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
         switch (item.getItemId()) {
             case R.id.menuItemDatabaseSave:
                 if(editTextDatabaseName.getText().length() != 0 && editTextDatabasePwd.getText().length() >= 8){
-
+                    DatabaseModel databaseModel = new DatabaseModel(this);
+                    int databaseId = databaseModel.createUserDatabase(new DatabaseProperty(editTextDatabaseName.getText().toString(), editTextDatabasePwd.getText().toString(), R.drawable.ic_database));
+                    for(String categoryName : getResources().getStringArray(R.array.array_default_category_name)){
+                        databaseModel.createUserCategory(new CategoryProperty(
+                                databaseId,
+                                categoryName,
+                                R.drawable.ic_folder
+                        ));
+                    }
+                    Intent intentListCategory = new Intent(CreateDatabaseActivity.this, ListCategoryActivity.class)
+                            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            .putExtra("databaseId", databaseId)
+                            .putExtra("databasePwd", editTextDatabasePwd.getText().toString());
+                    startActivity(intentListCategory);
+                    finish();
                 }else{
-                    Toast.makeText()
+                    AlertBuilderHelper alertBuilderHelper = new AlertBuilderHelper(CreateDatabaseActivity.this, R.string.dialog_title_missing_data, R.string.dialog_message_database_required_data, false);
+                    alertBuilderHelper.setPositiveButton(R.string.dialog_positive_button, null);
+                    alertBuilderHelper.show();
                 }
                 break;
         }
@@ -60,58 +76,17 @@ public class CreateDatabaseActivity extends Activity implements TextWatcher, Vie
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.buttonCreateDatabase:
-                buttonCreateNewDatabase.setEnabled(false);
-                DatabaseModel databaseModel = new DatabaseModel(this);
-                int databaseId = databaseModel.createUserDatabase(new DatabaseProperty(editTextDatabaseName.getText().toString(), editTextDatabasePwd.getText().toString(), R.drawable.ic_database), getResources().getStringArray(R.array.array_default_category_name));
-                Intent intentListCategory = new Intent(CreateDatabaseActivity.this, ListCategoryActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                        .putExtra("databaseId", databaseId)
-                        .putExtra("databasePwd", editTextDatabasePwd.getText().toString());
-                startActivity(intentListCategory);
-                finish();
-                break;
-        }
-    }
 
     @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        // NOT IN USE
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-        //TODO add Regex for Password!
-        if (editTextDatabaseName.getText().length() != 0 && editTextDatabasePwd.getText().length() >= 8) {
-            buttonCreateNewDatabase.setEnabled(true);
-        } else {
-            buttonCreateNewDatabase.setEnabled(false);
-        }
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-        // NOT IN USE
+    public void setDefaults() {
     }
 
     @Override
     public void populateView() {
-
-    }
-
-    @Override
-    public void setDefaults() {
+        setContentView(R.layout.activity_create_database_layout);
         editTextDatabaseName = (EditText) findViewById(R.id.editTextDatabaseName);
         editTextDatabasePwd = (EditText) findViewById(R.id.editTextDatabasePwd);
         imageButton = (ImageButton) findViewById(R.id.imageButtonDisplayPwd);
-        buttonCreateNewDatabase = (Button) findViewById(R.id.buttonCreateDatabase);
-
-        editTextDatabaseName.addTextChangedListener(this);
-        editTextDatabasePwd.addTextChangedListener(this);
         imageButton.setOnTouchListener(new TouchListener(editTextDatabasePwd));
-        buttonCreateNewDatabase.setOnClickListener(this);
     }
 }

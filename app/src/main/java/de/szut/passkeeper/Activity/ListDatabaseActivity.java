@@ -29,11 +29,11 @@ import de.szut.passkeeper.Utility.ListViewAdapter;
 
 
 public class ListDatabaseActivity extends Activity implements AdapterView.OnItemClickListener, IActivity, View.OnClickListener {
-    //TODO implement floating image button
 
     private DatabaseModel databaseModel;
     private Vector<IUserProperty> vectorUserDatabaseProperties;
     private ListView listView;
+    private ListViewAdapter listViewAdapter;
     private ImageButton imageButtonFab;
 
     //TODO implement context menu
@@ -41,13 +41,16 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listview_layout);
         setDefaults();
         populateView();
     }
 
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        vectorUserDatabaseProperties = databaseModel.getUserDatabasePropertyVector();
+        listViewAdapter.notifyDataSetChanged();
+    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -89,15 +92,17 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
 
     @Override
     public void setDefaults() {
-        listView = (ListView) findViewById(R.id.listViewDefault);
         databaseModel = new DatabaseModel(getApplicationContext());
-        imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
+        vectorUserDatabaseProperties = databaseModel.getUserDatabasePropertyVector();
     }
 
     @Override
     public void populateView() {
-        vectorUserDatabaseProperties = databaseModel.getUserDatabasePropertyVector();
-        listView.setAdapter(new ListViewAdapter(vectorUserDatabaseProperties, this));
+        setContentView(R.layout.activity_listview_layout);
+        imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
+        listView = (ListView) findViewById(R.id.listViewDefault);
+        listViewAdapter = new ListViewAdapter(ListDatabaseActivity.this, vectorUserDatabaseProperties);
+        listView.setAdapter(listViewAdapter);
         listView.setOnItemClickListener(this);
         imageButtonFab.setOnClickListener(this);
         registerForContextMenu(listView);

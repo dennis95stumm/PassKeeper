@@ -23,7 +23,6 @@ import de.szut.passkeeper.Utility.AlertBuilderHelper;
 import de.szut.passkeeper.Utility.ListViewAdapter;
 
 public class ListCategoryActivity extends Activity implements AdapterView.OnItemClickListener, IActivity, View.OnClickListener {
-    //TODO implement floating image button
 
     private ListView listView;
     private Vector<IUserProperty> vectorCategoryProperty;
@@ -38,11 +37,9 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listview_layout);
         setDefaults();
         populateView();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -53,7 +50,7 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        switch (item.getItemId()){
             case android.R.id.home:
                 onBackPressed();
                 break;
@@ -97,15 +94,16 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
         databaseModel = new DatabaseModel(getApplicationContext());
         databaseId = getIntent().getExtras().getInt("databaseId");
         databasePwd = getIntent().getExtras().getString("databasePwd");
-        setTitle(databaseModel.getUserDatabaseName(databaseId));
-        listView = (ListView) findViewById(R.id.listViewDefault);
-        imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
+        vectorCategoryProperty = databaseModel.getUserCategoryPropertyVector(databaseId);
     }
 
     @Override
     public void populateView() {
-        vectorCategoryProperty = databaseModel.getUserCategoryPropertyVector(databaseId);
-        listViewAdapter = new ListViewAdapter(vectorCategoryProperty, this);
+        setTitle(databaseModel.getUserDatabaseName(databaseId));
+        setContentView(R.layout.activity_listview_layout);
+        listView = (ListView) findViewById(R.id.listViewDefault);
+        imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
+        listViewAdapter = new ListViewAdapter(ListCategoryActivity.this, vectorCategoryProperty);
         listView.setAdapter(listViewAdapter);
         listView.setOnItemClickListener(this);
         imageButtonFab.setOnClickListener(this);

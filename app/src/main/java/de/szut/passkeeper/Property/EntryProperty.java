@@ -16,10 +16,9 @@ public class EntryProperty implements IUserProperty {
     private String entryHash;
     private String entryNote;
     private int entryIconId;
-    private String entryCDate;
-    private String entryMDate;
+    private String entryModifyDate;
 
-    public EntryProperty(int entryId, int categoryId, int databaseId, String entryTitle, String entryUsername, String entryPwd, String entryHash, String entryNote, int entryIconId, String entryCDate, String entryMDate) {
+    public EntryProperty(int entryId, int categoryId, int databaseId, String entryTitle, String entryUsername, String entryPwd, String entryHash, String entryNote, int entryIconId, String entryModifyDate) {
         this.entryId = entryId;
         this.categoryId = categoryId;
         this.databaseId = databaseId;
@@ -29,8 +28,7 @@ public class EntryProperty implements IUserProperty {
         this.entryHash = entryHash;
         this.entryNote = entryNote;
         this.entryIconId = entryIconId;
-        this.entryCDate = entryCDate;
-        this.entryMDate = entryMDate;
+        this.entryModifyDate = entryModifyDate;
     }
 
     public EntryProperty(int databaseId, int categoryId, String entryTitle, String entryUsername, String entryPwd, String entryHash, String entryNote, int entryIconId) {
@@ -44,14 +42,13 @@ public class EntryProperty implements IUserProperty {
         this.entryIconId = entryIconId;
     }
 
-    public EntryProperty(int entryId, String entryTitle, String entryUsername, String entryPwd, String entryHash, String entryNote, String entryMDate){
+    public EntryProperty(int entryId, String entryTitle, String entryUsername, String entryPwd, String entryHash, String entryNote){
         this.entryId = entryId;
         this.entryTitle = entryTitle;
         this.entryUsername = entryUsername;
         this.entryPwd = entryPwd;
         this.entryHash = entryHash;
         this.entryNote = entryNote;
-        this.entryMDate = entryMDate;
     }
 
     @Override
@@ -61,7 +58,7 @@ public class EntryProperty implements IUserProperty {
 
     @Override
     public String getItemSubHeader() {
-        return getEntryMDate();
+        return getEntryModifyDate();
     }
 
     @Override
@@ -105,11 +102,7 @@ public class EntryProperty implements IUserProperty {
         return entryIconId;
     }
 
-    public String getEntryCDate() {
-        return entryCDate;
-    }
-
-    public String getEntryMDate() {
-        return entryMDate;
+    public String getEntryModifyDate() {
+        return entryModifyDate;
     }
 }

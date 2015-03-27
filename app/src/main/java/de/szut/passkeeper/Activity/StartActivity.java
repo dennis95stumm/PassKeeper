@@ -26,15 +26,15 @@ public class StartActivity extends Activity {
     private void setStartActivity() {
         databaseModel = new DatabaseModel(getApplicationContext());
         vectorUserDatabaseProperty = databaseModel.getUserDatabasePropertyVector();
-        if (vectorUserDatabaseProperty.size() == 0) {
-            Intent intentCreateDatabaseActivity = new Intent(this, CreateDatabaseActivity.class)
-                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intentCreateDatabaseActivity);
-            finish();
-        } else {
+        if (!vectorUserDatabaseProperty.isEmpty()) {
             Intent intentListDatabaseActivity = new Intent(this, ListDatabaseActivity.class)
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intentListDatabaseActivity);
+            finish();
+        } else {
+            Intent intentCreateDatabaseActivity = new Intent(this, CreateDatabaseActivity.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intentCreateDatabaseActivity);
             finish();
         }
     }
