@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -61,6 +62,7 @@ public class UpdateEntryActivity extends Activity implements IActivity {
                 break;
             case R.id.updateEntry:
                 if (editTextEntryTitle.getText().length() != 0 && editTextEntryPwd.getText().length() != 0) {
+                    Toast.makeText(UpdateEntryActivity.this, editTextEntryUsername.getText().toString(), Toast.LENGTH_SHORT).show();
                     hasDecrypted = !hasDecrypted;
                     new BackgroundTask().execute();
                 } else {
@@ -109,21 +111,25 @@ public class UpdateEntryActivity extends Activity implements IActivity {
     }
 
     private void encryptData() {
-        Toast.makeText(UpdateEntryActivity.this, editTextEntryUsername.getText().toString(), Toast.LENGTH_SHORT).show();
         String username = editTextEntryUsername.getText().toString();
         String password = editTextEntryPwd.getText().toString();
         byte[] salt;
         salt = Security.getInstance().generateSalt();
+        Log.d(getClass().getSimpleName() + " Username", username);
+        Log.d(getClass().getSimpleName() + " Password", password);
+        Log.d(getClass().getSimpleName() + " Salt", Base64.encodeToString(salt, Base64.DEFAULT));
         String encryptedUsername = Security.getInstance().decryptValue(databasePwd, username, salt);
         String encryptedPassword = Security.getInstance().decryptValue(databasePwd, password, salt);
-        entryProperty = new EntryProperty(
+        Log.d(getClass().getSimpleName() + " Encrypted Username", encryptedUsername);
+        Log.d(getClass().getSimpleName() + " Encrypted Password", encryptedPassword);
+        databaseModel.updateUserEntry( new EntryProperty(
                 entryId,
                 editTextEntryTitle.getText().toString(),
                 encryptedUsername,
                 encryptedPassword,
                 Base64.encodeToString(salt, Base64.DEFAULT),
                 editTextEntryNote.getText().toString()
-        );
+        ));
     }
 
     private class BackgroundTask extends AsyncTask<Void, Void, Void> {
@@ -160,7 +166,6 @@ public class UpdateEntryActivity extends Activity implements IActivity {
             if (!hasDecrypted) {
                 populateView();
             } else {
-                databaseModel.updateUserEntry(entryProperty);
                 onBackPressed();
             }
         }
