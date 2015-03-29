@@ -2,7 +2,6 @@ package de.szut.passkeeper.Activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
@@ -10,13 +9,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import de.szut.passkeeper.Interface.IActivity;
 import de.szut.passkeeper.Model.DatabaseModel;
 import de.szut.passkeeper.Model.Security;
 import de.szut.passkeeper.Property.EntryProperty;
 import de.szut.passkeeper.R;
+import de.szut.passkeeper.Utility.AlertBuilderHelper;
 import de.szut.passkeeper.Utility.TouchListener;
 
 public class CreateEntryActivity extends Activity implements IActivity {
@@ -57,7 +56,9 @@ public class CreateEntryActivity extends Activity implements IActivity {
                 if (editTextEntryTitle.getText().length() != 0 && editTextEntryPwd.getText().length() != 0) {
                     new BackgroundTask().execute();
                 } else {
-                    //TODO SHOW ALERTDIALOG
+                    AlertBuilderHelper alertBuilderHelper = new AlertBuilderHelper(CreateEntryActivity.this, R.string.dialog_title_missing_data, R.string.dialog_message_entry_required_data, false);
+                    alertBuilderHelper.setPositiveButton(R.string.dialog_positive_button_default, null);
+                    alertBuilderHelper.show();
                 }
                 break;
         }

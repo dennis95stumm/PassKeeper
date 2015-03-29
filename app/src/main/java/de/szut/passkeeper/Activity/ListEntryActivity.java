@@ -1,6 +1,7 @@
 package de.szut.passkeeper.Activity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,6 +19,7 @@ import de.szut.passkeeper.Interface.IUserProperty;
 import de.szut.passkeeper.Model.DatabaseModel;
 import de.szut.passkeeper.Property.EntryProperty;
 import de.szut.passkeeper.R;
+import de.szut.passkeeper.Utility.AlertBuilderHelper;
 import de.szut.passkeeper.Utility.ListViewAdapter;
 
 /**
@@ -45,11 +47,11 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
-        Toast.makeText(ListEntryActivity.this, "Restarted...", Toast.LENGTH_SHORT).show();
-        vectorEntryPropery = databaseModel.getUserEntryVector(databaseId, categoryId);
-        listViewAdapter.notifyDataSetChanged();
+    protected void onResume() {
+        super.onResume();
+        vectorEntryPropery.clear();
+        vectorEntryPropery.addAll(databaseModel.getUserEntryVector(databaseId, categoryId));
+        listViewAdapter.refresh(databaseModel.getUserEntryVector(databaseId, categoryId));
     }
 
     @Override
@@ -95,12 +97,27 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
 
     @Override
     public void setDefaults() {
+        databaseModel = new DatabaseModel(this);
+        vectorEntryPropery = new Vector<>();
+        vectorEntryPropery.addAll(databaseModel.getUserEntryVector(databaseId, categoryId));
+        if(vectorEntryPropery.isEmpty()){
+            AlertBuilderHelper alertBuilderHelper = new AlertBuilderHelper(ListEntryActivity.this, R.string.dialog_title_create_entry, R.string.dialog_message_create_entry, true);
+            alertBuilderHelper.setPositiveButton(R.string.dialog_positive_button_default, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intentCreateEntryActivity = new Intent(ListEntryActivity.this, CreateEntryActivity.class)
+                            .putExtra("databaseId", databaseId)
+                            .putExtra("categoryId", categoryId)
+                            .putExtra("databasePwd", databasePwd);
+                    startActivity(intentCreateEntryActivity);
+                }
+            });
+            alertBuilderHelper.show();
+        }
         getActionBar().setDisplayHomeAsUpEnabled(true);
         databaseId = getIntent().getExtras().getInt("databaseId");
         categoryId = getIntent().getExtras().getInt("categoryId");
         databasePwd = getIntent().getExtras().getString("databasePwd");
-        databaseModel = new DatabaseModel(this);
-        vectorEntryPropery = databaseModel.getUserEntryVector(databaseId, categoryId);
     }
 
     @Override
