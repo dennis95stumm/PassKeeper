@@ -109,6 +109,7 @@ public class UpdateEntryActivity extends Activity implements IActivity {
     }
 
     private void encryptData() {
+        Toast.makeText(UpdateEntryActivity.this, editTextEntryUsername.getText().toString(), Toast.LENGTH_SHORT).show();
         String username = editTextEntryUsername.getText().toString();
         String password = editTextEntryPwd.getText().toString();
         byte[] salt;
@@ -129,10 +130,6 @@ public class UpdateEntryActivity extends Activity implements IActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            /*
-            Toast.makeText(UpdateEntryActivity.this, "Starting Task", Toast.LENGTH_SHORT).show();
-            Toast.makeText(UpdateEntryActivity.this, String.valueOf(hasDecrypted), Toast.LENGTH_SHORT).show();
-            */
             progressDialog = new ProgressDialog(UpdateEntryActivity.this);
             if (!hasDecrypted) {
                 progressDialog.setMessage(getResources().getString(R.string.dialog_loading_message_decrypting_data));
