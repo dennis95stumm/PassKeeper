@@ -7,4 +7,6 @@ public interface IUserProperty {
     public String getItemHeader();
 
     public String getItemSubHeader();
+
+    public int getItemImage();
 }

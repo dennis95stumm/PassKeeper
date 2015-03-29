@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -27,42 +28,28 @@ import de.szut.passkeeper.Utility.AlertBuilderHelper;
 import de.szut.passkeeper.Utility.ListViewAdapter;
 
 
-public class ListDatabaseActivity extends Activity implements AdapterView.OnItemClickListener, IActivity {
+public class ListDatabaseActivity extends Activity implements AdapterView.OnItemClickListener, IActivity, View.OnClickListener {
 
     private DatabaseModel databaseModel;
     private Vector<IUserProperty> vectorUserDatabaseProperties;
     private ListView listView;
+    private ListViewAdapter listViewAdapter;
+    private ImageButton imageButtonFab;
 
     //TODO implement context menu
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listview_layout);
         setDefaults();
         populateView();
     }
 
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_database, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        switch(item.getItemId()){
-            case R.id.addDatabase:
-                startActivity(new Intent(this, CreateDatabaseActivity.class));
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
+    protected void onResume() {
+        super.onResume();
+        vectorUserDatabaseProperties = databaseModel.getUserDatabasePropertyVector();
+        listViewAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -78,15 +65,23 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 if (Security.getInstance().checkPassword(editText.getText().toString(), ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabasePwd())) {
-                    Intent intent = new Intent(ListDatabaseActivity.this, ListCategoryActivity.class);
-                    intent.putExtra("databaseName", ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseName());
-                    intent.putExtra("databaseId", ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId());
-                    intent.putExtra("password", editText.getText().toString());
-                    startActivity(intent);
+                    Intent intentListCategoryActivity = new Intent(ListDatabaseActivity.this, ListCategoryActivity.class)
+                            .putExtra("databaseId", ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId())
+                            .putExtra("databasePwd", editText.getText().toString());
+                    startActivity(intentListCategoryActivity);
                 }
             }
         });
         alertDialog.show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.imageButtonFab:
+                startActivity(new Intent(ListDatabaseActivity.this, CreateDatabaseActivity.class));
+                break;
+        }
     }
 
     @Override
@@ -97,15 +92,19 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
 
     @Override
     public void setDefaults() {
-        listView = (ListView) findViewById(R.id.listViewDefault);
         databaseModel = new DatabaseModel(getApplicationContext());
+        vectorUserDatabaseProperties = databaseModel.getUserDatabasePropertyVector();
     }
 
     @Override
     public void populateView() {
-        vectorUserDatabaseProperties = databaseModel.getUserDatabasePropertyVector();
-        listView.setAdapter(new ListViewAdapter(vectorUserDatabaseProperties, this));
+        setContentView(R.layout.activity_listview_layout);
+        imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
+        listView = (ListView) findViewById(R.id.listViewDefault);
+        listViewAdapter = new ListViewAdapter(ListDatabaseActivity.this, vectorUserDatabaseProperties);
+        listView.setAdapter(listViewAdapter);
         listView.setOnItemClickListener(this);
+        imageButtonFab.setOnClickListener(this);
         registerForContextMenu(listView);
     }
 }

@@ -9,20 +9,21 @@ public class DatabaseProperty implements IUserProperty {
     private int databaseId;
     private String databaseName;
     private String databasePwd;
-    private String databaseCdate;
-    private String databaseMdate;
+    private int databaseIconId;
+    private String databaseModifyDate;
 
-    public DatabaseProperty(int databaseId, String databaseName, String databasePwd, String databaseCdate, String databaseMdate) {
+    public DatabaseProperty(int databaseId, String databaseName, String databasePwd, int databaseIconId, String databaseModifyDate) {
         this.databaseId = databaseId;
         this.databaseName = databaseName;
         this.databasePwd = databasePwd;
-        this.databaseCdate = databaseCdate;
-        this.databaseMdate = databaseMdate;
+        this.databaseIconId = databaseIconId;
+        this.databaseModifyDate = databaseModifyDate;
     }
 
-    public DatabaseProperty(String databaseName, String databasePwd) {
+    public DatabaseProperty(String databaseName, String databasePwd, int databaseIconId) {
         this.databaseName = databaseName;
         this.databasePwd = databasePwd;
+        this.databaseIconId = databaseIconId;
     }
 
     @Override
@@ -32,7 +33,12 @@ public class DatabaseProperty implements IUserProperty {
 
     @Override
     public String getItemSubHeader() {
-        return getDatabaseMdate();
+        return getDatabaseModifyDate();
+    }
+
+    @Override
+    public int getItemImage() {
+        return getDatabaseIconId();
     }
 
     public int getDatabaseId() {
@@ -47,11 +53,11 @@ public class DatabaseProperty implements IUserProperty {
         return databasePwd;
     }
 
-    public String getDatabaseCdate() {
-        return databaseCdate;
+    public int getDatabaseIconId() {
+        return databaseIconId;
     }
 
-    public String getDatabaseMdate() {
-        return databaseMdate;
+    public String getDatabaseModifyDate() {
+        return databaseModifyDate;
     }
 }

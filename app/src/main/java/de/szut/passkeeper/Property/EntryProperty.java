@@ -11,24 +11,44 @@ public class EntryProperty implements IUserProperty {
     private int categoryId;
     private int entryId;
     private String entryTitle;
-    private String entryUserName;
+    private String entryUsername;
     private String entryPwd;
     private String entryHash;
     private String entryNote;
-    private String entryCDate;
-    private String entryMDate;
+    private int entryIconId;
+    private String entryModifyDate;
 
-    public EntryProperty(int databaseId, int categoryId, int entryId, String entryTitle, String entryUserName, String entryPwd, String entryHash, String entryNote, String entryCDate, String entryMDate) {
-        this.databaseId = databaseId;
-        this.categoryId = categoryId;
+    public EntryProperty(int entryId, int categoryId, int databaseId, String entryTitle, String entryUsername, String entryPwd, String entryHash, String entryNote, int entryIconId, String entryModifyDate) {
         this.entryId = entryId;
+        this.categoryId = categoryId;
+        this.databaseId = databaseId;
         this.entryTitle = entryTitle;
-        this.entryUserName = entryUserName;
+        this.entryUsername = entryUsername;
         this.entryPwd = entryPwd;
         this.entryHash = entryHash;
         this.entryNote = entryNote;
-        this.entryCDate = entryCDate;
-        this.entryMDate = entryMDate;
+        this.entryIconId = entryIconId;
+        this.entryModifyDate = entryModifyDate;
+    }
+
+    public EntryProperty(int databaseId, int categoryId, String entryTitle, String entryUsername, String entryPwd, String entryHash, String entryNote, int entryIconId) {
+        this.databaseId = databaseId;
+        this.categoryId = categoryId;
+        this.entryTitle = entryTitle;
+        this.entryUsername = entryUsername;
+        this.entryPwd = entryPwd;
+        this.entryHash = entryHash;
+        this.entryNote = entryNote;
+        this.entryIconId = entryIconId;
+    }
+
+    public EntryProperty(int entryId, String entryTitle, String entryUsername, String entryPwd, String entryHash, String entryNote){
+        this.entryId = entryId;
+        this.entryTitle = entryTitle;
+        this.entryUsername = entryUsername;
+        this.entryPwd = entryPwd;
+        this.entryHash = entryHash;
+        this.entryNote = entryNote;
     }
 
     @Override
@@ -38,7 +58,12 @@ public class EntryProperty implements IUserProperty {
 
     @Override
     public String getItemSubHeader() {
-        return getEntryMDate();
+        return getEntryModifyDate();
+    }
+
+    @Override
+    public int getItemImage() {
+        return getEntryIconId();
     }
 
     public int getDatabaseId() {
@@ -57,8 +82,8 @@ public class EntryProperty implements IUserProperty {
         return entryTitle;
     }
 
-    public String getEntryUserName() {
-        return entryUserName;
+    public String getEntryUsername() {
+        return entryUsername;
     }
 
     public String getEntryPwd() {
@@ -73,11 +98,11 @@ public class EntryProperty implements IUserProperty {
         return entryNote;
     }
 
-    public String getEntryCDate() {
-        return entryCDate;
+    public int getEntryIconId() {
+        return entryIconId;
     }
 
-    public String getEntryMDate() {
-        return entryMDate;
+    public String getEntryModifyDate() {
+        return entryModifyDate;
     }
 }

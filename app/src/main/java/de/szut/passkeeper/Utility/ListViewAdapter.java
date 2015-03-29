@@ -1,13 +1,18 @@
 package de.szut.passkeeper.Utility;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 
 import de.szut.passkeeper.Interface.IUserProperty;
@@ -19,9 +24,9 @@ public class ListViewAdapter extends BaseAdapter {
     Context context;
     private Vector<IUserProperty> vector;
 
-    public ListViewAdapter(Vector<IUserProperty> vector, Context context) {
-        this.vector = vector;
+    public ListViewAdapter(Context context, Vector<IUserProperty> vector) {
         this.context = context;
+        this.vector = vector;
     }
 
     @Override
@@ -62,10 +67,10 @@ public class ListViewAdapter extends BaseAdapter {
         TextView textViewDatabaseName = (TextView) v.findViewById(R.id.textViewHeader);
         TextView textViewEditationDate = (TextView) v.findViewById(R.id.textViewSubHeader);
 
-        IUserProperty IUserProperty = vector.get(position);
-        imageView.setImageResource(R.drawable.ic_launcher);
-        textViewDatabaseName.setText(IUserProperty.getItemHeader());
-        textViewEditationDate.setText(IUserProperty.getItemSubHeader());
+        IUserProperty iUserProperty = vector.get(position);
+        imageView.setImageResource(iUserProperty.getItemImage());
+        textViewDatabaseName.setText(iUserProperty.getItemHeader());
+        textViewEditationDate.setText(context.getString(R.string.textview_modified) +  " " + iUserProperty.getItemSubHeader());
 
         return v;
     }
