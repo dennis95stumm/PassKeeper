@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -61,6 +62,7 @@ public class UpdateEntryActivity extends Activity implements IActivity {
                 break;
             case R.id.updateEntry:
                 if (editTextEntryTitle.getText().length() != 0 && editTextEntryPwd.getText().length() != 0) {
+                    Toast.makeText(UpdateEntryActivity.this, editTextEntryUsername.getText().toString(), Toast.LENGTH_SHORT).show();
                     hasDecrypted = !hasDecrypted;
                     new BackgroundTask().execute();
                 } else {
@@ -113,26 +115,27 @@ public class UpdateEntryActivity extends Activity implements IActivity {
         String password = editTextEntryPwd.getText().toString();
         byte[] salt;
         salt = Security.getInstance().generateSalt();
+        Log.d(getClass().getSimpleName() + " Username", username);
+        Log.d(getClass().getSimpleName() + " Password", password);
+        Log.d(getClass().getSimpleName() + " Salt", Base64.encodeToString(salt, Base64.DEFAULT));
         String encryptedUsername = Security.getInstance().decryptValue(databasePwd, username, salt);
         String encryptedPassword = Security.getInstance().decryptValue(databasePwd, password, salt);
-        entryProperty = new EntryProperty(
+        Log.d(getClass().getSimpleName() + " Encrypted Username", encryptedUsername);
+        Log.d(getClass().getSimpleName() + " Encrypted Password", encryptedPassword);
+        databaseModel.updateUserEntry( new EntryProperty(
                 entryId,
                 editTextEntryTitle.getText().toString(),
                 encryptedUsername,
                 encryptedPassword,
                 Base64.encodeToString(salt, Base64.DEFAULT),
                 editTextEntryNote.getText().toString()
-        );
+        ));
     }
 
     private class BackgroundTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            /*
-            Toast.makeText(UpdateEntryActivity.this, "Starting Task", Toast.LENGTH_SHORT).show();
-            Toast.makeText(UpdateEntryActivity.this, String.valueOf(hasDecrypted), Toast.LENGTH_SHORT).show();
-            */
             progressDialog = new ProgressDialog(UpdateEntryActivity.this);
             if (!hasDecrypted) {
                 progressDialog.setMessage(getResources().getString(R.string.dialog_loading_message_decrypting_data));
@@ -163,7 +166,6 @@ public class UpdateEntryActivity extends Activity implements IActivity {
             if (!hasDecrypted) {
                 populateView();
             } else {
-                databaseModel.updateUserEntry(entryProperty);
                 onBackPressed();
             }
         }

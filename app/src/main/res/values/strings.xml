@@ -3,21 +3,28 @@
 
     <string name="app_name">PassKeeper</string>
 
-    <string name="dialog_positive_button">Ok</string>
+    <string name="dialog_positive_button_default">Ok</string>
+    <string name="dialog_positive_button_delete">Delete Forever!</string>
     <string name="dialog_negative_button">Cancel</string>
 
     <string name="dialog_title_open_database">Open Database</string>
     <string name="dialog_title_add_category">Add Category</string>
     <string name="dialog_title_missing_data">Missing required data!</string>
+    <string name="dialog_title_create_entry">No data found!</string>
+    <string name="dialog_title_warning">WARNING!</string>
 
     <string name="dialog_message_open_database">Password please!</string>
     <string name="dialog_message_add_category">Create a new category!</string>
     <string name="dialog_message_entry_required_data">At least the title and a password must be given!</string>
+    <string name="dialog_message_create_entry">There is no data available for this category. Would you like to create one?</string>
     <string name="dialog_message_database_required_data">The database name must have at least 1 letter and the password must have 8 letters!</string>
+    <string name="dialog_message_delete_database_warning_message">Attenion! If you proceed to delete this database, you will lose <b>ALL</b> your data! Including <b>all your credentials and categories</b>. This <b>CAN NOT</b> be undone. If you wish to continue, insert your password and and hit the delete button.</string>
 
     <string name="dialog_loading_message_encrypting_data">Encrypting data. This may take some time.</string>
     <string name="dialog_loading_message_decrypting_data">Decrypting data. This may take some time.</string>
     <string name="dialog_loading_message_saving_data">Persisting data</string>
+
+    <string name="toast_message_wrong_password">Wrong password!</string>
 
     <string name="title_activity_create_database">Create Database</string>
     <string name="title_activity_choose_database">Databases</string>
@@ -34,7 +41,6 @@
     <string name="hint_entry_pwd_repeat">Repeat Password</string>
     <string name="hint_entry_note">Notes</string>
 
-    <string name="button_create">Create</string>
     <string name="textview_modified">modified on:</string>
 
     <string name="image_button_description_show_pwd">Show Password</string>
@@ -44,6 +50,9 @@
     <string name="menu_item_title_create_entry">Add new credentials!</string>
     <string name="menu_item_title_update_entry">Add new credentials!</string>
 
+    <string name="contextmenu_item_update_database_name">Rename Database</string>
+    <string name="contextmenu_item_update_database_password">Change Password</string>
+    <string name="contextmenu_item_delete_database">Delete Database</string>
 
     <array name="array_default_category_name">
         <item>Internet</item>

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.List;
 import java.util.Vector;
 
 import de.szut.passkeeper.Interface.IActivity;
@@ -35,6 +37,10 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
     private ListView listView;
     private ListViewAdapter listViewAdapter;
     private ImageButton imageButtonFab;
+    private AdapterView.AdapterContextMenuInfo listItemInfo;
+    private static final int CONTEXT_UPDATE_DATABASE_NAME_ID = ContextMenu.FIRST;
+    private static final int CONTEXT_UPDATE_DATABASE_PWD_ID = ContextMenu.FIRST + 1;
+    private static final int CONTEXT_DELETE_DATABASE_ID = ContextMenu.FIRST + 2;
 
     //TODO implement context menu
 
@@ -48,8 +54,54 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
     @Override
     protected void onResume() {
         super.onResume();
-        vectorUserDatabaseProperties = databaseModel.getUserDatabasePropertyVector();
-        listViewAdapter.notifyDataSetChanged();
+        vectorUserDatabaseProperties.clear();
+        vectorUserDatabaseProperties.addAll(databaseModel.getUserDatabasePropertyVector());
+        listViewAdapter.refresh(databaseModel.getUserDatabasePropertyVector());
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(Menu.NONE, CONTEXT_UPDATE_DATABASE_NAME_ID, Menu.NONE, R.string.contextmenu_item_update_database_name);
+        menu.add(Menu.NONE, CONTEXT_UPDATE_DATABASE_PWD_ID, Menu.NONE, R.string.contextmenu_item_update_database_password);
+        menu.add(Menu.NONE, CONTEXT_DELETE_DATABASE_ID, Menu.NONE, R.string.contextmenu_item_delete_database);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        listItemInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        Toast.makeText(ListDatabaseActivity.this, String.valueOf(vectorUserDatabaseProperties.size()), Toast.LENGTH_SHORT).show();
+        switch (item.getItemId()){
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                final AlertBuilderHelper alertBuilderHelper = new AlertBuilderHelper(ListDatabaseActivity.this, R.string.dialog_title_warning, R.string.dialog_message_delete_database_warning_message, true);
+                final EditText editTextDatabasePwd = new EditText(ListDatabaseActivity.this);
+                editTextDatabasePwd.setHint(R.string.hint_database_pwd);
+                editTextDatabasePwd.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                editTextDatabasePwd.setTransformationMethod(new PasswordTransformationMethod());
+                alertBuilderHelper.setView(editTextDatabasePwd);
+                alertBuilderHelper.setPositiveButton(R.string.dialog_positive_button_delete, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        if(Security.getInstance().checkPassword(editTextDatabasePwd.getText().toString(), ((DatabaseProperty) vectorUserDatabaseProperties.get(listItemInfo.position)).getDatabasePwd()) ){
+                            databaseModel.deleteUserDatabase(((DatabaseProperty) vectorUserDatabaseProperties.get(listItemInfo.position)).getDatabaseId());
+                            vectorUserDatabaseProperties.remove(listItemInfo.position);
+                            listViewAdapter.refresh(databaseModel.getUserDatabasePropertyVector());
+                        }else{
+                            Toast.makeText(ListDatabaseActivity.this, R.string.toast_message_wrong_password, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                alertBuilderHelper.show();
+                //TODO SET ICON
+                //TODO DISABLE POSITIVE BUTTON
+                break;
+        }
+        return super.onContextItemSelected(item);
     }
 
     @Override
@@ -60,7 +112,7 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
         editText.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
         editText.setTransformationMethod(new PasswordTransformationMethod());
         alertDialog.setView(editText);
-        alertDialog.setPositiveButton(R.string.dialog_positive_button, new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton(R.string.dialog_positive_button_default, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -69,6 +121,8 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
                             .putExtra("databaseId", ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId())
                             .putExtra("databasePwd", editText.getText().toString());
                     startActivity(intentListCategoryActivity);
+                }else{
+                    Toast.makeText(ListDatabaseActivity.this, R.string.toast_message_wrong_password, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -84,16 +138,12 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
         }
     }
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        Toast.makeText(getApplicationContext(), "Context Menu", Toast.LENGTH_SHORT).show();
-        return super.onContextItemSelected(item);
-    }
 
     @Override
     public void setDefaults() {
         databaseModel = new DatabaseModel(getApplicationContext());
-        vectorUserDatabaseProperties = databaseModel.getUserDatabasePropertyVector();
+        vectorUserDatabaseProperties = new Vector<>();
+        vectorUserDatabaseProperties.addAll(databaseModel.getUserDatabasePropertyVector());
     }
 
     @Override
@@ -101,7 +151,7 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
         setContentView(R.layout.activity_listview_layout);
         imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
         listView = (ListView) findViewById(R.id.listViewDefault);
-        listViewAdapter = new ListViewAdapter(ListDatabaseActivity.this, vectorUserDatabaseProperties);
+        listViewAdapter = new ListViewAdapter(ListDatabaseActivity.this, databaseModel.getUserDatabasePropertyVector());
         listView.setAdapter(listViewAdapter);
         listView.setOnItemClickListener(this);
         imageButtonFab.setOnClickListener(this);

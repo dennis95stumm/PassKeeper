@@ -3,15 +3,10 @@ package de.szut.passkeeper.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import de.szut.passkeeper.Interface.IActivity;
 import de.szut.passkeeper.Model.DatabaseModel;
@@ -67,7 +62,7 @@ public class CreateDatabaseActivity extends Activity implements IActivity {
                     finish();
                 }else{
                     AlertBuilderHelper alertBuilderHelper = new AlertBuilderHelper(CreateDatabaseActivity.this, R.string.dialog_title_missing_data, R.string.dialog_message_database_required_data, false);
-                    alertBuilderHelper.setPositiveButton(R.string.dialog_positive_button, null);
+                    alertBuilderHelper.setPositiveButton(R.string.dialog_positive_button_default, null);
                     alertBuilderHelper.show();
                 }
                 break;

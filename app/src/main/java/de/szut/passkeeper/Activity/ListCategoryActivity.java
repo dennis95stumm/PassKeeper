@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -72,15 +73,15 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
         switch (v.getId()) {
             case R.id.imageButtonFab:
                 AlertBuilderHelper alertDialog = new AlertBuilderHelper(this, R.string.dialog_title_add_category, R.string.dialog_message_add_category, true);
-                final EditText editText = new EditText(this);
-                editText.setHint(R.string.hint_category_name);
-                alertDialog.setView(editText);
-                alertDialog.setPositiveButton(R.string.dialog_positive_button, new DialogInterface.OnClickListener() {
+                final EditText editTextCategoryName = new EditText(this);
+                editTextCategoryName.setHint(R.string.hint_category_name);
+                alertDialog.setView(editTextCategoryName);
+                alertDialog.setPositiveButton(R.string.dialog_positive_button_default, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        int categoryId = databaseModel.createUserCategory(new CategoryProperty(databaseId, editText.getText().toString(), R.drawable.ic_folder));
+                        int categoryId = databaseModel.createUserCategory(new CategoryProperty(databaseId, editTextCategoryName.getText().toString(), R.drawable.ic_folder));
                         vectorCategoryProperty.add(databaseModel.getUserCategoryProperty(categoryId));
-                        listViewAdapter.notifyDataSetChanged();
+                        listViewAdapter.refresh(databaseModel.getUserCategoryPropertyVector(databaseId));
                     }
                 });
                 alertDialog.show();
@@ -91,10 +92,11 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
     @Override
     public void setDefaults() {
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        databaseModel = new DatabaseModel(getApplicationContext());
         databaseId = getIntent().getExtras().getInt("databaseId");
         databasePwd = getIntent().getExtras().getString("databasePwd");
-        vectorCategoryProperty = databaseModel.getUserCategoryPropertyVector(databaseId);
+        databaseModel = new DatabaseModel(ListCategoryActivity.this);
+        vectorCategoryProperty = new Vector<>();
+        vectorCategoryProperty.addAll(databaseModel.getUserCategoryPropertyVector(databaseId));
     }
 
     @Override
@@ -103,7 +105,7 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
         setContentView(R.layout.activity_listview_layout);
         listView = (ListView) findViewById(R.id.listViewDefault);
         imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
-        listViewAdapter = new ListViewAdapter(ListCategoryActivity.this, vectorCategoryProperty);
+        listViewAdapter = new ListViewAdapter(ListCategoryActivity.this, databaseModel.getUserCategoryPropertyVector(databaseId));
         listView.setAdapter(listViewAdapter);
         listView.setOnItemClickListener(this);
         imageButtonFab.setOnClickListener(this);

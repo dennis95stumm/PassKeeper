@@ -74,4 +74,9 @@ public class ListViewAdapter extends BaseAdapter {
 
         return v;
     }
+
+    public void refresh(Vector<IUserProperty> vector){
+        this.vector = vector;
+        notifyDataSetChanged();
+    }
 }

@@ -255,4 +255,10 @@ public class DatabaseModel {
         cursor.close();
         databaseOpenHelper.close();
     }
+
+    public void deleteUserDatabase(int databaseId){
+        sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
+        sqLiteDatabase.delete(DatabaseOpenHelper.TABLE_USER_DATABASE, DatabaseOpenHelper.KEY_ID_USER_DATABASE + " = ?", new String[]{String.valueOf(databaseId)});
+        databaseOpenHelper.close();
+    }
 }
