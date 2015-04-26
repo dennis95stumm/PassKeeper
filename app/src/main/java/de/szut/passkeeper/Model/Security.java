@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
@@ -79,24 +80,19 @@ public class Security {
             KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
             SecretKey tmp = factory.generateSecret(spec); // TODO dies daurt zu lange und wird auch wieder beim entschlüsseln benötigt noch mal prüfen
             SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
-            Cipher cipher = Cipher.getInstance("AES");
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding", "SunJCE");
             cipher.init(Cipher.ENCRYPT_MODE, secret);
             byte[] encryptedValue = cipher.doFinal(value.getBytes("UTF-8"));
             byte[] encryptedValueBase64Bytes = Base64.encode(encryptedValue, Base64.DEFAULT);
             encryptedValueBase64 = new String(encryptedValueBase64Bytes);
-        } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
-        } catch (BadPaddingException e) {
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (InvalidKeySpecException e) {
+        } catch (NoSuchPaddingException
+                | UnsupportedEncodingException
+                | NoSuchAlgorithmException
+                | IllegalBlockSizeException
+                | BadPaddingException
+                | InvalidKeyException
+                | InvalidKeySpecException
+                | NoSuchProviderException e) {
             e.printStackTrace();
         }
         return encryptedValueBase64;
@@ -114,24 +110,19 @@ public class Security {
             KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
             SecretKey tmp = factory.generateSecret(spec);
             SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
-            Cipher cipher = Cipher.getInstance("AES");
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding", "SunJCE");
             cipher.init(Cipher.DECRYPT_MODE, secret);
             byte[] decodedValue = Base64.decode(value.getBytes("UTF-8"), Base64.DEFAULT);
             byte[] decryptedValueBytes = cipher.doFinal(decodedValue);
             decryptedValue = new String(decryptedValueBytes);
-        } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
-        } catch (BadPaddingException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (InvalidKeySpecException e) {
+        } catch (NoSuchPaddingException
+                | UnsupportedEncodingException
+                | NoSuchAlgorithmException
+                | IllegalBlockSizeException
+                | BadPaddingException
+                | InvalidKeyException
+                | InvalidKeySpecException
+                | NoSuchProviderException e) {
             e.printStackTrace();
         }
         return decryptedValue;
