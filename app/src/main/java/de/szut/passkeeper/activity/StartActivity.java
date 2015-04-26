@@ -1,17 +1,17 @@
-package de.szut.passkeeper.Activity;
+package de.szut.passkeeper.activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 
 import java.util.Vector;
 
-import de.szut.passkeeper.Interface.IUserProperty;
 import de.szut.passkeeper.R;
-import de.szut.passkeeper.Utility.DataLoaderTask;
+import de.szut.passkeeper.interfaces.IUserProperty;
+import de.szut.passkeeper.utility.DataLoaderTask;
 
 
 public class StartActivity extends Activity {

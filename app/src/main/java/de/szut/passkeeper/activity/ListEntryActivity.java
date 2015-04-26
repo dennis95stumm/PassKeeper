@@ -1,4 +1,4 @@
-package de.szut.passkeeper.Activity;
+package de.szut.passkeeper.activity;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -10,17 +10,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.Vector;
 
-import de.szut.passkeeper.Interface.IActivity;
-import de.szut.passkeeper.Interface.IUserProperty;
-import de.szut.passkeeper.Model.DatabaseModel;
-import de.szut.passkeeper.Property.EntryProperty;
 import de.szut.passkeeper.R;
-import de.szut.passkeeper.Utility.AlertBuilderHelper;
-import de.szut.passkeeper.Utility.ListViewAdapter;
+import de.szut.passkeeper.interfaces.IActivity;
+import de.szut.passkeeper.interfaces.IUserProperty;
+import de.szut.passkeeper.model.DatabaseModel;
+import de.szut.passkeeper.property.EntryProperty;
+import de.szut.passkeeper.utility.AlertBuilderHelper;
+import de.szut.passkeeper.utility.ListViewAdapter;
 
 /**
  * Created by Sami.Al-Khatib on 21.03.2015.

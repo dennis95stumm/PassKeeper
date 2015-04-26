@@ -1,4 +1,4 @@
-package de.szut.passkeeper.Utility;
+package de.szut.passkeeper.utility;
 
 import android.text.method.PasswordTransformationMethod;
 import android.view.MotionEvent;

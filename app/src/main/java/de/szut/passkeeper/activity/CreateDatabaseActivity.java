@@ -1,4 +1,4 @@
-package de.szut.passkeeper.Activity;
+package de.szut.passkeeper.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,13 +8,13 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import de.szut.passkeeper.Interface.IActivity;
-import de.szut.passkeeper.Model.DatabaseModel;
-import de.szut.passkeeper.Property.CategoryProperty;
-import de.szut.passkeeper.Property.DatabaseProperty;
 import de.szut.passkeeper.R;
-import de.szut.passkeeper.Utility.AlertBuilderHelper;
-import de.szut.passkeeper.Utility.TouchListener;
+import de.szut.passkeeper.interfaces.IActivity;
+import de.szut.passkeeper.model.DatabaseModel;
+import de.szut.passkeeper.property.CategoryProperty;
+import de.szut.passkeeper.property.DatabaseProperty;
+import de.szut.passkeeper.utility.AlertBuilderHelper;
+import de.szut.passkeeper.utility.TouchListener;
 
 
 public class CreateDatabaseActivity extends Activity implements IActivity {

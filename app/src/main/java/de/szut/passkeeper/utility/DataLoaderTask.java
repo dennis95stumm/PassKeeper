@@ -1,9 +1,9 @@
-package de.szut.passkeeper.Utility;
+package de.szut.passkeeper.utility;
 
 import java.util.Vector;
 
-import de.szut.passkeeper.Activity.StartActivity;
-import de.szut.passkeeper.Interface.IUserProperty;
+import de.szut.passkeeper.activity.StartActivity;
+import de.szut.passkeeper.interfaces.IUserProperty;
 
 /**
  * Created by redtiger on 22.03.15.

@@ -1,4 +1,4 @@
-package de.szut.passkeeper.Activity;
+package de.szut.passkeeper.activity;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -15,13 +14,13 @@ import android.widget.ListView;
 
 import java.util.Vector;
 
-import de.szut.passkeeper.Interface.IActivity;
-import de.szut.passkeeper.Interface.IUserProperty;
-import de.szut.passkeeper.Model.DatabaseModel;
-import de.szut.passkeeper.Property.CategoryProperty;
 import de.szut.passkeeper.R;
-import de.szut.passkeeper.Utility.AlertBuilderHelper;
-import de.szut.passkeeper.Utility.ListViewAdapter;
+import de.szut.passkeeper.interfaces.IActivity;
+import de.szut.passkeeper.interfaces.IUserProperty;
+import de.szut.passkeeper.model.DatabaseModel;
+import de.szut.passkeeper.property.CategoryProperty;
+import de.szut.passkeeper.utility.AlertBuilderHelper;
+import de.szut.passkeeper.utility.ListViewAdapter;
 
 public class ListCategoryActivity extends Activity implements AdapterView.OnItemClickListener, IActivity, View.OnClickListener {
 

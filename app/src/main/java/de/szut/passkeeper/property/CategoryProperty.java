@@ -1,6 +1,6 @@
-package de.szut.passkeeper.Property;
+package de.szut.passkeeper.property;
 
-import de.szut.passkeeper.Interface.IUserProperty;
+import de.szut.passkeeper.interfaces.IUserProperty;
 
 /**
  * Created by Sami.Al-Khatib on 18.03.2015.

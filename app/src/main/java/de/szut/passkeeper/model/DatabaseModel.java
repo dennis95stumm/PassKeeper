@@ -1,4 +1,4 @@
-package de.szut.passkeeper.Model;
+package de.szut.passkeeper.model;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,10 +9,10 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Vector;
 
-import de.szut.passkeeper.Interface.IUserProperty;
-import de.szut.passkeeper.Property.CategoryProperty;
-import de.szut.passkeeper.Property.DatabaseProperty;
-import de.szut.passkeeper.Property.EntryProperty;
+import de.szut.passkeeper.interfaces.IUserProperty;
+import de.szut.passkeeper.property.CategoryProperty;
+import de.szut.passkeeper.property.DatabaseProperty;
+import de.szut.passkeeper.property.EntryProperty;
 
 /**
  * Created by Sami.Al-Khatib on 10.02.2015.

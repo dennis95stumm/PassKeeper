@@ -1,11 +1,11 @@
-package de.szut.passkeeper.Utility;
+package de.szut.passkeeper.utility;
 
 import android.content.Context;
 
 import java.util.Vector;
 
-import de.szut.passkeeper.Interface.IUserProperty;
-import de.szut.passkeeper.Model.DatabaseModel;
+import de.szut.passkeeper.interfaces.IUserProperty;
+import de.szut.passkeeper.model.DatabaseModel;
 
 /**
  * Created by redtiger on 22.03.15.

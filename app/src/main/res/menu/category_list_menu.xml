@@ -1,5 +1,5 @@
 <menu xmlns:tools="http://schemas.android.com/tools"
-    tools:context="de.szut.passkeeper.Activity.ListCategoryActivity">
+    tools:context="de.szut.passkeeper.activity.ListCategoryActivity">
     <!--<item
         android:id="@+id/addCategory"
         android:icon="@android:drawable/ic_menu_add"

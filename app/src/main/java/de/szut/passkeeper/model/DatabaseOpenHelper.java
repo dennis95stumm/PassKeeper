@@ -1,4 +1,4 @@
-package de.szut.passkeeper.Model;
+package de.szut.passkeeper.model;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

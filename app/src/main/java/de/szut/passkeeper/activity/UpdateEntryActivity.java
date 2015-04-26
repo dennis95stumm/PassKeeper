@@ -1,8 +1,7 @@
-package de.szut.passkeeper.Activity;
+package de.szut.passkeeper.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
@@ -13,14 +12,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import java.util.Calendar;
-
-import de.szut.passkeeper.Interface.IActivity;
-import de.szut.passkeeper.Model.DatabaseModel;
-import de.szut.passkeeper.Model.Security;
-import de.szut.passkeeper.Property.EntryProperty;
 import de.szut.passkeeper.R;
-import de.szut.passkeeper.Utility.TouchListener;
+import de.szut.passkeeper.interfaces.IActivity;
+import de.szut.passkeeper.model.DatabaseModel;
+import de.szut.passkeeper.model.Security;
+import de.szut.passkeeper.property.EntryProperty;
+import de.szut.passkeeper.utility.TouchListener;
 
 public class UpdateEntryActivity extends Activity implements IActivity {
 
