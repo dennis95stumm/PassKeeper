@@ -238,6 +238,13 @@ public class DatabaseModel {
         databaseOpenHelper.close();
     }
 
+    public void updateUserDatabasePwd(int databaseId, String password){
+        sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DatabaseOpenHelper.KEY_PWD_USER_DATABASE, password);
+        sqLiteDatabase.update(DatabaseOpenHelper.TABLE_USER_DATABASE, contentValues, DatabaseOpenHelper.KEY_ID_USER_DATABASE + " = ?", new String[]{String.valueOf(databaseId)});
+    }
+
     public void updateUserEntry(EntryProperty entryProperty){
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
