@@ -12,6 +12,7 @@
     <string name="dialog_title_missing_data">Missing required data!</string>
     <string name="dialog_title_create_entry">No data found!</string>
     <string name="dialog_title_warning">WARNING!</string>
+    <string name="dialog_title_change_database_pwd">Change Password</string>
 
     <string name="dialog_message_open_database">Password please!</string>
     <string name="dialog_message_add_category">Create a new category!</string>
@@ -37,6 +38,9 @@
     <string name="hint_category_name">Category Name</string>
     <string name="hint_entry_title">Title</string>
     <string name="hint_entry_username">Username</string>
+    <string name="hint_database_pwd_old">Old Password</string>
+    <string name="hint_database_pwd_new">New Password</string>
+    <string name="hint_database_pwd_repeat">Repeat Password</string>
     <string name="hint_entry_pwd">Password</string>
     <string name="hint_entry_pwd_repeat">Repeat Password</string>
     <string name="hint_entry_note">Notes</string>
