@@ -142,4 +142,9 @@ public class Security {
         }
         return salt;
     }
+
+
+    public String generatePassword() {
+        return "";
+    }
 }
