@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import javax.crypto.SecretKey;
+
 import de.szut.passkeeper.R;
 import de.szut.passkeeper.interfaces.IActivity;
 import de.szut.passkeeper.model.DatabaseModel;
@@ -108,8 +110,9 @@ public class CreateEntryActivity extends Activity implements IActivity {
             String password = editTextEntryPwd.getText().toString();
             byte[] salt;
             salt = Security.getInstance().generateSalt();
-            String hashedUsername = Security.getInstance().encryptValue(databasePwd, username, salt);
-            String hashedPassword = Security.getInstance().encryptValue(databasePwd, password, salt);
+            SecretKey secret = Security.getInstance().getSecret(databasePwd, salt);
+            String hashedUsername = Security.getInstance().encryptValue(username, secret);
+            String hashedPassword = Security.getInstance().encryptValue(password, secret);
             databaseModel.createUserEntry(new EntryProperty(
                             databaseId,
                             categoryId,

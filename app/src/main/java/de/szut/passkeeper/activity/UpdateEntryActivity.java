@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import javax.crypto.SecretKey;
+
 import de.szut.passkeeper.R;
 import de.szut.passkeeper.interfaces.IActivity;
 import de.szut.passkeeper.model.DatabaseModel;
@@ -103,8 +105,9 @@ public class UpdateEntryActivity extends Activity implements IActivity {
         String password = entryProperty.getEntryPwd();
         byte[] salt;
         salt = Base64.decode(entryProperty.getEntryHash(), Base64.DEFAULT);
-        decryptedUsername = Security.getInstance().decryptValue(databasePwd, username, salt);
-        decryptedUserPwd = Security.getInstance().decryptValue(databasePwd, password, salt);
+        SecretKey secret = Security.getInstance().getSecret(databasePwd, salt);
+        decryptedUsername = Security.getInstance().decryptValue(username, secret);
+        decryptedUserPwd = Security.getInstance().decryptValue(password, secret);
     }
 
     private void encryptData() {
@@ -115,8 +118,9 @@ public class UpdateEntryActivity extends Activity implements IActivity {
         Log.d(getClass().getSimpleName() + " Username", username);
         Log.d(getClass().getSimpleName() + " Password", password);
         Log.d(getClass().getSimpleName() + " Salt", Base64.encodeToString(salt, Base64.DEFAULT));
-        String encryptedUsername = Security.getInstance().decryptValue(databasePwd, username, salt);
-        String encryptedPassword = Security.getInstance().decryptValue(databasePwd, password, salt);
+        SecretKey secret = Security.getInstance().getSecret(databasePwd, salt);
+        String encryptedUsername = Security.getInstance().encryptValue(username, secret);
+        String encryptedPassword = Security.getInstance().encryptValue(password, secret);
         Log.d(getClass().getSimpleName() + " Encrypted Username", encryptedUsername);
         Log.d(getClass().getSimpleName() + " Encrypted Password", encryptedPassword);
         databaseModel.updateUserEntry( new EntryProperty(

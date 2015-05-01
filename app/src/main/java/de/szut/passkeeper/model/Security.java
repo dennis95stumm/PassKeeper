@@ -1,12 +1,12 @@
 package de.szut.passkeeper.model;
 
+
 import android.util.Base64;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
@@ -68,61 +68,65 @@ public class Security {
     }
 
     /**
+     *
      * @param password
-     * @param value
+     * @param salt
      * @return
      */
-    public String encryptValue(String password, String value, byte[] salt) {
-
-        String encryptedValueBase64 = "";
+    public SecretKey getSecret(String password, byte[] salt) {
+        SecretKey secret = null;
         try {
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
             KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
-            SecretKey tmp = factory.generateSecret(spec); // TODO dies daurt zu lange und wird auch wieder beim entschlüsseln benötigt noch mal prüfen
-            SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding", "SunJCE");
+            SecretKey tmp = factory.generateSecret(spec);
+            secret = new SecretKeySpec(tmp.getEncoded(), "AES");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        }
+        return secret;
+    }
+
+    /**
+     * @param value
+     * @return
+     */
+    public String encryptValue(String value, SecretKey secret) {
+        String encryptedValueBase64 = "";
+        try {
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, secret);
             byte[] encryptedValue = cipher.doFinal(value.getBytes("UTF-8"));
-            byte[] encryptedValueBase64Bytes = Base64.encode(encryptedValue, Base64.DEFAULT);
-            encryptedValueBase64 = new String(encryptedValueBase64Bytes);
+            encryptedValueBase64 = Base64.encodeToString(encryptedValue, Base64.NO_WRAP);
         } catch (NoSuchPaddingException
                 | UnsupportedEncodingException
                 | NoSuchAlgorithmException
                 | IllegalBlockSizeException
                 | BadPaddingException
-                | InvalidKeyException
-                | InvalidKeySpecException
-                | NoSuchProviderException e) {
+                | InvalidKeyException e) {
             e.printStackTrace();
         }
         return encryptedValueBase64;
     }
 
     /**
-     * @param password
      * @param value
      * @return
      */
-    public String decryptValue(String password, String value, byte[] salt) {
+    public String decryptValue(String value, SecretKey secret) {
         String decryptedValue = "";
         try {
-            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-            KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
-            SecretKey tmp = factory.generateSecret(spec);
-            SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding", "SunJCE");
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, secret);
-            byte[] decodedValue = Base64.decode(value.getBytes("UTF-8"), Base64.DEFAULT);
+            byte[] decodedValue = Base64.decode(value, Base64.NO_WRAP);
             byte[] decryptedValueBytes = cipher.doFinal(decodedValue);
             decryptedValue = new String(decryptedValueBytes);
         } catch (NoSuchPaddingException
-                | UnsupportedEncodingException
                 | NoSuchAlgorithmException
                 | IllegalBlockSizeException
                 | BadPaddingException
-                | InvalidKeyException
-                | InvalidKeySpecException
-                | NoSuchProviderException e) {
+                | InvalidKeyException e) {
             e.printStackTrace();
         }
         return decryptedValue;
