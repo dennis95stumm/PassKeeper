@@ -108,20 +108,21 @@ public class CreateEntryActivity extends Activity implements IActivity {
         protected Void doInBackground(Void... params) {
             String username = editTextEntryUsername.getText().toString();
             String password = editTextEntryPwd.getText().toString();
-            byte[] salt;
-            salt = Security.getInstance().generateSalt();
+            byte[] salt = Security.getInstance().generateSalt();
             SecretKey secret = Security.getInstance().getSecret(databasePwd, salt);
-            String hashedUsername = Security.getInstance().encryptValue(username, secret);
-            String hashedPassword = Security.getInstance().encryptValue(password, secret);
+            byte[] iv = Security.getInstance().generateIV();
+            String hashedUsername = Security.getInstance().encryptValue(username, secret, iv);
+            String hashedPassword = Security.getInstance().encryptValue(password, secret, iv);
             databaseModel.createUserEntry(new EntryProperty(
                             databaseId,
                             categoryId,
                             editTextEntryTitle.getText().toString(),
                             hashedUsername,
                             hashedPassword,
-                            Base64.encodeToString(salt, Base64.DEFAULT),
+                            Base64.encodeToString(salt, Base64.NO_WRAP),
                             editTextEntryNote.getText().toString(),
-                            R.drawable.ic_lock
+                            R.drawable.ic_lock,
+                            Base64.encodeToString(iv, Base64.NO_WRAP)
                     )
             );
             return null;

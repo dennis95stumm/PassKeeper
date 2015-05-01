@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -103,33 +102,29 @@ public class UpdateEntryActivity extends Activity implements IActivity {
     private void decryptData() {
         String username = entryProperty.getEntryUsername();
         String password = entryProperty.getEntryPwd();
-        byte[] salt;
-        salt = Base64.decode(entryProperty.getEntryHash(), Base64.DEFAULT);
+        byte[] salt = Base64.decode(entryProperty.getEntryHash(), Base64.NO_WRAP);
         SecretKey secret = Security.getInstance().getSecret(databasePwd, salt);
-        decryptedUsername = Security.getInstance().decryptValue(username, secret);
-        decryptedUserPwd = Security.getInstance().decryptValue(password, secret);
+        byte[] iv = Base64.decode(entryProperty.getEntryIV(), Base64.NO_WRAP);
+        decryptedUsername = Security.getInstance().decryptValue(username, secret, iv);
+        decryptedUserPwd = Security.getInstance().decryptValue(password, secret, iv);
     }
 
     private void encryptData() {
         String username = editTextEntryUsername.getText().toString();
         String password = editTextEntryPwd.getText().toString();
-        byte[] salt;
-        salt = Security.getInstance().generateSalt();
-        Log.d(getClass().getSimpleName() + " Username", username);
-        Log.d(getClass().getSimpleName() + " Password", password);
-        Log.d(getClass().getSimpleName() + " Salt", Base64.encodeToString(salt, Base64.DEFAULT));
+        byte[] salt = Security.getInstance().generateSalt();
         SecretKey secret = Security.getInstance().getSecret(databasePwd, salt);
-        String encryptedUsername = Security.getInstance().encryptValue(username, secret);
-        String encryptedPassword = Security.getInstance().encryptValue(password, secret);
-        Log.d(getClass().getSimpleName() + " Encrypted Username", encryptedUsername);
-        Log.d(getClass().getSimpleName() + " Encrypted Password", encryptedPassword);
+        byte[] iv = Security.getInstance().generateIV();
+        String encryptedUsername = Security.getInstance().encryptValue(username, secret, iv);
+        String encryptedPassword = Security.getInstance().encryptValue(password, secret, iv);
         databaseModel.updateUserEntry( new EntryProperty(
                 entryId,
                 editTextEntryTitle.getText().toString(),
                 encryptedUsername,
                 encryptedPassword,
-                Base64.encodeToString(salt, Base64.DEFAULT),
-                editTextEntryNote.getText().toString()
+                Base64.encodeToString(salt, Base64.NO_WRAP),
+                editTextEntryNote.getText().toString(),
+                Base64.encodeToString(iv, Base64.NO_WRAP)
         ));
     }
 

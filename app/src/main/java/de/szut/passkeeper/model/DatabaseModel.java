@@ -112,7 +112,8 @@ public class DatabaseModel {
                     cursor.getString(6),
                     cursor.getString(7),
                     cursor.getInt(8),
-                    cursor.getString(9)
+                    cursor.getString(9),
+                    cursor.getString(10)
             ));
         }
         cursor.close();
@@ -155,7 +156,8 @@ public class DatabaseModel {
                     cursor.getString(6),
                     cursor.getString(7),
                     cursor.getInt(8),
-                    cursor.getString(9)
+                    cursor.getString(9),
+                    cursor.getString(10)
             );
             cursor.close();
         }
@@ -234,6 +236,7 @@ public class DatabaseModel {
         contentValues.put(DatabaseOpenHelper.KEY_HASH_USER_ENTRY, entryProperty.getEntryHash());
         contentValues.put(DatabaseOpenHelper.KEY_NOTE_USER_ENTRY, entryProperty.getEntryNote());
         contentValues.put(DatabaseOpenHelper.KEY_ICON_USER_ENTRY, entryProperty.getEntryIconId());
+        contentValues.put(DatabaseOpenHelper.KEY_IV_USER_ENTRY, entryProperty.getEntryIV());
         sqLiteDatabase.insert(DatabaseOpenHelper.TABLE_USER_ENTRY, null, contentValues);
         databaseOpenHelper.close();
     }
@@ -252,6 +255,7 @@ public class DatabaseModel {
         contentValues.put(DatabaseOpenHelper.KEY_USERNAME_USER_ENTRY, entryProperty.getEntryUsername());
         contentValues.put(DatabaseOpenHelper.KEY_USERPWD_USER_ENTRY, entryProperty.getEntryPwd());
         contentValues.put(DatabaseOpenHelper.KEY_HASH_USER_ENTRY, entryProperty.getEntryHash());
+        contentValues.put(DatabaseOpenHelper.KEY_IV_USER_ENTRY, entryProperty.getEntryIV());
         sqLiteDatabase.update(DatabaseOpenHelper.TABLE_USER_ENTRY, contentValues, DatabaseOpenHelper.KEY_ID_USER_ENTRY + " = ?", new String[]{String.valueOf(entryProperty.getEntryId())});
         String rawSql = "UPDATE " +
                 DatabaseOpenHelper.TABLE_USER_ENTRY

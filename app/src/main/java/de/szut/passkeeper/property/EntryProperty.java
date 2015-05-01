@@ -17,8 +17,9 @@ public class EntryProperty implements IUserProperty {
     private String entryNote;
     private int entryIconId;
     private String entryModifyDate;
+    private String entryIV;
 
-    public EntryProperty(int entryId, int categoryId, int databaseId, String entryTitle, String entryUsername, String entryPwd, String entryHash, String entryNote, int entryIconId, String entryModifyDate) {
+    public EntryProperty(int entryId, int categoryId, int databaseId, String entryTitle, String entryUsername, String entryPwd, String entryHash, String entryNote, int entryIconId, String entryModifyDate, String iv) {
         this.entryId = entryId;
         this.categoryId = categoryId;
         this.databaseId = databaseId;
@@ -29,9 +30,10 @@ public class EntryProperty implements IUserProperty {
         this.entryNote = entryNote;
         this.entryIconId = entryIconId;
         this.entryModifyDate = entryModifyDate;
+        this.entryIV = iv;
     }
 
-    public EntryProperty(int databaseId, int categoryId, String entryTitle, String entryUsername, String entryPwd, String entryHash, String entryNote, int entryIconId) {
+    public EntryProperty(int databaseId, int categoryId, String entryTitle, String entryUsername, String entryPwd, String entryHash, String entryNote, int entryIconId, String iv) {
         this.databaseId = databaseId;
         this.categoryId = categoryId;
         this.entryTitle = entryTitle;
@@ -40,15 +42,17 @@ public class EntryProperty implements IUserProperty {
         this.entryHash = entryHash;
         this.entryNote = entryNote;
         this.entryIconId = entryIconId;
+        this.entryIV = iv;
     }
 
-    public EntryProperty(int entryId, String entryTitle, String entryUsername, String entryPwd, String entryHash, String entryNote){
+    public EntryProperty(int entryId, String entryTitle, String entryUsername, String entryPwd, String entryHash, String entryNote, String iv) {
         this.entryId = entryId;
         this.entryTitle = entryTitle;
         this.entryUsername = entryUsername;
         this.entryPwd = entryPwd;
         this.entryHash = entryHash;
         this.entryNote = entryNote;
+        this.entryIV = iv;
     }
 
     @Override
@@ -104,5 +108,9 @@ public class EntryProperty implements IUserProperty {
 
     public String getEntryModifyDate() {
         return entryModifyDate;
+    }
+
+    public String getEntryIV() {
+        return entryIV;
     }
 }

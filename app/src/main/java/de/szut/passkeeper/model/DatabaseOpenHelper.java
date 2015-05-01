@@ -54,6 +54,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     public static final String KEY_NOTE_USER_ENTRY = "pass_entry_note";
     public static final String KEY_ICON_USER_ENTRY = "pass_entry_icon";
     public static final String KEY_MODIFY_DATE_USER_ENTRY = "pass_entry_mdate";
+    public static final String KEY_IV_USER_ENTRY = "pass_entry_iv";
     // CREATE STATEMENTS FOR TABLES
     private static final String CREATE_USER_ENTRY_TABLE_SQL =
             "CREATE TABLE " + TABLE_USER_ENTRY +
@@ -68,6 +69,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                     + KEY_NOTE_USER_ENTRY + " TEXT,\n"
                     + KEY_ICON_USER_ENTRY + " INTEGER,\n"
                     + KEY_MODIFY_DATE_USER_ENTRY + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"
+                    + KEY_IV_USER_ENTRY + " TEXT,\n"
                     + "FOREIGN KEY (" + KEY_ID_USER_DATABASE + ") REFERENCES " + TABLE_USER_DATABASE + "(" + KEY_ID_USER_DATABASE + ") ON DELETE CASCADE\n"
                     + "FOREIGN KEY (" + KEY_ID_USER_CATEGORY + ") REFERENCES " + TABLE_USER_ENTRY + "(" + KEY_ID_USER_CATEGORY + ") ON DELETE CASCADE\n" +
                     ")";

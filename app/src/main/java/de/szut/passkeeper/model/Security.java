@@ -4,6 +4,7 @@ package de.szut.passkeeper.model;
 import android.util.Base64;
 
 import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -17,6 +18,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -92,11 +94,12 @@ public class Security {
      * @param value
      * @return
      */
-    public String encryptValue(String value, SecretKey secret) {
+    public String encryptValue(String value, SecretKey secret, byte[] iv) {
         String encryptedValueBase64 = "";
         try {
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, secret);
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            IvParameterSpec ivSpec = new IvParameterSpec(iv);
+            cipher.init(Cipher.ENCRYPT_MODE, secret, ivSpec);
             byte[] encryptedValue = cipher.doFinal(value.getBytes("UTF-8"));
             encryptedValueBase64 = Base64.encodeToString(encryptedValue, Base64.NO_WRAP);
         } catch (NoSuchPaddingException
@@ -104,7 +107,8 @@ public class Security {
                 | NoSuchAlgorithmException
                 | IllegalBlockSizeException
                 | BadPaddingException
-                | InvalidKeyException e) {
+                | InvalidKeyException
+                | InvalidAlgorithmParameterException e) {
             e.printStackTrace();
         }
         return encryptedValueBase64;
@@ -114,11 +118,12 @@ public class Security {
      * @param value
      * @return
      */
-    public String decryptValue(String value, SecretKey secret) {
+    public String decryptValue(String value, SecretKey secret, byte[] iv) {
         String decryptedValue = "";
         try {
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-            cipher.init(Cipher.DECRYPT_MODE, secret);
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            IvParameterSpec ivSpec = new IvParameterSpec(iv);
+            cipher.init(Cipher.DECRYPT_MODE, secret, ivSpec);
             byte[] decodedValue = Base64.decode(value, Base64.NO_WRAP);
             byte[] decryptedValueBytes = cipher.doFinal(decodedValue);
             decryptedValue = new String(decryptedValueBytes);
@@ -126,7 +131,8 @@ public class Security {
                 | NoSuchAlgorithmException
                 | IllegalBlockSizeException
                 | BadPaddingException
-                | InvalidKeyException e) {
+                | InvalidKeyException
+                | InvalidAlgorithmParameterException e) {
             e.printStackTrace();
         }
         return decryptedValue;
@@ -147,6 +153,22 @@ public class Security {
         return salt;
     }
 
+    /**
+     * @return
+     * @throws NoSuchAlgorithmException
+     */
+    public byte[] generateIV() {
+        byte[] iv = null;
+        try {
+            iv = new byte[Cipher.getInstance("AES/CBC/PKCS5Padding").getBlockSize()];
+            SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+            random.nextBytes(iv);
+        } catch (NoSuchAlgorithmException
+                | NoSuchPaddingException e) {
+            e.printStackTrace();
+        }
+        return iv;
+    }
 
     public String generatePassword() {
         return "";
