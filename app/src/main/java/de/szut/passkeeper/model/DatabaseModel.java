@@ -45,7 +45,8 @@ public class DatabaseModel {
             DatabaseOpenHelper.KEY_HASH_USER_ENTRY,
             DatabaseOpenHelper.KEY_NOTE_USER_ENTRY,
             DatabaseOpenHelper.KEY_ICON_USER_ENTRY,
-            DatabaseOpenHelper.KEY_MODIFY_DATE_USER_ENTRY
+            DatabaseOpenHelper.KEY_MODIFY_DATE_USER_ENTRY,
+            DatabaseOpenHelper.KEY_IV_USER_ENTRY
     };
 
     public DatabaseModel(Context context) {
