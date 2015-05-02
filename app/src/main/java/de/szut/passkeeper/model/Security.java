@@ -71,7 +71,6 @@ public class Security {
     }
 
     /**
-     *
      * @param password
      * @param salt
      * @return

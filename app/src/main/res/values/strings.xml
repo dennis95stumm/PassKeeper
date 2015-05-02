@@ -32,7 +32,7 @@
     <string name="title_activity_update_entry">Update Entry</string>
     <string name="title_activity_create_entry">Create Entry</string>
     <string name="loading">Loading! Please wait...</string>
-    
+
     <string name="hint_database_name">Database Name</string>
     <string name="hint_database_pwd">Database Password</string>
     <string name="hint_category_name">Category Name</string>

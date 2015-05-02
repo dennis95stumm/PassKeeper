@@ -19,7 +19,7 @@ public class AlertBuilderHelper extends AlertDialog.Builder {
     public AlertBuilderHelper(Context context, int title, int message, boolean setNegative) {
         super(context);
         this.setTitle(title);
-        if(message != 0)
+        if (message != 0)
             this.setMessage(message);
         if (setNegative) {
             this.setNegativeButton(R.string.dialog_negative_button, new DialogInterface.OnClickListener() {

@@ -15,9 +15,9 @@ import de.szut.passkeeper.utility.DataLoaderTask;
 
 
 public class StartActivity extends Activity {
+    public static final int TASK_COMPLETE = 1;
     private Vector<IUserProperty> vectorUserDatabaseProperty;
     private Handler mHandler;
-    public static final int TASK_COMPLETE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class StartActivity extends Activity {
         mHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message inputMessage) {
-                DataLoaderTask task = (DataLoaderTask)inputMessage.obj;
+                DataLoaderTask task = (DataLoaderTask) inputMessage.obj;
                 vectorUserDatabaseProperty = task.getPropertyVector();
                 setStartActivity();
             }

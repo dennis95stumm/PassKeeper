@@ -65,12 +65,12 @@ public class ListViewAdapter extends BaseAdapter {
         IUserProperty iUserProperty = vector.get(position);
         imageView.setImageResource(iUserProperty.getItemImage());
         textViewDatabaseName.setText(iUserProperty.getItemHeader());
-        textViewEditationDate.setText(context.getString(R.string.textview_modified) +  " " + iUserProperty.getItemSubHeader());
+        textViewEditationDate.setText(context.getString(R.string.textview_modified) + " " + iUserProperty.getItemSubHeader());
 
         return v;
     }
 
-    public void refresh(Vector<IUserProperty> vector){
+    public void refresh(Vector<IUserProperty> vector) {
         this.vector = vector;
         notifyDataSetChanged();
     }

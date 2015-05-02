@@ -31,7 +31,7 @@ public class DataLoaderTask {
     }
 
     public Vector<IUserProperty> getPropertyVector() {
-        return  propertyVector;
+        return propertyVector;
     }
 
     public void setPropertyVector(Vector<IUserProperty> propertyVector) {

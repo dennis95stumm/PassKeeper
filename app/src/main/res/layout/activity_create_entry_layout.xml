@@ -46,13 +46,13 @@
         android:src="@android:drawable/ic_menu_view" />
 
     <ImageButton
+        android:id="@+id/imageButtonGeneratePwd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButtonGeneratePwd"
-        android:src="@android:drawable/ic_lock_idle_lock"
-        android:layout_alignEnd="@+id/editTextEntryUsername"
         android:layout_above="@+id/editTextEntryNote"
-        android:layout_alignTop="@+id/imageButtonDisplayPwd" />
+        android:layout_alignEnd="@+id/editTextEntryUsername"
+        android:layout_alignTop="@+id/imageButtonDisplayPwd"
+        android:src="@android:drawable/ic_lock_idle_lock" />
 
     <EditText
         android:id="@+id/editTextEntryNote"

@@ -19,6 +19,21 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     public static final String KEY_PWD_USER_DATABASE = "pass_database_pwd";
     public static final String KEY_ICON_USER_DATABASE = "pass_database_icon";
     public static final String KEY_MODIFY_DATE_USER_DATABASE = "pass_database_mdate";
+    // Columns of pass_category table
+    public static final String KEY_ID_USER_CATEGORY = "pass_category_id";
+    public static final String KEY_NAME_USER_CATEGORY = "pass_category_name";
+    public static final String KEY_ICON_USER_CATEGORY = "pass_category_icon";
+    public static final String KEY_MODIFY_DATE_USER_CATEGORY = "pass_category_mdate";
+    // Columns of pass_entry table
+    public static final String KEY_ID_USER_ENTRY = "pass_entry_id";
+    public static final String KEY_TITLE_USER_ENTRY = "pass_entry_title";
+    public static final String KEY_USERNAME_USER_ENTRY = "pass_entry_username";
+    public static final String KEY_USERPWD_USER_ENTRY = "pass_entry_pwd";
+    public static final String KEY_HASH_USER_ENTRY = "pass_entry_hash";
+    public static final String KEY_NOTE_USER_ENTRY = "pass_entry_note";
+    public static final String KEY_ICON_USER_ENTRY = "pass_entry_icon";
+    public static final String KEY_MODIFY_DATE_USER_ENTRY = "pass_entry_mdate";
+    public static final String KEY_IV_USER_ENTRY = "pass_entry_iv";
     //
     private static final String CREATE_USER_DATABASE_TABLE_SQL =
             "CREATE TABLE " + TABLE_USER_DATABASE +
@@ -29,11 +44,6 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                     + KEY_ICON_USER_DATABASE + " INTEGER,\n"
                     + KEY_MODIFY_DATE_USER_DATABASE + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n" +
                     ")";
-    // Columns of pass_category table
-    public static final String KEY_ID_USER_CATEGORY = "pass_category_id";
-    public static final String KEY_NAME_USER_CATEGORY = "pass_category_name";
-    public static final String KEY_ICON_USER_CATEGORY = "pass_category_icon";
-    public static final String KEY_MODIFY_DATE_USER_CATEGORY = "pass_category_mdate";
     //
     private static final String CREATE_USER_CATEGORY_TABLE_SQL =
             "CREATE TABLE " + TABLE_USER_CATEGORY +
@@ -45,16 +55,6 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                     + KEY_MODIFY_DATE_USER_CATEGORY + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"
                     + " FOREIGN KEY (" + KEY_ID_USER_DATABASE + ") REFERENCES " + TABLE_USER_DATABASE + "(" + KEY_ID_USER_DATABASE + ") ON DELETE CASCADE\n" +
                     ")";
-    // Columns of pass_entry table
-    public static final String KEY_ID_USER_ENTRY = "pass_entry_id";
-    public static final String KEY_TITLE_USER_ENTRY = "pass_entry_title";
-    public static final String KEY_USERNAME_USER_ENTRY = "pass_entry_username";
-    public static final String KEY_USERPWD_USER_ENTRY = "pass_entry_pwd";
-    public static final String KEY_HASH_USER_ENTRY = "pass_entry_hash";
-    public static final String KEY_NOTE_USER_ENTRY = "pass_entry_note";
-    public static final String KEY_ICON_USER_ENTRY = "pass_entry_icon";
-    public static final String KEY_MODIFY_DATE_USER_ENTRY = "pass_entry_mdate";
-    public static final String KEY_IV_USER_ENTRY = "pass_entry_iv";
     // CREATE STATEMENTS FOR TABLES
     private static final String CREATE_USER_ENTRY_TABLE_SQL =
             "CREATE TABLE " + TABLE_USER_ENTRY +

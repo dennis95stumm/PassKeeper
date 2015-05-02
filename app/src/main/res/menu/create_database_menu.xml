@@ -1,11 +1,10 @@
-<menu xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context="de.szut.passkeeper.activity.CreateDatabaseActivity">
     <item
-        android:title="Null"
-        android:showAsAction="always"
         android:id="@+id/menuItemDatabaseSave"
-        android:icon="@android:drawable/ic_menu_save">
-        </item>
+        android:icon="@android:drawable/ic_menu_save"
+        android:showAsAction="always"
+        android:title="Null"></item>
 
 </menu>

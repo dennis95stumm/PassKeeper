@@ -121,7 +121,7 @@ public class UpdateEntryActivity extends Activity implements IActivity {
         byte[] iv = Security.getInstance().generateIV();
         String encryptedUsername = Security.getInstance().encryptValue(username, secret, iv);
         String encryptedPassword = Security.getInstance().encryptValue(password, secret, iv);
-        databaseModel.updateUserEntry( new EntryProperty(
+        databaseModel.updateUserEntry(new EntryProperty(
                 entryId,
                 editTextEntryTitle.getText().toString(),
                 encryptedUsername,
