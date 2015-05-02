@@ -14,7 +14,7 @@ import de.szut.passkeeper.model.DatabaseModel;
 import de.szut.passkeeper.property.CategoryProperty;
 import de.szut.passkeeper.property.DatabaseProperty;
 import de.szut.passkeeper.utility.AlertBuilderHelper;
-import de.szut.passkeeper.utility.TouchListener;
+import de.szut.passkeeper.utility.ViewPwdTouchListener;
 
 
 public class CreateDatabaseActivity extends Activity implements IActivity {
@@ -82,6 +82,6 @@ public class CreateDatabaseActivity extends Activity implements IActivity {
         editTextDatabaseName = (EditText) findViewById(R.id.editTextDatabaseName);
         editTextDatabasePwd = (EditText) findViewById(R.id.editTextDatabasePwd);
         imageButton = (ImageButton) findViewById(R.id.imageButtonDisplayPwd);
-        imageButton.setOnTouchListener(new TouchListener(editTextDatabasePwd));
+        imageButton.setOnTouchListener(new ViewPwdTouchListener(editTextDatabasePwd));
     }
 }

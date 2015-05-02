@@ -11,6 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.util.Random;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -171,6 +172,11 @@ public class Security {
     }
 
     public String generatePassword() {
-        return "";
+        String password = "";
+        Random random = new Random();
+        for (int i = 0; i < 16; i++) {
+            password += (char) (random.nextInt(93) + 33);
+        }
+        return password;
     }
 }

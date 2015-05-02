@@ -18,7 +18,8 @@ import de.szut.passkeeper.model.DatabaseModel;
 import de.szut.passkeeper.model.Security;
 import de.szut.passkeeper.property.EntryProperty;
 import de.szut.passkeeper.utility.AlertBuilderHelper;
-import de.szut.passkeeper.utility.TouchListener;
+import de.szut.passkeeper.utility.GeneratePwdClickListener;
+import de.szut.passkeeper.utility.ViewPwdTouchListener;
 
 public class CreateEntryActivity extends Activity implements IActivity {
 
@@ -27,6 +28,7 @@ public class CreateEntryActivity extends Activity implements IActivity {
     private EditText editTextEntryPwd;
     private EditText editTextEntryNote;
     private ImageButton imageButtonDisplayPwd;
+    private ImageButton imageButtonGeneratePwd;
     private ProgressDialog progressDialog;
     private DatabaseModel databaseModel;
     private int databaseId;
@@ -91,7 +93,9 @@ public class CreateEntryActivity extends Activity implements IActivity {
         editTextEntryPwd = (EditText) findViewById(R.id.editTextEntryPwd);
         editTextEntryNote = (EditText) findViewById(R.id.editTextEntryNote);
         imageButtonDisplayPwd = (ImageButton) findViewById(R.id.imageButtonDisplayPwd);
-        imageButtonDisplayPwd.setOnTouchListener(new TouchListener(editTextEntryPwd));
+        imageButtonGeneratePwd = (ImageButton) findViewById(R.id.imageButtonGeneratePwd);
+        imageButtonDisplayPwd.setOnTouchListener(new ViewPwdTouchListener(editTextEntryPwd));
+        imageButtonGeneratePwd.setOnClickListener(new GeneratePwdClickListener(editTextEntryPwd));
     }
 
     private class BackgroundTask extends AsyncTask<Void, Void, Void> {

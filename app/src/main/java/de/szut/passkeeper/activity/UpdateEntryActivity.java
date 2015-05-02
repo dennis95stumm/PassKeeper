@@ -18,7 +18,8 @@ import de.szut.passkeeper.interfaces.IActivity;
 import de.szut.passkeeper.model.DatabaseModel;
 import de.szut.passkeeper.model.Security;
 import de.szut.passkeeper.property.EntryProperty;
-import de.szut.passkeeper.utility.TouchListener;
+import de.szut.passkeeper.utility.GeneratePwdClickListener;
+import de.szut.passkeeper.utility.ViewPwdTouchListener;
 
 public class UpdateEntryActivity extends Activity implements IActivity {
 
@@ -28,6 +29,7 @@ public class UpdateEntryActivity extends Activity implements IActivity {
     private EditText editTextEntryPwd;
     private EditText editTextEntryNote;
     private ImageButton imageButtonDisplayPwd;
+    private ImageButton imageButtonGeneratePwd;
     private ProgressDialog progressDialog;
     private DatabaseModel databaseModel;
     private int databaseId;
@@ -92,11 +94,13 @@ public class UpdateEntryActivity extends Activity implements IActivity {
         editTextEntryPwd = (EditText) findViewById(R.id.editTextEntryPwd);
         editTextEntryNote = (EditText) findViewById(R.id.editTextEntryNote);
         imageButtonDisplayPwd = (ImageButton) findViewById(R.id.imageButtonDisplayPwd);
+        imageButtonGeneratePwd = (ImageButton) findViewById(R.id.imageButtonGeneratePwd);
         editTextEntryTitle.setText(entryProperty.getEntryTitle());
         editTextEntryUsername.setText(decryptedUsername);
         editTextEntryPwd.setText(decryptedUserPwd);
         editTextEntryNote.setText(entryProperty.getEntryNote());
-        imageButtonDisplayPwd.setOnTouchListener(new TouchListener(editTextEntryPwd));
+        imageButtonDisplayPwd.setOnTouchListener(new ViewPwdTouchListener(editTextEntryPwd));
+        imageButtonGeneratePwd.setOnClickListener(new GeneratePwdClickListener(editTextEntryPwd));
     }
 
     private void decryptData() {
