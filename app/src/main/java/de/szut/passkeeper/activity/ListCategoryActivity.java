@@ -4,33 +4,36 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 
 import java.util.Vector;
 
 import de.szut.passkeeper.R;
 import de.szut.passkeeper.interfaces.IActivity;
+import de.szut.passkeeper.interfaces.IRecyclerActivity;
+import de.szut.passkeeper.interfaces.IRecyclerItemClickListener;
 import de.szut.passkeeper.interfaces.IUserProperty;
 import de.szut.passkeeper.model.DatabaseModel;
 import de.szut.passkeeper.property.CategoryProperty;
 import de.szut.passkeeper.utility.AlertBuilderHelper;
-import de.szut.passkeeper.utility.ListViewAdapter;
+import de.szut.passkeeper.utility.RecyclerViewAdapter;
 
-public class ListCategoryActivity extends Activity implements AdapterView.OnItemClickListener, IActivity, View.OnClickListener {
+public class ListCategoryActivity extends Activity implements IActivity, View.OnClickListener, IRecyclerActivity, IRecyclerItemClickListener {
 
-    private ListView listView;
+    private RecyclerView recyclerView;
     private Vector<IUserProperty> vectorCategoryProperty;
     private DatabaseModel databaseModel;
-    private ListViewAdapter listViewAdapter;
+    private RecyclerViewAdapter recyclerViewAdapter;
     private int databaseId;
     private ImageButton imageButtonFab;
     private String databasePwd;
+    private LinearLayoutManager layoutManager;
 
     //TODO implement context menu
 
@@ -59,7 +62,7 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onRecyclerItemClick(int position) {
         Intent intentListEntryActivity = new Intent(ListCategoryActivity.this, ListEntryActivity.class)
                 .putExtra("databaseId", ((CategoryProperty) vectorCategoryProperty.get(position)).getDatabaseId())
                 .putExtra("categoryId", ((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryId())
@@ -80,7 +83,7 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
                     public void onClick(DialogInterface dialog, int which) {
                         int categoryId = databaseModel.createUserCategory(new CategoryProperty(databaseId, editTextCategoryName.getText().toString(), R.drawable.ic_folder));
                         vectorCategoryProperty.add(databaseModel.getUserCategoryProperty(categoryId));
-                        listViewAdapter.refresh(databaseModel.getUserCategoryPropertyVector(databaseId));
+                        recyclerViewAdapter.refresh(databaseModel.getUserCategoryPropertyVector(databaseId));
                     }
                 });
                 alertDialog.show();
@@ -94,20 +97,29 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
         databaseId = getIntent().getExtras().getInt("databaseId");
         databasePwd = getIntent().getExtras().getString("databasePwd");
         databaseModel = new DatabaseModel(ListCategoryActivity.this);
-        vectorCategoryProperty = new Vector<>();
-        vectorCategoryProperty.addAll(databaseModel.getUserCategoryPropertyVector(databaseId));
+        vectorCategoryProperty = databaseModel.getUserCategoryPropertyVector(databaseId);
     }
 
     @Override
     public void populateView() {
         setTitle(databaseModel.getUserDatabaseName(databaseId));
-        setContentView(R.layout.activity_listview_layout);
-        listView = (ListView) findViewById(R.id.listViewDefault);
+        setContentView(R.layout.activity_recyclerview_layout);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewDefault);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
         imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
-        listViewAdapter = new ListViewAdapter(ListCategoryActivity.this, databaseModel.getUserCategoryPropertyVector(databaseId));
-        listView.setAdapter(listViewAdapter);
-        listView.setOnItemClickListener(this);
+        recyclerViewAdapter = new RecyclerViewAdapter(ListCategoryActivity.this, databaseModel.getUserCategoryPropertyVector(databaseId));
+        recyclerView.setAdapter(recyclerViewAdapter);
+        //listView.setOnItemClickListener(this);
         imageButtonFab.setOnClickListener(this);
-        registerForContextMenu(listView);
+        registerForContextMenu(recyclerView);
+    }
+
+    @Override
+    public void removeItem(int position) {
+        databaseModel.deleteUserCategory(((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryId());
+        vectorCategoryProperty.remove(position);
+        recyclerViewAdapter.refresh(vectorCategoryProperty);
     }
 }

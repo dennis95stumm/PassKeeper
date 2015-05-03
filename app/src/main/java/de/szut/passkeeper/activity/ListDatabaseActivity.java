@@ -5,6 +5,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.view.ContextMenu;
@@ -14,32 +17,34 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.Vector;
 
 import de.szut.passkeeper.R;
 import de.szut.passkeeper.interfaces.IActivity;
+import de.szut.passkeeper.interfaces.IRecyclerActivity;
+import de.szut.passkeeper.interfaces.IRecyclerItemClickListener;
 import de.szut.passkeeper.interfaces.IUserProperty;
 import de.szut.passkeeper.model.DatabaseModel;
 import de.szut.passkeeper.model.Security;
 import de.szut.passkeeper.property.DatabaseProperty;
 import de.szut.passkeeper.utility.AlertBuilderHelper;
-import de.szut.passkeeper.utility.ListViewAdapter;
+import de.szut.passkeeper.utility.RecyclerViewAdapter;
 
 
-public class ListDatabaseActivity extends Activity implements AdapterView.OnItemClickListener, IActivity, View.OnClickListener {
+public class ListDatabaseActivity extends Activity implements IActivity, View.OnClickListener, IRecyclerActivity, IRecyclerItemClickListener {
 
     private static final int CONTEXT_UPDATE_DATABASE_NAME_ID = ContextMenu.FIRST;
     private static final int CONTEXT_UPDATE_DATABASE_PWD_ID = ContextMenu.FIRST + 1;
     private static final int CONTEXT_DELETE_DATABASE_ID = ContextMenu.FIRST + 2;
     private DatabaseModel databaseModel;
     private Vector<IUserProperty> vectorUserDatabaseProperties;
-    private ListView listView;
-    private ListViewAdapter listViewAdapter;
+    private RecyclerView recyclerView;
+    private RecyclerViewAdapter recyclerViewAdapter;
     private ImageButton imageButtonFab;
     private AdapterView.AdapterContextMenuInfo listItemInfo;
+    private LinearLayoutManager layoutManager;
 
     //TODO implement context menu
 
@@ -55,7 +60,7 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
         super.onResume();
         vectorUserDatabaseProperties.clear();
         vectorUserDatabaseProperties.addAll(databaseModel.getUserDatabasePropertyVector());
-        listViewAdapter.refresh(databaseModel.getUserDatabasePropertyVector());
+        recyclerViewAdapter.refresh(databaseModel.getUserDatabasePropertyVector());
     }
 
     @Override
@@ -108,9 +113,7 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         if (Security.getInstance().checkPassword(editTextDatabasePwd.getText().toString(), ((DatabaseProperty) vectorUserDatabaseProperties.get(listItemInfo.position)).getDatabasePwd())) {
-                            databaseModel.deleteUserDatabase(((DatabaseProperty) vectorUserDatabaseProperties.get(listItemInfo.position)).getDatabaseId());
-                            vectorUserDatabaseProperties.remove(listItemInfo.position);
-                            listViewAdapter.refresh(databaseModel.getUserDatabasePropertyVector());
+                            removeItem(listItemInfo.position);
                         } else {
                             Toast.makeText(ListDatabaseActivity.this, R.string.toast_message_wrong_password, Toast.LENGTH_SHORT).show();
                         }
@@ -125,7 +128,7 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+    public void onRecyclerItemClick(final int position) {
         final AlertDialog.Builder alertDialog = new AlertBuilderHelper(this, R.string.dialog_title_open_database, R.string.dialog_message_open_database, true);
         final EditText editText = new EditText(this);
         editText.setHint(R.string.hint_database_pwd);
@@ -162,19 +165,29 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
     @Override
     public void setDefaults() {
         databaseModel = new DatabaseModel(getApplicationContext());
-        vectorUserDatabaseProperties = new Vector<>();
-        vectorUserDatabaseProperties.addAll(databaseModel.getUserDatabasePropertyVector());
+        vectorUserDatabaseProperties = databaseModel.getUserDatabasePropertyVector();
     }
 
     @Override
     public void populateView() {
-        setContentView(R.layout.activity_listview_layout);
+        setContentView(R.layout.activity_recyclerview_layout);
         imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
-        listView = (ListView) findViewById(R.id.listViewDefault);
-        listViewAdapter = new ListViewAdapter(ListDatabaseActivity.this, databaseModel.getUserDatabasePropertyVector());
-        listView.setAdapter(listViewAdapter);
-        listView.setOnItemClickListener(this);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewDefault);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewAdapter = new RecyclerViewAdapter(this, databaseModel.getUserDatabasePropertyVector());
+        recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerViewAdapter.setOnItemClickListener(this);
         imageButtonFab.setOnClickListener(this);
-        registerForContextMenu(listView);
+        registerForContextMenu(recyclerView);
+    }
+
+    @Override
+    public void removeItem(int position) {
+        databaseModel.deleteUserDatabase(((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId());
+        vectorUserDatabaseProperties.remove(position);
+        recyclerViewAdapter.refresh(vectorUserDatabaseProperties);
     }
 }

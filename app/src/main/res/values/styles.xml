@@ -1,5 +1,5 @@
 <resources>
-
+    <color name="recyclerItemDeleteColor">#ff7575</color>
     <style name="MaterialLightTheme" parent="android:Theme.Material.Light.DarkActionBar">
         <!--<item name="android:navigationBarColor">@color/color</item>-->
     </style>

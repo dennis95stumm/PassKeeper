@@ -7,4 +7,5 @@ public interface IActivity {
     public void setDefaults();
 
     public void populateView();
+
 }
