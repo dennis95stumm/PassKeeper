@@ -17,7 +17,7 @@
             android:id="@+id/delitition_password"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toLeftOf="@id/deltition_password_yes"
+            android:layout_toLeftOf="@+id/deltition_password_yes"
             android:hint="@string/hint_entry_pwd"
             android:inputType="textPassword" />
 
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/elevation_high"
-            android:layout_toLeftOf="@id/deltition_password_no"
+            android:layout_toLeftOf="@+id/deltition_password_no"
             android:text="@string/yes"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
 
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/elevation_high"
-            android:layout_toLeftOf="@id/deltition_no"
+            android:layout_toLeftOf="@+id/deltition_no"
             android:text="@string/yes"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
 

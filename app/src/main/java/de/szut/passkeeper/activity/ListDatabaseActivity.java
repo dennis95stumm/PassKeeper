@@ -177,7 +177,7 @@ public class ListDatabaseActivity extends Activity implements IActivity, View.On
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewAdapter = new RecyclerViewAdapter(this, databaseModel.getUserDatabasePropertyVector());
+        recyclerViewAdapter = new RecyclerViewAdapter(this, databaseModel.getUserDatabasePropertyVector(), recyclerView);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerViewAdapter.setOnItemClickListener(this);
         imageButtonFab.setOnClickListener(this);

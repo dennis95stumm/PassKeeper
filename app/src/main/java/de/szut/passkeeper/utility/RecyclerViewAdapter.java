@@ -1,7 +1,9 @@
 package de.szut.passkeeper.utility;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -23,9 +25,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private Vector<IUserProperty> vector;
     private IRecyclerItemClickListener onRecyclerItemClickListener;
 
-    public RecyclerViewAdapter(Context context, Vector<IUserProperty> vector) {
+    public RecyclerViewAdapter(Context context, Vector<IUserProperty> vector, RecyclerView recyclerView) {
         this.context = context;
         this.vector = vector;
+        final GestureDetector gestruesDetector = new GestureDetector(null, new RecyclerGestrueListener(context, onRecyclerItemClickListener, recyclerView));
+        ((Activity) context).findViewById(R.id.recyclerViewDefault).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestruesDetector.onTouchEvent(event);
+            }
+        });
     }
 
     /*@Override
@@ -61,20 +70,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        Log.d(RecyclerViewAdapter.class.getSimpleName(), "viewID: " + viewGroup.getId());
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_item_layout, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(view);
+
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-        final GestureDetector gestruesDetector = new GestureDetector(null, new RecyclerGestrueListener(context, viewHolder, onRecyclerItemClickListener, i));
-        viewHolder.itemView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return gestruesDetector.onTouchEvent(event);
-            }
-        });
         viewHolder.header.setText(vector.get(i).getItemHeader());
         viewHolder.subheader.setText(vector.get(i).getItemSubHeader());
         viewHolder.icon.setImageResource(vector.get(i).getItemImage());
