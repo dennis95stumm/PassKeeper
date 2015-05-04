@@ -57,6 +57,9 @@
     <string name="contextmenu_item_update_database_name">Rename Database</string>
     <string name="contextmenu_item_update_database_password">Change Password</string>
     <string name="contextmenu_item_delete_database">Delete Database</string>
+    <string name="delte_confirmation">Are you sure to delete?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <array name="array_default_category_name">
         <item>Internet</item>

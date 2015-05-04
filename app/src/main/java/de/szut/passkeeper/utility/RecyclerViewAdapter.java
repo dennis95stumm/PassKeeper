@@ -68,14 +68,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-        final GestureDetector gestruesDetector = new GestureDetector(context, new RecyclerGestrueListener(context, viewHolder, onRecyclerItemClickListener, i));
+        final GestureDetector gestruesDetector = new GestureDetector(null, new RecyclerGestrueListener(context, viewHolder, onRecyclerItemClickListener, i));
         viewHolder.itemView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (gestruesDetector.onTouchEvent(event)) {
-                    return false;
-                }
-                return true;
+                return gestruesDetector.onTouchEvent(event);
             }
         });
         viewHolder.header.setText(vector.get(i).getItemHeader());
@@ -97,8 +94,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public TextView subheader;
         public ImageView icon;
         public View itemView;
-        public View deleteAnimViewLeft;
-        public View deleteAnimViewRight;
+        public View deleteAnimView;
         public View mainView;
 
         public ViewHolder(View itemView) {
@@ -107,8 +103,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             header = (TextView) itemView.findViewById(R.id.textViewHeader);
             subheader = (TextView) itemView.findViewById(R.id.textViewSubHeader);
             icon = (ImageView) itemView.findViewById(R.id.icon);
-            deleteAnimViewLeft = itemView.findViewById(R.id.delete_recycler_item_left);
-            deleteAnimViewRight = itemView.findViewById(R.id.delete_recycler_item_right);
+            deleteAnimView = itemView.findViewById(R.id.delete_recycler_item);
             mainView = itemView.findViewById(R.id.mainview);
         }
     }
