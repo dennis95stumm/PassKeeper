@@ -24,7 +24,6 @@ import java.util.Vector;
 import de.szut.passkeeper.R;
 import de.szut.passkeeper.interfaces.IActivity;
 import de.szut.passkeeper.interfaces.IRecyclerActivity;
-import de.szut.passkeeper.interfaces.IRecyclerItemClickListener;
 import de.szut.passkeeper.interfaces.IUserProperty;
 import de.szut.passkeeper.model.DatabaseModel;
 import de.szut.passkeeper.model.Security;
@@ -33,7 +32,7 @@ import de.szut.passkeeper.utility.AlertBuilderHelper;
 import de.szut.passkeeper.utility.RecyclerViewAdapter;
 
 
-public class ListDatabaseActivity extends Activity implements IActivity, View.OnClickListener, IRecyclerActivity, IRecyclerItemClickListener {
+public class ListDatabaseActivity extends Activity implements IActivity, View.OnClickListener, IRecyclerActivity {
 
     private static final int CONTEXT_UPDATE_DATABASE_NAME_ID = ContextMenu.FIRST;
     private static final int CONTEXT_UPDATE_DATABASE_PWD_ID = ContextMenu.FIRST + 1;
@@ -179,7 +178,6 @@ public class ListDatabaseActivity extends Activity implements IActivity, View.On
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerViewAdapter = new RecyclerViewAdapter(this, databaseModel.getUserDatabasePropertyVector(), recyclerView);
         recyclerView.setAdapter(recyclerViewAdapter);
-        recyclerViewAdapter.setOnItemClickListener(this);
         imageButtonFab.setOnClickListener(this);
         registerForContextMenu(recyclerView);
     }

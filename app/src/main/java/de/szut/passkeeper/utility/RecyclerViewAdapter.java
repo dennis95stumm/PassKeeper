@@ -15,7 +15,7 @@ import android.widget.TextView;
 import java.util.Vector;
 
 import de.szut.passkeeper.R;
-import de.szut.passkeeper.interfaces.IRecyclerItemClickListener;
+import de.szut.passkeeper.interfaces.IRecyclerActivity;
 import de.szut.passkeeper.interfaces.IUserProperty;
 
 
@@ -23,12 +23,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     Context context;
     private Vector<IUserProperty> vector;
-    private IRecyclerItemClickListener onRecyclerItemClickListener;
+    private IRecyclerActivity iRecyclerActivity;
 
-    public RecyclerViewAdapter(Context context, Vector<IUserProperty> vector, RecyclerView recyclerView) {
+    public RecyclerViewAdapter(Context context, Vector<IUserProperty> vector, RecyclerView recyclerView, IRecyclerActivity iRecyclerActivity) {
         this.context = context;
         this.vector = vector;
-        final GestureDetector gestruesDetector = new GestureDetector(null, new RecyclerGestrueListener(context, onRecyclerItemClickListener, recyclerView));
+        this.iRecyclerActivity = iRecyclerActivity;
+        final GestureDetector gestruesDetector = new GestureDetector(null, new RecyclerGestrueListener(context, iRecyclerActivity, recyclerView));
         ((Activity) context).findViewById(R.id.recyclerViewDefault).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -87,10 +88,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public int getItemCount() {
         return vector.size();
-    }
-
-    public void setOnItemClickListener(IRecyclerItemClickListener onItemClickListener) {
-        this.onRecyclerItemClickListener = onItemClickListener;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

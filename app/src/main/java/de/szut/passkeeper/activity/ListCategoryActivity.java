@@ -17,14 +17,13 @@ import java.util.Vector;
 import de.szut.passkeeper.R;
 import de.szut.passkeeper.interfaces.IActivity;
 import de.szut.passkeeper.interfaces.IRecyclerActivity;
-import de.szut.passkeeper.interfaces.IRecyclerItemClickListener;
 import de.szut.passkeeper.interfaces.IUserProperty;
 import de.szut.passkeeper.model.DatabaseModel;
 import de.szut.passkeeper.property.CategoryProperty;
 import de.szut.passkeeper.utility.AlertBuilderHelper;
 import de.szut.passkeeper.utility.RecyclerViewAdapter;
 
-public class ListCategoryActivity extends Activity implements IActivity, View.OnClickListener, IRecyclerActivity, IRecyclerItemClickListener {
+public class ListCategoryActivity extends Activity implements IActivity, View.OnClickListener, IRecyclerActivity {
 
     private RecyclerView recyclerView;
     private Vector<IUserProperty> vectorCategoryProperty;

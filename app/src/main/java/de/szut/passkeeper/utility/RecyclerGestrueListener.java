@@ -4,26 +4,25 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import de.szut.passkeeper.interfaces.IRecyclerItemClickListener;
+import de.szut.passkeeper.interfaces.IRecyclerActivity;
 
 /**
  * Created by redtiger on 03.05.15.
  */
 public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureListener {
-    private IRecyclerItemClickListener iRecyclerItemClickListener;
+    private IRecyclerActivity iRecyclerActivity;
     private int recyclerPosition;
     private Context context;
     private RecyclerView view;
     private RecyclerViewAdapter.ViewHolder actualViewHolder;
 
-    public RecyclerGestrueListener(Context context, IRecyclerItemClickListener iRecyclerItemClickListener, RecyclerView view) {
-        this.iRecyclerItemClickListener = iRecyclerItemClickListener;
+    public RecyclerGestrueListener(Context context, IRecyclerActivity iRecyclerActivity, RecyclerView view) {
+        this.iRecyclerActivity = iRecyclerActivity;
         this.context = context;
         this.view = view;
     }
