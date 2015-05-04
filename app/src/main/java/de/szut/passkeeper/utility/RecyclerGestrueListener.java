@@ -1,5 +1,6 @@
 package de.szut.passkeeper.utility;
 
+import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -29,7 +30,7 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
-        iRecyclerItemClickListener.onRecyclerItemClick(recyclerPosition);
+        //iRecyclerItemClickListener.onRecyclerItemClick(recyclerPosition);
         return super.onSingleTapUp(e);
     }
 
@@ -57,18 +58,82 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
     @Override
     public boolean onFling(final MotionEvent e1, final MotionEvent e2, float velocityX, float velocityY) {
         final int distanceX = (int) (e2.getX() - e1.getX());
-        if (e1.getX() - e2.getX() > actualViewHolder.mainView.getWidth() / 2) { // Right to Left
-            Log.d(RecyclerGestrueListener.class.getSimpleName(), "right to left swipe more than the half");
-        } else if (e2.getX() - e1.getX() > actualViewHolder.mainView.getWidth() / 2) { // Left to Right
-            Log.d(RecyclerGestrueListener.class.getSimpleName(), "left to right swipe more than the half");
+        if (e1.getX() - e2.getX() > actualViewHolder.mainView.getWidth() * 0.80) { // Right to Left
+            ValueAnimator animator = ValueAnimator.ofInt(Math.abs(distanceX), actualViewHolder.mainView.getWidth());
+            animator.setDuration(500);
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    View animationView = actualViewHolder.mainView;
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) animationView.getLayoutParams();
+                    params.rightMargin = (int) animation.getAnimatedValue();
+                    params.leftMargin = -(int) animation.getAnimatedValue();
+                    animationView.setLayoutParams(params);
+                }
+            });
+            animator.start();
+            animator.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    actualViewHolder.deleteAnimView.setVisibility(View.GONE);
+                    actualViewHolder.delteConfirmationView.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            });
+        } else if (e2.getX() - e1.getX() > actualViewHolder.mainView.getWidth() * 0.80) { // Left to Right
+            ValueAnimator animator = ValueAnimator.ofInt(Math.abs(distanceX), actualViewHolder.mainView.getWidth());
+            animator.setDuration(500);
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    View animationView = actualViewHolder.mainView;
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) animationView.getLayoutParams();
+                    params.rightMargin = -(int) animation.getAnimatedValue();
+                    params.leftMargin = (int) animation.getAnimatedValue();
+                    animationView.setLayoutParams(params);
+                }
+            });
+            animator.start();
+            animator.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    actualViewHolder.deleteAnimView.setVisibility(View.GONE);
+                    actualViewHolder.delteConfirmationView.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            });
         } else {
-            Log.d(RecyclerGestrueListener.class.getSimpleName(), "small swipe " + Math.abs(distanceX));
             ValueAnimator animator = ValueAnimator.ofInt(Math.abs(distanceX), 0);
             animator.setDuration(500);
             animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
-                    Log.d(RecyclerGestrueListener.class.getSimpleName(), "animated value " + animation.getAnimatedValue());
                     View animationView = actualViewHolder.mainView;
                     RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) animationView.getLayoutParams();
                     params.rightMargin = distanceX > 0 ? -(int) animation.getAnimatedValue() : (int) animation.getAnimatedValue();
@@ -77,8 +142,27 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
                 }
             });
             animator.start();
+            animator.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    actualViewHolder = null;
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            });
         }
-        actualViewHolder = null;
         return false;
     }
 

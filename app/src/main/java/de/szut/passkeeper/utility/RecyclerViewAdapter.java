@@ -100,6 +100,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public View itemView;
         public View deleteAnimView;
         public View mainView;
+        public View delteConfirmationView;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -109,6 +110,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             icon = (ImageView) itemView.findViewById(R.id.icon);
             deleteAnimView = itemView.findViewById(R.id.delete_recycler_item);
             mainView = itemView.findViewById(R.id.mainview);
+            delteConfirmationView = itemView.findViewById(R.id.delete_recycler_item_confirmation);
         }
     }
 }
