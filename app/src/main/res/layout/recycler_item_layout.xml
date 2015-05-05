@@ -86,6 +86,7 @@
         android:padding="8dp">
 
         <ImageView
+            android:id="@+id/delete_image_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -93,6 +94,7 @@
             android:src="@android:drawable/ic_menu_delete" />
 
         <ImageView
+            android:id="@+id/delete_image_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

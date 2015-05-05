@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import de.szut.passkeeper.R;
 import de.szut.passkeeper.interfaces.IRecyclerActivity;
 
 /**
@@ -38,6 +39,8 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
         int minSwipeDistance = 30;
         if (e1.getX() - e2.getX() > minSwipeDistance) { // Right to left swipe
             int distance = (int) (e2.getX() - e1.getX());
+            actualViewHolder.deleteAnimView.findViewById(R.id.delete_image_left).setVisibility(View.GONE);
+            actualViewHolder.deleteAnimView.findViewById(R.id.delete_image_right).setVisibility(View.VISIBLE);
             View animationView = actualViewHolder.mainView;
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) animationView.getLayoutParams();
             params.rightMargin = -distance;
@@ -45,6 +48,8 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
             animationView.setLayoutParams(params);
         } else if (e2.getX() - e1.getX() > minSwipeDistance) { // Left to right
             int distance = (int) (e1.getX() - e2.getX());
+            actualViewHolder.deleteAnimView.findViewById(R.id.delete_image_left).setVisibility(View.VISIBLE);
+            actualViewHolder.deleteAnimView.findViewById(R.id.delete_image_right).setVisibility(View.GONE);
             View animationView = actualViewHolder.mainView;
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) animationView.getLayoutParams();
             params.rightMargin = distance;
