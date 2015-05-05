@@ -3,6 +3,9 @@ package de.szut.passkeeper.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -22,6 +25,7 @@ public class CreateDatabaseActivity extends Activity implements IActivity {
     private EditText editTextDatabaseName;
     private EditText editTextDatabasePwd;
     private ImageButton imageButton;
+    private MenuItem saveDatabaseItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,7 @@ public class CreateDatabaseActivity extends Activity implements IActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.create_database_menu, menu);
+        saveDatabaseItem = menu.findItem(R.id.menuItemDatabaseSave);
         return true;
     }
 
@@ -81,6 +86,26 @@ public class CreateDatabaseActivity extends Activity implements IActivity {
         setContentView(R.layout.activity_create_database_layout);
         editTextDatabaseName = (EditText) findViewById(R.id.editTextDatabaseName);
         editTextDatabasePwd = (EditText) findViewById(R.id.editTextDatabasePwd);
+        editTextDatabasePwd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!s.toString().matches("((?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!\"#$%&'\\(\\)\\*\\+,\\-\\./:;<=>\\?@\\[\\\\\\]\\^_`\\{\\|\\}~]).{8,16})")) {
+                    editTextDatabasePwd.setError(getText(R.string.bad_password));
+                    saveDatabaseItem.setEnabled(false);
+                } else {
+                    editTextDatabasePwd.setError(null);
+                    saveDatabaseItem.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
         imageButton = (ImageButton) findViewById(R.id.imageButtonDisplayPwd);
         imageButton.setOnTouchListener(new ViewPwdTouchListener(editTextDatabasePwd));
     }

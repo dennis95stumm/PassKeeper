@@ -60,6 +60,7 @@
     <string name="delte_confirmation">Are you sure to delete?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="bad_password">The password must contain at least one upper case, one lower case character, one special character, one digit and must be between 8 and 16 characters.</string>
 
     <array name="array_default_category_name">
         <item>Internet</item>
