@@ -29,6 +29,7 @@ import de.szut.passkeeper.model.DatabaseModel;
 import de.szut.passkeeper.model.Security;
 import de.szut.passkeeper.property.DatabaseProperty;
 import de.szut.passkeeper.utility.AlertBuilderHelper;
+import de.szut.passkeeper.utility.RecyclerItemDividerDecoration;
 import de.szut.passkeeper.utility.RecyclerViewAdapter;
 
 
@@ -178,6 +179,7 @@ public class ListDatabaseActivity extends Activity implements IActivity, View.On
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerViewAdapter = new RecyclerViewAdapter(this, databaseModel.getUserDatabasePropertyVector(), recyclerView, this);
         recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.addItemDecoration(new RecyclerItemDividerDecoration(this));
         imageButtonFab.setOnClickListener(this);
         registerForContextMenu(recyclerView);
     }

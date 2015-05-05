@@ -21,6 +21,7 @@ import de.szut.passkeeper.interfaces.IUserProperty;
 import de.szut.passkeeper.model.DatabaseModel;
 import de.szut.passkeeper.property.CategoryProperty;
 import de.szut.passkeeper.utility.AlertBuilderHelper;
+import de.szut.passkeeper.utility.RecyclerItemDividerDecoration;
 import de.szut.passkeeper.utility.RecyclerViewAdapter;
 
 public class ListCategoryActivity extends Activity implements IActivity, View.OnClickListener, IRecyclerActivity {
@@ -110,6 +111,7 @@ public class ListCategoryActivity extends Activity implements IActivity, View.On
         imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
         recyclerViewAdapter = new RecyclerViewAdapter(this, databaseModel.getUserCategoryPropertyVector(databaseId), recyclerView, this);
         recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.addItemDecoration(new RecyclerItemDividerDecoration(this));
         //listView.setOnItemClickListener(this);
         imageButtonFab.setOnClickListener(this);
         registerForContextMenu(recyclerView);

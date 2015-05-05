@@ -20,6 +20,7 @@ import de.szut.passkeeper.interfaces.IUserProperty;
 import de.szut.passkeeper.model.DatabaseModel;
 import de.szut.passkeeper.property.EntryProperty;
 import de.szut.passkeeper.utility.AlertBuilderHelper;
+import de.szut.passkeeper.utility.RecyclerItemDividerDecoration;
 import de.szut.passkeeper.utility.RecyclerViewAdapter;
 
 /**
@@ -132,6 +133,7 @@ public class ListEntryActivity extends Activity implements IActivity, View.OnCli
         recyclerViewAdapter = new RecyclerViewAdapter(this, vectorEntryPropery, recyclerView, this);
         recyclerView.setAdapter(recyclerViewAdapter);
         //recyclerView.setOnItemClickListener(this);
+        recyclerView.addItemDecoration(new RecyclerItemDividerDecoration(this));
         imageButtonFab.setOnClickListener(this);
         registerForContextMenu(recyclerView);
     }
