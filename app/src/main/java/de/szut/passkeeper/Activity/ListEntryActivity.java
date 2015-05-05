@@ -99,8 +99,13 @@ public class ListEntryActivity extends Activity implements AdapterView.OnItemCli
     public void setDefaults() {
         databaseModel = new DatabaseModel(this);
         vectorEntryPropery = new Vector<>();
-        vectorEntryPropery.addAll(databaseModel.getUserEntryVector(databaseId, categoryId));
-        if(databaseModel.getUserEntryVector(databaseId, categoryId).isEmpty()){
+        Vector<IUserProperty> userEntryVector = databaseModel.getUserEntryVector(databaseId, categoryId);
+
+        vectorEntryPropery.addAll(userEntryVector);
+
+        //Ist immer empty
+        if(userEntryVector.isEmpty()){
+
             AlertBuilderHelper alertBuilderHelper = new AlertBuilderHelper(ListEntryActivity.this, R.string.dialog_title_create_entry, R.string.dialog_message_create_entry, true);
             alertBuilderHelper.setPositiveButton(R.string.dialog_positive_button_default, new DialogInterface.OnClickListener() {
                 @Override

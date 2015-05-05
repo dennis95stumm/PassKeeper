@@ -14,7 +14,7 @@
     <string name="dialog_title_warning">WARNING!</string>
     <string name="dialog_title_change_database_pwd">Change Password</string>
 
-    <string name="dialog_message_open_database">Password please!</string>
+    <string name="dialog_message_open_database">Please insert a password!</string>
     <string name="dialog_message_add_category">Create a new category!</string>
     <string name="dialog_message_entry_required_data">At least the title and a password must be given!</string>
     <string name="dialog_message_create_entry">There is no data available for this category. Would you like to create one?</string>

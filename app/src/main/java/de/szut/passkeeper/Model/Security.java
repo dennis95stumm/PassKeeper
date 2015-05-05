@@ -71,7 +71,7 @@ public class Security {
         byte[] encryptedValue = new byte[0];
         try {
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-            KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
+            KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);//65536 ist zu klein - unsicher
             SecretKey tmp = factory.generateSecret(spec);
             SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
             Cipher cipher = Cipher.getInstance("AES");
