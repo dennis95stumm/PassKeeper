@@ -61,7 +61,9 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
 
     /** TODO
      * Keine Logik hinter Update Category
-     * Keine Logik hinter Delete Category
+     * Logik hinter Delete Category ist noch buggy. Nach dem zweiten mal Löschen eines Eintrages
+     * wird scheinbar der Ursprungszustand wieder hergestellt. (Alle Einträge werden gelöscht
+     * und die Default einträge werden wieder hergestellt
      */
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
