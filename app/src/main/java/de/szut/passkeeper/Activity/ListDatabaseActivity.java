@@ -68,6 +68,12 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
         menu.add(Menu.NONE, CONTEXT_DELETE_DATABASE_ID, Menu.NONE, R.string.contextmenu_item_delete_database);
     }
 
+
+    /**TODO
+     * Buggy - Rename Database -> ist nicht programmiert
+     * Change Password -> Führt zum Absturz des Programmes
+     * Delete Database Funktioniert soweit
+     */
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         listItemInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();

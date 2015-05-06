@@ -57,6 +57,11 @@
     <string name="contextmenu_item_update_database_password">Change Password</string>
     <string name="contextmenu_item_delete_database">Delete Database</string>
 
+    <string name="dialog_message_delete_category_warning_message">Attenion! If you proceed to delete this Category, you will lose <b>ALL</b> your Entries! This <b>CAN NOT</b> be undone. If you wish to continue, insert your password and and hit the delete button.</string>
+    <string name="contextmenu_item_update_category_name">Rename Category</string>
+    <string name="contextmenu_item_delete_category">Delete Category</string>
+
+
     <array name="array_default_category_name">
         <item>Internet</item>
         <item>Networking</item>

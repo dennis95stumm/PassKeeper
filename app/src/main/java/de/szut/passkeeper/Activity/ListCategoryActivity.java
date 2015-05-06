@@ -1,9 +1,13 @@
 package de.szut.passkeeper.Activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,13 +16,16 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.Vector;
 
 import de.szut.passkeeper.Interface.IActivity;
 import de.szut.passkeeper.Interface.IUserProperty;
 import de.szut.passkeeper.Model.DatabaseModel;
+import de.szut.passkeeper.Model.Security;
 import de.szut.passkeeper.Property.CategoryProperty;
+import de.szut.passkeeper.Property.DatabaseProperty;
 import de.szut.passkeeper.R;
 import de.szut.passkeeper.Utility.AlertBuilderHelper;
 import de.szut.passkeeper.Utility.ListViewAdapter;
@@ -30,10 +37,13 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
     private DatabaseModel databaseModel;
     private ListViewAdapter listViewAdapter;
     private int databaseId;
+    private Vector<IUserProperty> vectorUserDatabaseProperties;
     private ImageButton imageButtonFab;
     private String databasePwd;
+    private static final int CONTEXT_UPDATE_CATEGORY_NAME_ID = ContextMenu.FIRST;
+    private static final int CONTEXT_DELETE_CATEGORY_ID = ContextMenu.FIRST + 1;
+    private AdapterView.AdapterContextMenuInfo listItemInfo;
 
-    //TODO implement context menu
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +58,42 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
         getMenuInflater().inflate(R.menu.category_list_menu, menu);
         return true;
     }
+
+    /** TODO
+     * Keine Logik hinter Update Category
+     * Keine Logik hinter Delete Category
+     */
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(Menu.NONE, CONTEXT_UPDATE_CATEGORY_NAME_ID, Menu.NONE, R.string.contextmenu_item_update_category_name);
+        menu.add(Menu.NONE, CONTEXT_DELETE_CATEGORY_ID, Menu.NONE, R.string.contextmenu_item_delete_category);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        listItemInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()){
+            case 1:
+                //TODO Umbenennen Logik hinterlegen
+                break;
+            case 2:
+                final AlertBuilderHelper alertBuilderHelper = new AlertBuilderHelper(ListCategoryActivity.this, R.string.dialog_title_warning, R.string.dialog_message_delete_category_warning_message, true);
+                alertBuilderHelper.setPositiveButton(R.string.dialog_positive_button_delete, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                            databaseModel.deleteUserCategory(((CategoryProperty) vectorCategoryProperty.get(listItemInfo.position)).getCategoryId());
+                            vectorCategoryProperty.remove(listItemInfo.position);
+                            listViewAdapter.refresh(databaseModel.getUserCategoryPropertyVector(listItemInfo.position));
+                    }
+                });
+                alertBuilderHelper.show();
+                break;
+        }
+        return super.onContextItemSelected(item);
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
