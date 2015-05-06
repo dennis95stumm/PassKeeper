@@ -84,12 +84,12 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
                 alertBuilderHelper.setPositiveButton(R.string.dialog_positive_button_delete, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Integer position = listItemInfo.position;
                         dialog.dismiss();
+                        Integer position = listItemInfo.position;
                             databaseModel.deleteUserCategory(((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryId());
                             vectorCategoryProperty.remove(position);
-                        //TODO Refresh sorgt für bugs! -> prüfen
-                            listViewAdapter.refresh(databaseModel.getUserCategoryPropertyVector(position));
+                        //TODO Nach Refresh werden falsche oder keine Datensätze mehr gelöscht! -> zu prüfen this.vector = vector;
+                            listViewAdapter.refresh(databaseModel.getUserCategoryPropertyVector(databaseId));
                     }
                 });
                 alertBuilderHelper.show();
