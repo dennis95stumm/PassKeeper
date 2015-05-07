@@ -123,4 +123,12 @@ public class ListCategoryActivity extends Activity implements IActivity, View.On
         vectorCategoryProperty.remove(position);
         recyclerViewAdapter.refresh(vectorCategoryProperty);
     }
+
+    @Override
+    public boolean confirmRemove(String password, int position) {
+        return true;
+    }
+
+    @Override
+    public void onRemoveConfirmationFailed() {}
 }

@@ -2,12 +2,17 @@ package de.szut.passkeeper.utility;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import de.szut.passkeeper.R;
 import de.szut.passkeeper.interfaces.IRecyclerActivity;
@@ -21,16 +26,18 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
     private Context context;
     private RecyclerView view;
     private RecyclerViewAdapter.ViewHolder actualViewHolder;
+    private int confirmationViewId;
 
-    public RecyclerGestrueListener(Context context, IRecyclerActivity iRecyclerActivity, RecyclerView view) {
+    public RecyclerGestrueListener(Context context, IRecyclerActivity iRecyclerActivity, RecyclerView view, int confirmationViewId) {
         this.iRecyclerActivity = iRecyclerActivity;
         this.context = context;
         this.view = view;
+        this.confirmationViewId = confirmationViewId;
     }
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
-        //iRecyclerItemClickListener.onRecyclerItemClick(recyclerPosition);
+        iRecyclerActivity.onRecyclerItemClick(recyclerPosition);
         return super.onSingleTapUp(e);
     }
 
@@ -119,7 +126,36 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     actualViewHolder.deleteAnimView.setVisibility(View.GONE);
-                    actualViewHolder.delteConfirmationView.setVisibility(View.VISIBLE);
+                    actualViewHolder.delteConfirmation.setVisibility(View.VISIBLE);
+                    if(actualViewHolder.delteConfirmationView instanceof EditText) {
+                        InputMethodManager imm = (InputMethodManager)context.getSystemService(
+                                Context.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                        actualViewHolder.delteConfirmationView.requestFocus();
+                    }
+                    ((TextView)actualViewHolder.delteConfirmation.findViewById(R.id.deltition_yes)).setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            if (iRecyclerActivity.confirmRemove(actualViewHolder.delteConfirmationView instanceof EditText ? ((EditText)actualViewHolder.delteConfirmationView).getText().toString() : null, recyclerPosition)) {
+                               iRecyclerActivity.removeItem(recyclerPosition);
+                            } else {
+                                actualViewHolder.delteConfirmation.setVisibility(View.GONE);
+                                actualViewHolder.deleteAnimView.setVisibility(View.VISIBLE);
+                                View animationView = actualViewHolder.mainView;
+                                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) animationView.getLayoutParams();
+                                params.rightMargin = 0;
+                                params.leftMargin = 0;
+                                animationView.setLayoutParams(params);
+                                iRecyclerActivity.onRemoveConfirmationFailed();
+                                if(actualViewHolder.delteConfirmationView instanceof EditText) {
+                                    InputMethodManager imm = (InputMethodManager)context.getSystemService(
+                                            Context.INPUT_METHOD_SERVICE);
+                                    imm.hideSoftInputFromWindow(actualViewHolder.delteConfirmationView.getWindowToken(), 0);
+                                }
+                            }
+                            return false;
+                        }
+                    });
                 }
 
                 @Override
@@ -175,6 +211,7 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
         View childView = view.findChildViewUnder(e.getX(), e.getY());
         if (childView != null) {
             actualViewHolder = (RecyclerViewAdapter.ViewHolder) view.getChildViewHolder(childView);
+            recyclerPosition = view.getChildAdapterPosition(childView);
         }
         return true;
     }

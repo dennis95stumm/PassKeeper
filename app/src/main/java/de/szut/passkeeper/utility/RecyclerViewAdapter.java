@@ -24,18 +24,34 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     Context context;
     private Vector<IUserProperty> vector;
     private IRecyclerActivity iRecyclerActivity;
+    private int deleteConfirmationViewId;
 
     public RecyclerViewAdapter(Context context, Vector<IUserProperty> vector, RecyclerView recyclerView, IRecyclerActivity iRecyclerActivity) {
         this.context = context;
         this.vector = vector;
         this.iRecyclerActivity = iRecyclerActivity;
-        final GestureDetector gestruesDetector = new GestureDetector(null, new RecyclerGestrueListener(context, iRecyclerActivity, recyclerView));
+        final GestureDetector gestruesDetector = new GestureDetector(null, new RecyclerGestrueListener(context, iRecyclerActivity, recyclerView, R.id.delitition_text));
         ((Activity) context).findViewById(R.id.recyclerViewDefault).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return gestruesDetector.onTouchEvent(event);
             }
         });
+        this.deleteConfirmationViewId = R.id.delitition_password;
+    }
+
+    public RecyclerViewAdapter(Context context, Vector<IUserProperty> vector, RecyclerView recyclerView, IRecyclerActivity iRecyclerActivity, int confirmViewId) {
+        this.context = context;
+        this.vector = vector;
+        this.iRecyclerActivity = iRecyclerActivity;
+        final GestureDetector gestruesDetector = new GestureDetector(null, new RecyclerGestrueListener(context, iRecyclerActivity, recyclerView, confirmViewId));
+        ((Activity) context).findViewById(R.id.recyclerViewDefault).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestruesDetector.onTouchEvent(event);
+            }
+        });
+        this.deleteConfirmationViewId = confirmViewId;
     }
 
     /*@Override
@@ -71,7 +87,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        Log.d(RecyclerViewAdapter.class.getSimpleName(), "viewID: " + viewGroup.getId());
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_item_layout, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(view);
 
@@ -97,6 +112,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public View itemView;
         public View deleteAnimView;
         public View mainView;
+        public View delteConfirmation;
         public View delteConfirmationView;
 
         public ViewHolder(View itemView) {
@@ -107,7 +123,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             icon = (ImageView) itemView.findViewById(R.id.icon);
             deleteAnimView = itemView.findViewById(R.id.delete_recycler_item);
             mainView = itemView.findViewById(R.id.mainview);
-            delteConfirmationView = itemView.findViewById(R.id.delete_recycler_item_confirmation);
+            delteConfirmation = itemView.findViewById(R.id.delete_recycler_item_confirmation);
+            delteConfirmationView = itemView.findViewById(deleteConfirmationViewId);
+            delteConfirmationView.setVisibility(View.VISIBLE);
         }
     }
 }

@@ -65,10 +65,6 @@ public class CreateDatabaseActivity extends Activity implements IActivity {
                             .putExtra("databasePwd", editTextDatabasePwd.getText().toString());
                     startActivity(intentListCategory);
                     finish();
-                } else {
-                    AlertBuilderHelper alertBuilderHelper = new AlertBuilderHelper(CreateDatabaseActivity.this, R.string.dialog_title_missing_data, R.string.dialog_message_database_required_data, false);
-                    alertBuilderHelper.setPositiveButton(R.string.dialog_positive_button_default, null);
-                    alertBuilderHelper.show();
                 }
                 break;
         }
@@ -86,6 +82,26 @@ public class CreateDatabaseActivity extends Activity implements IActivity {
         setContentView(R.layout.activity_create_database_layout);
         editTextDatabaseName = (EditText) findViewById(R.id.editTextDatabaseName);
         editTextDatabasePwd = (EditText) findViewById(R.id.editTextDatabasePwd);
+        editTextDatabaseName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().isEmpty()) {
+                    editTextDatabaseName.setError(getText(R.string.bad_db_name));
+                    saveDatabaseItem.setEnabled(false);
+                } else {
+                    editTextDatabaseName.setError(null);
+                    saveDatabaseItem.setEnabled(editTextDatabasePwd.getError() == null && !editTextDatabasePwd.getText().toString().isEmpty());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
         editTextDatabasePwd.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -98,7 +114,7 @@ public class CreateDatabaseActivity extends Activity implements IActivity {
                     saveDatabaseItem.setEnabled(false);
                 } else {
                     editTextDatabasePwd.setError(null);
-                    saveDatabaseItem.setEnabled(true);
+                    saveDatabaseItem.setEnabled(!editTextDatabaseName.getText().toString().isEmpty());
                 }
             }
 

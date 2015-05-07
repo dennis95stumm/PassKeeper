@@ -100,6 +100,10 @@ public class ListEntryActivity extends Activity implements IActivity, View.OnCli
     @Override
     public void setDefaults() {
         databaseModel = new DatabaseModel(this);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        databaseId = getIntent().getExtras().getInt("databaseId");
+        categoryId = getIntent().getExtras().getInt("categoryId");
+        databasePwd = getIntent().getExtras().getString("databasePwd");
         vectorEntryPropery = databaseModel.getUserEntryVector(databaseId, categoryId);
         if (databaseModel.getUserEntryVector(databaseId, categoryId).isEmpty()) {
             AlertBuilderHelper alertBuilderHelper = new AlertBuilderHelper(ListEntryActivity.this, R.string.dialog_title_create_entry, R.string.dialog_message_create_entry, true);
@@ -115,10 +119,6 @@ public class ListEntryActivity extends Activity implements IActivity, View.OnCli
             });
             alertBuilderHelper.show();
         }
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        databaseId = getIntent().getExtras().getInt("databaseId");
-        categoryId = getIntent().getExtras().getInt("categoryId");
-        databasePwd = getIntent().getExtras().getString("databasePwd");
     }
 
     @Override
@@ -144,4 +144,12 @@ public class ListEntryActivity extends Activity implements IActivity, View.OnCli
         vectorEntryPropery.remove(position);
         recyclerViewAdapter.refresh(vectorEntryPropery);
     }
+
+    @Override
+    public boolean confirmRemove(String password, int position) {
+        return true;
+    }
+
+    @Override
+    public void onRemoveConfirmationFailed() {}
 }

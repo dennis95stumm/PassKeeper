@@ -6,4 +6,6 @@ package de.szut.passkeeper.interfaces;
 public interface IRecyclerActivity {
     void removeItem(int position);
     void onRecyclerItemClick(int position);
+    boolean confirmRemove(String password, int position);
+    void onRemoveConfirmationFailed();
 }

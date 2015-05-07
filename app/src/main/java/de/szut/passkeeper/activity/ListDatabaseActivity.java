@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -177,7 +178,7 @@ public class ListDatabaseActivity extends Activity implements IActivity, View.On
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewAdapter = new RecyclerViewAdapter(this, databaseModel.getUserDatabasePropertyVector(), recyclerView, this);
+        recyclerViewAdapter = new RecyclerViewAdapter(this, databaseModel.getUserDatabasePropertyVector(), recyclerView, this, R.id.delitition_password);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.addItemDecoration(new RecyclerItemDividerDecoration(this));
         imageButtonFab.setOnClickListener(this);
@@ -189,5 +190,15 @@ public class ListDatabaseActivity extends Activity implements IActivity, View.On
         databaseModel.deleteUserDatabase(((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId());
         vectorUserDatabaseProperties.remove(position);
         recyclerViewAdapter.refresh(vectorUserDatabaseProperties);
+    }
+
+    @Override
+    public boolean confirmRemove(String password, int position) {
+        return Security.getInstance().checkPassword(password, ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabasePwd());
+    }
+
+    @Override
+    public void onRemoveConfirmationFailed() {
+        Toast.makeText(ListDatabaseActivity.this, R.string.toast_message_wrong_password, Toast.LENGTH_SHORT).show();
     }
 }

@@ -5,7 +5,7 @@
     android:background="#ffebeff1"
     android:orientation="horizontal">
     <RelativeLayout
-        android:id="@+id/delete_recycler_item_password_confirmation"
+        android:id="@+id/delete_recycler_item_confirmation"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:background="@color/recyclerItemDeleteColor"
@@ -17,40 +17,14 @@
             android:id="@+id/delitition_password"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toLeftOf="@+id/deltition_password_yes"
             android:hint="@string/hint_entry_pwd"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:layout_toLeftOf="@+id/deltition_yes"
+            android:visibility="gone"/>
 
         <TextView
-            android:id="@+id/deltition_password_yes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/elevation_high"
-            android:layout_toLeftOf="@+id/deltition_password_no"
-            android:text="@string/yes"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
-
-        <TextView
-            android:id="@+id/deltition_password_no"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="@string/no"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/delete_recycler_item_confirmation"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:background="@color/recyclerItemDeleteColor"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        android:visibility="gone">
-
-        <TextView
+            android:id="@+id/delitition_text"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

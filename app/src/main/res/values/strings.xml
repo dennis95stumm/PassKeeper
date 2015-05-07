@@ -18,7 +18,6 @@
     <string name="dialog_message_add_category">Create a new category!</string>
     <string name="dialog_message_entry_required_data">At least the title and a password must be given!</string>
     <string name="dialog_message_create_entry">There is no data available for this category. Would you like to create one?</string>
-    <string name="dialog_message_database_required_data">The database name must have at least 1 letter and the password must have 8 letters!</string>
     <string name="dialog_message_delete_database_warning_message">Attenion! If you proceed to delete this database, you will lose <b>ALL</b> your data! Including <b>all your credentials and categories</b>. This <b>CAN NOT</b> be undone. If you wish to continue, insert your password and and hit the delete button.</string>
 
     <string name="dialog_loading_message_encrypting_data">Encrypting data. This may take some time.</string>
@@ -60,6 +59,8 @@
     <string name="delte_confirmation">Are you sure to delete?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+
+    <string name="bad_db_name">The database name must have at least 1 letter and the password must have 8 letters!</string>
     <string name="bad_password">The password must contain at least one upper case, one lower case character, one special character, one digit and must be between 8 and 16 characters.</string>
 
     <array name="array_default_category_name">
