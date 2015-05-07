@@ -26,17 +26,18 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
     private Context context;
     private RecyclerView view;
     private RecyclerViewAdapter.ViewHolder actualViewHolder;
-    private int confirmationViewId;
+    private boolean swipingEnabled = true;
 
-    public RecyclerGestrueListener(Context context, IRecyclerActivity iRecyclerActivity, RecyclerView view, int confirmationViewId) {
+    public RecyclerGestrueListener(Context context, IRecyclerActivity iRecyclerActivity, RecyclerView view) {
         this.iRecyclerActivity = iRecyclerActivity;
         this.context = context;
         this.view = view;
-        this.confirmationViewId = confirmationViewId;
     }
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
+        if(actualViewHolder == null || !swipingEnabled) { return false; }
+        swipingEnabled = true;
         iRecyclerActivity.onRecyclerItemClick(recyclerPosition);
         return super.onSingleTapUp(e);
     }
@@ -44,6 +45,7 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         int minSwipeDistance = 30;
+        if(actualViewHolder == null || !swipingEnabled) { return false; }
         if (e1.getX() - e2.getX() > minSwipeDistance) { // Right to left swipe
             int distance = (int) (e2.getX() - e1.getX());
             actualViewHolder.deleteAnimView.findViewById(R.id.delete_image_left).setVisibility(View.GONE);
@@ -69,6 +71,8 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
     @Override
     public boolean onFling(final MotionEvent e1, final MotionEvent e2, float velocityX, float velocityY) {
         final int distanceX = (int) (e2.getX() - e1.getX());
+        if(actualViewHolder == null || !swipingEnabled) { return false; }
+        swipingEnabled = false;
         if (e1.getX() - e2.getX() > actualViewHolder.mainView.getWidth() * 0.80) { // Right to Left
             ValueAnimator animator = ValueAnimator.ofInt(Math.abs(distanceX), actualViewHolder.mainView.getWidth());
             animator.setDuration(500);
@@ -148,11 +152,13 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
                                 animationView.setLayoutParams(params);
                                 iRecyclerActivity.onRemoveConfirmationFailed();
                                 if(actualViewHolder.delteConfirmationView instanceof EditText) {
+                                    ((EditText) actualViewHolder.delteConfirmationView).setText(null);
                                     InputMethodManager imm = (InputMethodManager)context.getSystemService(
                                             Context.INPUT_METHOD_SERVICE);
                                     imm.hideSoftInputFromWindow(actualViewHolder.delteConfirmationView.getWindowToken(), 0);
                                 }
                             }
+                            swipingEnabled = true;
                             return false;
                         }
                     });
@@ -209,7 +215,7 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
     @Override
     public boolean onDown(MotionEvent e) {
         View childView = view.findChildViewUnder(e.getX(), e.getY());
-        if (childView != null) {
+        if (childView != null && swipingEnabled) {
             actualViewHolder = (RecyclerViewAdapter.ViewHolder) view.getChildViewHolder(childView);
             recyclerPosition = view.getChildAdapterPosition(childView);
         }
