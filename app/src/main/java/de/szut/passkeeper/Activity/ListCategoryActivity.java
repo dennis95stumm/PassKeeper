@@ -61,9 +61,9 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
 
     /** TODO
      * Keine Logik hinter Update Category
-     * Logik hinter Delete Category ist noch buggy. Nach dem zweiten mal Löschen eines Eintrages
-     * wird scheinbar der Ursprungszustand wieder hergestellt. (Alle Einträge werden gelöscht
-     * und die Default einträge werden wieder hergestellt
+     * Logik hinter Delete Category ist noch buggy. Nach dem zweiten mal Loeschen eines Eintrages
+     * wird scheinbar der Ursprungszustand wieder hergestellt. (Alle Eintraege werden geloescht
+     * und die Default Eintraege werden wieder hergestellt
      */
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -88,7 +88,7 @@ public class ListCategoryActivity extends Activity implements AdapterView.OnItem
                         Integer position = listItemInfo.position;
                             databaseModel.deleteUserCategory(((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryId());
                             vectorCategoryProperty.remove(position);
-                        //TODO Nach Refresh werden falsche oder keine Datensätze mehr gelöscht! -> zu prüfen this.vector = vector;
+                        //TODO Nach Refresh werden falsche oder keine Datensaetze mehr geloescht! -> zu pruefen this.vector = vector;
                             listViewAdapter.refresh(databaseModel.getUserCategoryPropertyVector(databaseId));
                     }
                 });

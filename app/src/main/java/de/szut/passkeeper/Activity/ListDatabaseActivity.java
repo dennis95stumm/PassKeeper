@@ -69,7 +69,7 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
 
     /**TODO
      * Buggy - Rename Database -> ist nicht programmiert
-     * Change Password -> Führt zum Absturz des Programmes
+     * Change Password -> Fuehrt zum Absturz des Programmes
      * Delete Database Funktioniert soweit
      */
     @Override
@@ -83,24 +83,18 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
 
                 alertChangeName.setView(R.layout.alert_dialog_change_name_layout);
 
-               // final EditText editTextOldDbPwd = (EditText) findViewById(R.id.editTextOldDbPwd);
+               final EditText editTextDbName = (EditText) findViewById(R.id.editTextDatabaseName);
 
-               // final EditText editTextNewDbPwd = (EditText) findViewById(R.id.editTextNewDbPwd);
-               // final EditText editTextNewDbPwdRepeat = (EditText) findViewById(R.id.editTextNewPwdDbRepeat);
-               // ImageButton imageButtonShowDbPwd = (ImageButton) findViewById(R.id.imageButtonViewPwd);
-                //Toast.makeText(ListDatabaseActivity.this, String.valueOf(editTextOldDbPwd), Toast.LENGTH_SHORT).show();
-               // alertChangePwd.setPositiveButton(R.string.dialog_positive_button_default, new DialogInterface.OnClickListener() {
-                 //   @Override
-                  //  public void onClick(DialogInterface dialog, int which) {
-                  //      if(Security.getInstance().checkPassword(editTextOldDbPwd.getText().toString(), ((DatabaseProperty) vectorUserDatabaseProperties.get(listItemInfo.position)).getDatabasePwd())
-                  //              && editTextNewDbPwd.getText().toString().equals(editTextNewDbPwdRepeat.getText().toString()) && editTextNewDbPwd.getText().length() == 8 ){
-                 //           databaseModel.updateUserDatabasePwd((((DatabaseProperty) vectorUserDatabaseProperties.get(listItemInfo.position)).getDatabaseId()), Security.getInstance().encryptPassword(editTextNewDbPwd.getText().toString()));
-                  //      }else{
-                 //           Toast.makeText(ListDatabaseActivity.this, R.string.toast_message_wrong_password, Toast.LENGTH_SHORT).show();
-                 //       }
-                 //   }
-               // });
-               // alertChangePwd.show();
+                Toast.makeText(ListDatabaseActivity.this, String.valueOf(editTextDbName), Toast.LENGTH_SHORT).show();
+                //Bestätigen ändert den Namen der Datenbank
+                alertChangeName.setPositiveButton(R.string.dialog_positive_button_default, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //databaseModel.updateUserDatabasePwd((((DatabaseProperty) vectorUserDatabaseProperties.get(listItemInfo.position)).getDatabaseId()), Security.getInstance().encryptPassword(editTextNewDbPwd.getText().toString()));
+                        databaseModel.updateUserDatabaseName((((DatabaseProperty) vectorUserDatabaseProperties.get(listItemInfo.position)).getDatabaseId()), editTextDbName.toString());
+                    }
+                });
+                alertChangeName.show();
                 break;
             case 2:
                 final AlertBuilderHelper alertChangePwd = new AlertBuilderHelper(ListDatabaseActivity.this, R.string.dialog_title_change_database_pwd, 0, true);
@@ -108,8 +102,8 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
                 AlertDialog alertDialog = builder.create();
                 
                 alertChangePwd.setView(R.layout.alert_dialog_change_pwd_layout);
-                final EditText editTextOldDbPwd = (EditText) findViewById(R.id.editTextOldDbName);
-                final EditText editTextNewDbPwd = (EditText) findViewById(R.id.editTextNewDbName);
+                final EditText editTextOldDbPwd = (EditText) findViewById(R.id.editTextOldPwdDb);
+                final EditText editTextNewDbPwd = (EditText) findViewById(R.id.editTextNewPwdDb);
                 final EditText editTextNewDbPwdRepeat = (EditText) findViewById(R.id.editTextNewPwdDbRepeat);
                 ImageButton imageButtonShowDbPwd = (ImageButton) findViewById(R.id.imageButtonViewPwd);
                 Toast.makeText(ListDatabaseActivity.this, String.valueOf(editTextOldDbPwd), Toast.LENGTH_SHORT).show();
@@ -117,7 +111,7 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if(Security.getInstance().checkPassword(editTextOldDbPwd.getText().toString(), ((DatabaseProperty) vectorUserDatabaseProperties.get(listItemInfo.position)).getDatabasePwd())
-                                && editTextNewDbPwd.getText().toString().equals(editTextNewDbPwdRepeat.getText().toString()) && editTextNewDbPwd.getText().length() == 8 ){
+                                && editTextNewDbPwd.getText().toString().equals(editTextNewDbPwdRepeat.getText().toString()) && editTextNewDbPwd.getText().length() >= 8 ){
                             databaseModel.updateUserDatabasePwd((((DatabaseProperty) vectorUserDatabaseProperties.get(listItemInfo.position)).getDatabaseId()), Security.getInstance().encryptPassword(editTextNewDbPwd.getText().toString()));
                         }else{
                             Toast.makeText(ListDatabaseActivity.this, R.string.toast_message_wrong_password, Toast.LENGTH_SHORT).show();

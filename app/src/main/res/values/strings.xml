@@ -30,8 +30,9 @@
             <!-- Rename Database menu -->
                 <!-- TODO Rename Menü funktioniert noch nicht -->
                 <string name="contextmenu_item_update_database_name">Rename Database</string>
-                <string name="hint_database_name_new">Please insert a new name</string>
-                <string name="dialog_title_change_database_name">Change Name</string>
+                <string name="dialog_title_change_database_name">Change Database Name</string>
+                <!-- <string name="hint_database_name">Please insert a new name</string> evtl new name definieren -->
+
 
             <!-- Change Database Password -->
                 <!-- TODO Change Password Logik funktioniert noch nicht, Absturz beim nicht eingeben statt Fehlermeldung -->
@@ -116,6 +117,8 @@
     <!-- Nicht gefunden -->
     <string name="dialog_loading_message_saving_data">Persisting data</string>
     <string name="hint_entry_pwd_repeat">Repeat Password</string>
+
+    <!-- Animation zum laden? -->
     <string name="textview_modified">modified on:</string>
 
     <string name="menu_item_title_add_database">Add a new database!</string>
