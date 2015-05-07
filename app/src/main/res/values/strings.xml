@@ -28,10 +28,10 @@
 
         <!-- Context menu Database -->
             <!-- Rename Database menu -->
-                <!-- TODO Rename Menü funktioniert noch nicht -->
+                <!-- TODO Rename Menü funktioniert noch nicht, schätzungsweise selbes Problem, wie bei Change Database Password-->
                 <string name="contextmenu_item_update_database_name">Rename Database</string>
                 <string name="dialog_title_change_database_name">Change Database Name</string>
-                <!-- <string name="hint_database_name">Please insert a new name</string> evtl new name definieren -->
+                <string name="hint_database_new_name">Please insert a new name</string>
 
 
             <!-- Change Database Password -->
@@ -114,7 +114,7 @@
 
 
 
-    <!-- Nicht gefunden -->
+    <!-- Im Programm nicht gefunden -->
     <string name="dialog_loading_message_saving_data">Persisting data</string>
     <string name="hint_entry_pwd_repeat">Repeat Password</string>
 

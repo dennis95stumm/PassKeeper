@@ -243,12 +243,14 @@ public class DatabaseModel {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseOpenHelper.KEY_PWD_USER_DATABASE, password);
         sqLiteDatabase.update(DatabaseOpenHelper.TABLE_USER_DATABASE, contentValues, DatabaseOpenHelper.KEY_ID_USER_DATABASE + " = ?", new String[]{String.valueOf(databaseId)});
+        databaseOpenHelper.close();
     }
     public void updateUserDatabaseName(int databaseId, String name){
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseOpenHelper.KEY_NAME_USER_DATABASE, name);
         sqLiteDatabase.update(DatabaseOpenHelper.TABLE_USER_DATABASE, contentValues, DatabaseOpenHelper.KEY_ID_USER_DATABASE + " = ?", new String[]{String.valueOf(databaseId)});
+        databaseOpenHelper.close();
     }//(String table, ContentValues values, String whereClause, String[] whereArgs)
     //pass_database,(pass_database_name, new name),pass_database_id=?,["123123"]
 
