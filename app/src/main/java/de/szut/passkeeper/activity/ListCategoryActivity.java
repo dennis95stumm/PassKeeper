@@ -24,7 +24,7 @@ import de.szut.passkeeper.utility.AlertBuilderHelper;
 import de.szut.passkeeper.utility.RecyclerItemDividerDecoration;
 import de.szut.passkeeper.utility.RecyclerViewAdapter;
 
-public class ListCategoryActivity extends Activity implements IActivity, View.OnClickListener, IRecyclerActivity {
+public class ListCategoryActivity extends IRecyclerActivity implements IActivity, View.OnClickListener {
 
     private RecyclerView recyclerView;
     private Vector<IUserProperty> vectorCategoryProperty;
@@ -61,7 +61,6 @@ public class ListCategoryActivity extends Activity implements IActivity, View.On
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
     public void onRecyclerItemClick(int position) {
         Intent intentListEntryActivity = new Intent(ListCategoryActivity.this, ListEntryActivity.class)
                 .putExtra("databaseId", ((CategoryProperty) vectorCategoryProperty.get(position)).getDatabaseId())
@@ -117,18 +116,9 @@ public class ListCategoryActivity extends Activity implements IActivity, View.On
         registerForContextMenu(recyclerView);
     }
 
-    @Override
     public void removeItem(int position) {
         databaseModel.deleteUserCategory(((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryId());
         vectorCategoryProperty.remove(position);
         recyclerViewAdapter.refresh(vectorCategoryProperty);
     }
-
-    @Override
-    public boolean confirmRemove(String password, int position) {
-        return true;
-    }
-
-    @Override
-    public void onRemoveConfirmationFailed() {}
 }

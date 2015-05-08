@@ -67,16 +67,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public long getItemId(int position) {
         return position;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return super.getItemViewType(position);
-    }
-
-    @Override
-    public int getViewTypeCount() {
-        return super.getViewTypeCount();
     }*/
 
 

@@ -34,7 +34,7 @@ import de.szut.passkeeper.utility.RecyclerItemDividerDecoration;
 import de.szut.passkeeper.utility.RecyclerViewAdapter;
 
 
-public class ListDatabaseActivity extends Activity implements IActivity, View.OnClickListener, IRecyclerActivity {
+public class ListDatabaseActivity extends IRecyclerActivity implements IActivity, View.OnClickListener {
 
     private static final int CONTEXT_UPDATE_DATABASE_NAME_ID = ContextMenu.FIRST;
     private static final int CONTEXT_UPDATE_DATABASE_PWD_ID = ContextMenu.FIRST + 1;

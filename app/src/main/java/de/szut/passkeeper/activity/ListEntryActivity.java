@@ -26,7 +26,7 @@ import de.szut.passkeeper.utility.RecyclerViewAdapter;
 /**
  * Created by Sami.Al-Khatib on 21.03.2015.
  */
-public class ListEntryActivity extends Activity implements IActivity, View.OnClickListener, IRecyclerActivity {
+public class ListEntryActivity extends IRecyclerActivity implements IActivity, View.OnClickListener {
 
     private RecyclerView recyclerView;
     private Vector<IUserProperty> vectorEntryPropery;
@@ -144,12 +144,4 @@ public class ListEntryActivity extends Activity implements IActivity, View.OnCli
         vectorEntryPropery.remove(position);
         recyclerViewAdapter.refresh(vectorEntryPropery);
     }
-
-    @Override
-    public boolean confirmRemove(String password, int position) {
-        return true;
-    }
-
-    @Override
-    public void onRemoveConfirmationFailed() {}
 }

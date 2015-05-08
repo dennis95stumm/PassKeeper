@@ -196,6 +196,7 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     actualViewHolder = null;
+                    swipingEnabled = true;
                 }
 
                 @Override
