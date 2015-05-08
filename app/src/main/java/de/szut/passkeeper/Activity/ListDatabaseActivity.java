@@ -68,9 +68,7 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
 
 
     /**TODO
-     * Buggy - Rename Database -> ist nicht programmiert
      * Change Password -> Fuehrt zum Absturz des Programmes
-     * Delete Database Funktioniert soweit
      */
     @Override
     public boolean onContextItemSelected(MenuItem item) {
@@ -88,15 +86,9 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
                     public void onClick(DialogInterface dialog, int which) {
                         Integer actualDbId = ((DatabaseProperty) vectorUserDatabaseProperties.get(listItemInfo.position)).getDatabaseId();
                         databaseModel.updateUserDatabaseName(actualDbId, editTextRename.getText().toString());
-                        //listViewAdapter.refresh(vectorUserDatabaseProperties);
-
+                        listViewAdapter.refresh(databaseModel.getUserDatabasePropertyVector());
                     }
                 });
-                //WIE KANN MAN DIESE VERSCHISSENE KACK LISTE VERNÜNFTIG REFRESHEN!!!!?!!! KACKEARSCHWURST!
-                //listView.invalidate();
-                //populateView();
-                //editTextRename.invalidate();
-                //getWindow().getDecorView().findViewById(android.R.id.content).invalidate();
                 alertChangeName.show();
                 break;
             case 2:
