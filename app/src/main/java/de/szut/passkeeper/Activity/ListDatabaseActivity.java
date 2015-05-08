@@ -92,25 +92,52 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
                 alertChangeName.show();
                 break;
             case 2:
-                final AlertBuilderHelper alertChangePwd = new AlertBuilderHelper(ListDatabaseActivity.this, R.string.dialog_title_change_database_pwd, 0, true);
-                AlertDialog.Builder builder = new AlertDialog.Builder(ListDatabaseActivity.this);
-                AlertDialog alertDialog = builder.create();
-                
-                alertChangePwd.setView(R.layout.alert_dialog_change_pwd_layout);
+                //final AlertBuilderHelper alertChangePwd = new AlertBuilderHelper(ListDatabaseActivity.this, R.string.dialog_title_change_database_pwd, 0, true);
+                //AlertDialog.Builder builder = new AlertDialog.Builder(ListDatabaseActivity.this);
+
+                final AlertDialog.Builder alertChangePwd = new AlertBuilderHelper(this, R.string.dialog_title_change_database_pwd, 0, true);
+
+                //AlertDialog alertDialog = builder.create();
+                //alertChangePwd.setView(R.layout.alert_dialog_change_pwd_layout);
+
+                //final EditText editTextOldDbPwd = new EditText(this);
+                //final EditText editTextNewDbPwd = new EditText(this);
+                //final EditText editTextNewDbPwdRepeat = new EditText(this);
+
+                //editTextOldDbPwd.setHint(R.string.hint_database_pwd_old);
+                //editTextNewDbPwd.setHint(R.string.hint_database_pwd_new);
+                //editTextNewDbPwdRepeat.setHint(R.string.hint_database_pwd_repeat);
+
+                //alertChangePwd.setView(editTextOldDbPwd).setView(editTextNewDbPwd).setView(editTextNewDbPwdRepeat);
+                //alertChangePwd.setView(editTextNewDbPwd);
+                //alertChangePwd.setView(editTextNewDbPwdRepeat);
+
+
                 final EditText editTextOldDbPwd = (EditText) findViewById(R.id.editTextOldPwdDb);
                 final EditText editTextNewDbPwd = (EditText) findViewById(R.id.editTextNewPwdDb);
                 final EditText editTextNewDbPwdRepeat = (EditText) findViewById(R.id.editTextNewPwdDbRepeat);
-                ImageButton imageButtonShowDbPwd = (ImageButton) findViewById(R.id.imageButtonViewPwd);
-                Toast.makeText(ListDatabaseActivity.this, String.valueOf(editTextOldDbPwd), Toast.LENGTH_SHORT).show();
+
+                //ImageButton imageButtonShowDbPwd = (ImageButton) findViewById(R.id.imageButtonViewPwd);
+                //Toast.makeText(ListDatabaseActivity.this, String.valueOf(editTextOldDbPwd), Toast.LENGTH_SHORT).show();
                 alertChangePwd.setPositiveButton(R.string.dialog_positive_button_default, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(Security.getInstance().checkPassword(editTextOldDbPwd.getText().toString(), ((DatabaseProperty) vectorUserDatabaseProperties.get(listItemInfo.position)).getDatabasePwd())
-                                && editTextNewDbPwd.getText().toString().equals(editTextNewDbPwdRepeat.getText().toString()) && editTextNewDbPwd.getText().length() >= 8 ){
-                            databaseModel.updateUserDatabasePwd((((DatabaseProperty) vectorUserDatabaseProperties.get(listItemInfo.position)).getDatabaseId()), Security.getInstance().encryptPassword(editTextNewDbPwd.getText().toString()));
-                        }else{
-                            Toast.makeText(ListDatabaseActivity.this, R.string.toast_message_wrong_password, Toast.LENGTH_SHORT).show();
-                        }
+                        String oldPwd = editTextOldDbPwd.getText().toString();
+                        String newPwd = editTextNewDbPwd.getText().toString();
+                        String newPwdRepeat = editTextNewDbPwdRepeat.getText().toString();
+
+                        String databasePwd = ((DatabaseProperty) vectorUserDatabaseProperties.get(listItemInfo.position)).getDatabasePwd();
+                        Integer databaseId = ((DatabaseProperty) vectorUserDatabaseProperties.get(listItemInfo.position)).getDatabaseId();
+
+                        String newEncryptPassword = Security.getInstance().encryptPassword(newPwd);
+                        //if(Security.getInstance().checkPassword(oldPwd, databasePwd)
+                                //&& newPwd.equals(newPwdRepeat) && newPwd.length() >= 8 ){
+
+                            databaseModel.updateUserDatabasePwd(databaseId, newEncryptPassword);
+
+                        // }else{
+                        //    Toast.makeText(ListDatabaseActivity.this, R.string.toast_message_wrong_password, Toast.LENGTH_SHORT).show();
+                        //}
                     }
                 });
                 alertChangePwd.show();
