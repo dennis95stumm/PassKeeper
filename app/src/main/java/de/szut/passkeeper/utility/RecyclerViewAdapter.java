@@ -37,7 +37,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 return gestruesDetector.onTouchEvent(event);
             }
         });
-        this.deleteConfirmationViewId = R.id.delitition_password;
+        this.deleteConfirmationViewId = R.id.delitition_text;
     }
 
     public RecyclerViewAdapter(Context context, Vector<IUserProperty> vector, RecyclerView recyclerView, IRecyclerActivity iRecyclerActivity, int confirmViewId) {

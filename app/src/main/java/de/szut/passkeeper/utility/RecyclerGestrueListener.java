@@ -1,6 +1,7 @@
 package de.szut.passkeeper.utility;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
@@ -27,6 +28,8 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
     private RecyclerView view;
     private RecyclerViewAdapter.ViewHolder actualViewHolder;
     private boolean swipingEnabled = true;
+    private int MIN_SWIPE_DISTANCE_X = 100;
+    private int MIN_SWIPE_DISTANCE_Y = 30;
 
     public RecyclerGestrueListener(Context context, IRecyclerActivity iRecyclerActivity, RecyclerView view) {
         this.iRecyclerActivity = iRecyclerActivity;
@@ -46,11 +49,11 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        int minSwipeDistance = 30;
+        // || distanceY > MIN_SWIPE_DISTANCE_Y
         if (actualViewHolder == null || !swipingEnabled) {
             return false;
         }
-        if (e1.getX() - e2.getX() > minSwipeDistance) { // Right to left swipe
+        if (e1.getX() - e2.getX() > MIN_SWIPE_DISTANCE_X) { // Right to left swipe
             int distance = (int) (e2.getX() - e1.getX());
             actualViewHolder.deleteAnimView.findViewById(R.id.delete_image_left).setVisibility(View.GONE);
             actualViewHolder.deleteAnimView.findViewById(R.id.delete_image_right).setVisibility(View.VISIBLE);
@@ -59,7 +62,7 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
             params.rightMargin = -distance;
             params.leftMargin = distance;
             animationView.setLayoutParams(params);
-        } else if (e2.getX() - e1.getX() > minSwipeDistance) { // Left to right
+        } else if (e2.getX() - e1.getX() > MIN_SWIPE_DISTANCE_X) { // Left to right
             int distance = (int) (e1.getX() - e2.getX());
             actualViewHolder.deleteAnimView.findViewById(R.id.delete_image_left).setVisibility(View.VISIBLE);
             actualViewHolder.deleteAnimView.findViewById(R.id.delete_image_right).setVisibility(View.GONE);
@@ -75,7 +78,7 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
     @Override
     public boolean onFling(final MotionEvent e1, final MotionEvent e2, float velocityX, float velocityY) {
         final int distanceX = (int) (e2.getX() - e1.getX());
-        if (actualViewHolder == null || !swipingEnabled) {
+        if (actualViewHolder == null || !swipingEnabled) {// || Math.abs(e2.getY()-e1.getY()) > MIN_SWIPE_DISTANCE_Y
             return false;
         }
         swipingEnabled = false;
@@ -97,25 +100,11 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
                 }
             });
             animator.start();
-            animator.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-                }
-
+            animator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     actualViewHolder = null;
                     swipingEnabled = true;
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-
                 }
             });
         }
@@ -124,12 +113,16 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
 
     @Override
     public boolean onDown(MotionEvent e) {
-        View childView = view.findChildViewUnder(e.getX(), e.getY());
-        if (childView != null && swipingEnabled) {
-            actualViewHolder = (RecyclerViewAdapter.ViewHolder) view.getChildViewHolder(childView);
-            recyclerPosition = view.getChildAdapterPosition(childView);
+        if (swipingEnabled) {
+            View childView = view.findChildViewUnder(e.getX(), e.getY());
+            if (childView != null) {
+                actualViewHolder = (RecyclerViewAdapter.ViewHolder) view.getChildViewHolder(childView);
+                recyclerPosition = view.getChildAdapterPosition(childView);
+            }
+
+            return true;
         }
-        return true;
+        return false;
     }
 
     private void swipe(int distanceX, final boolean rightToLeft) {
@@ -146,11 +139,7 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
             }
         });
         animator.start();
-        animator.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-
+        animator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 actualViewHolder.deleteAnimView.setVisibility(View.GONE);
@@ -161,42 +150,51 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
                     imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
                     actualViewHolder.delteConfirmationView.requestFocus();
                 }
-                ((TextView) actualViewHolder.delteConfirmation.findViewById(R.id.deltition_yes)).setOnTouchListener(new View.OnTouchListener() {
+                actualViewHolder.delteConfirmation.findViewById(R.id.deltition_yes).setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
-                        if (iRecyclerActivity.confirmRemove(actualViewHolder.delteConfirmationView instanceof EditText ? ((EditText) actualViewHolder.delteConfirmationView).getText().toString() : null, recyclerPosition)) {
-                            iRecyclerActivity.removeItem(recyclerPosition);
-                        } else {
-                            actualViewHolder.delteConfirmation.setVisibility(View.GONE);
-                            actualViewHolder.deleteAnimView.setVisibility(View.VISIBLE);
-                            View animationView = actualViewHolder.mainView;
-                            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) animationView.getLayoutParams();
-                            params.rightMargin = 0;
-                            params.leftMargin = 0;
-                            animationView.setLayoutParams(params);
-                            iRecyclerActivity.onRemoveConfirmationFailed();
-                            if (actualViewHolder.delteConfirmationView instanceof EditText) {
-                                ((EditText) actualViewHolder.delteConfirmationView).setText(null);
-                                InputMethodManager imm = (InputMethodManager) context.getSystemService(
-                                        Context.INPUT_METHOD_SERVICE);
-                                imm.hideSoftInputFromWindow(actualViewHolder.delteConfirmationView.getWindowToken(), 0);
+                        if (actualViewHolder != null) {
+
+                            if (iRecyclerActivity.confirmRemove(actualViewHolder.delteConfirmationView instanceof EditText ? ((EditText) actualViewHolder.delteConfirmationView).getText().toString() : null, recyclerPosition)) {
+                                iRecyclerActivity.removeItem(recyclerPosition);
+                                actualViewHolder = null;
+                                swipingEnabled = true;
+                            } else {
+                                resetView();
+                                iRecyclerActivity.onRemoveConfirmationFailed();
                             }
                         }
-                        swipingEnabled = true;
-                        return false;
+                        return true;
+                    }
+                });
+                actualViewHolder.delteConfirmation.findViewById(R.id.deltition_no).setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (actualViewHolder != null) {
+                            resetView();
+                        }
+                        return true;
                     }
                 });
             }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
         });
+    }
+
+    private void resetView() {
+        actualViewHolder.delteConfirmation.setVisibility(View.GONE);
+        actualViewHolder.deleteAnimView.setVisibility(View.VISIBLE);
+        View animationView = actualViewHolder.mainView;
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) animationView.getLayoutParams();
+        params.rightMargin = 0;
+        params.leftMargin = 0;
+        animationView.setLayoutParams(params);
+        if (actualViewHolder.delteConfirmationView instanceof EditText) {
+            ((EditText) actualViewHolder.delteConfirmationView).setText(null);
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(
+                    Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(actualViewHolder.delteConfirmationView.getWindowToken(), 0);
+        }
+        actualViewHolder = null;
+        swipingEnabled = true;
     }
 }

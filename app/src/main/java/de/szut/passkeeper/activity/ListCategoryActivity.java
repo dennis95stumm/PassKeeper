@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -80,12 +81,16 @@ public class ListCategoryActivity extends IRecyclerActivity implements IActivity
                 alertDialog.setPositiveButton(R.string.dialog_positive_button_default, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(editTextCategoryName.getWindowToken(), 0);
                         int categoryId = databaseModel.createUserCategory(new CategoryProperty(databaseId, editTextCategoryName.getText().toString(), R.drawable.ic_folder));
                         vectorCategoryProperty.add(databaseModel.getUserCategoryProperty(categoryId));
                         recyclerViewAdapter.refresh(databaseModel.getUserCategoryPropertyVector(databaseId));
                     }
                 });
                 alertDialog.show();
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
                 break;
         }
     }

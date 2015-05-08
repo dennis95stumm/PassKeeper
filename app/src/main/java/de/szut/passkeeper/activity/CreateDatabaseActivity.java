@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -47,6 +48,8 @@ public class CreateDatabaseActivity extends Activity implements IActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editTextDatabaseName.getWindowToken(), 0);
         switch (item.getItemId()) {
             case R.id.menuItemDatabaseSave:
                 if (editTextDatabaseName.getText().length() != 0 && editTextDatabasePwd.getText().length() >= 8) {
@@ -124,5 +127,7 @@ public class CreateDatabaseActivity extends Activity implements IActivity {
         });
         imageButton = (ImageButton) findViewById(R.id.imageButtonDisplayPwd);
         imageButton.setOnTouchListener(new ViewPwdTouchListener(editTextDatabasePwd));
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 }

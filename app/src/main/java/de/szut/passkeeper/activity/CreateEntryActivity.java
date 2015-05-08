@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -52,6 +53,8 @@ public class CreateEntryActivity extends Activity implements IActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editTextEntryTitle.getWindowToken(), 0);
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
@@ -87,7 +90,7 @@ public class CreateEntryActivity extends Activity implements IActivity {
 
     @Override
     public void populateView() {
-        setContentView(R.layout.activity_create_entry_layout);
+        setContentView(R.layout.activity_entry_layout);
         editTextEntryTitle = (EditText) findViewById(R.id.editTextEntryTitle);
         editTextEntryUsername = (EditText) findViewById(R.id.editTextEntryUsername);
         editTextEntryPwd = (EditText) findViewById(R.id.editTextEntryPwd);
@@ -96,6 +99,8 @@ public class CreateEntryActivity extends Activity implements IActivity {
         imageButtonGeneratePwd = (ImageButton) findViewById(R.id.imageButtonGeneratePwd);
         imageButtonDisplayPwd.setOnTouchListener(new ViewPwdTouchListener(editTextEntryPwd));
         imageButtonGeneratePwd.setOnClickListener(new GeneratePwdClickListener(editTextEntryPwd));
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
     private class BackgroundTask extends AsyncTask<Void, Void, Void> {

@@ -88,7 +88,7 @@ public class UpdateEntryActivity extends Activity implements IActivity {
 
     @Override
     public void populateView() {
-        setContentView(R.layout.activity_update_entry_layout);
+        setContentView(R.layout.activity_entry_layout);
         editTextEntryTitle = (EditText) findViewById(R.id.editTextEntryTitle);
         editTextEntryUsername = (EditText) findViewById(R.id.editTextEntryUsername);
         editTextEntryPwd = (EditText) findViewById(R.id.editTextEntryPwd);
