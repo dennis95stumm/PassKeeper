@@ -77,39 +77,26 @@ public class ListDatabaseActivity extends Activity implements AdapterView.OnItem
         listItemInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()){
             case 1:
+                final AlertDialog.Builder alertChangeName = new AlertBuilderHelper(this, R.string.dialog_title_change_database_name, 0, true);
+                //Edittext zur Benennung wird hinterlegt
+                final EditText editTextRename = new EditText(this);
+                editTextRename.setHint(R.string.hint_database_new_name);
+                alertChangeName.setView(editTextRename);
 
-                //alles falsch ,. . wird gleich geändert
-
-                final AlertBuilderHelper alertChangeName = new AlertBuilderHelper(ListDatabaseActivity.this, R.string.dialog_title_change_database_name, 0, true);
-                AlertDialog.Builder newBuilder = new AlertDialog.Builder(ListDatabaseActivity.this);
-                AlertDialog newAlertDialog = newBuilder.create();
-
-                alertChangeName.setView(R.layout.alert_dialog_change_name_layout);
-
-
-                //final AlertDialog.Builder alertDialog = new AlertBuilderHelper(this, R.string.dialog_title_open_database, R.string.dialog_message_open_database, true);
-                //final EditText editText = new EditText(this);
-                //editText.setHint(R.string.hint_database_pwd);
-                //editText.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                //editText.setTransformationMethod(new PasswordTransformationMethod());
-                //alertDialog.setView(editText);
-
-
-                //Bestätigen ändert den Namen der Datenbank
                 alertChangeName.setPositiveButton(R.string.dialog_positive_button_default, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        //Intent intentListCategoryActivity = new Intent(ListDatabaseActivity.this, ListCategoryActivity.class)
-                          //      .putExtra("databaseId", ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId());
-                        //startActivity(intentListCategoryActivity);
+                        Integer actualDbId = ((DatabaseProperty) vectorUserDatabaseProperties.get(listItemInfo.position)).getDatabaseId();
+                        databaseModel.updateUserDatabaseName(actualDbId, editTextRename.getText().toString());
+                        //listViewAdapter.refresh(vectorUserDatabaseProperties);
 
-                        EditText editTextDbName = (EditText) findViewById(R.id.editTextNewDatabaseName);
-
-                        //databaseModel.updateUserDatabasePwd((((DatabaseProperty) vectorUserDatabaseProperties.get(listItemInfo.position)).getDatabaseId()), Security.getInstance().encryptPassword(editTextNewDbPwd.getText().toString()));
-                        databaseModel.updateUserDatabaseName((((DatabaseProperty) vectorUserDatabaseProperties.get(listItemInfo.position)).getDatabaseId()), editTextDbName.getText().toString());
                     }
                 });
+                //WIE KANN MAN DIESE VERSCHISSENE KACK LISTE VERNÜNFTIG REFRESHEN!!!!?!!! KACKEARSCHWURST!
+                //listView.invalidate();
+                //populateView();
+                //editTextRename.invalidate();
+                //getWindow().getDecorView().findViewById(android.R.id.content).invalidate();
                 alertChangeName.show();
                 break;
             case 2:

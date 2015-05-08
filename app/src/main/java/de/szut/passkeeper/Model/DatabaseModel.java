@@ -251,8 +251,7 @@ public class DatabaseModel {
         contentValues.put(DatabaseOpenHelper.KEY_NAME_USER_DATABASE, name);
         sqLiteDatabase.update(DatabaseOpenHelper.TABLE_USER_DATABASE, contentValues, DatabaseOpenHelper.KEY_ID_USER_DATABASE + " = ?", new String[]{String.valueOf(databaseId)});
         databaseOpenHelper.close();
-    }//(String table, ContentValues values, String whereClause, String[] whereArgs)
-    //pass_database,(pass_database_name, new name),pass_database_id=?,["123123"]
+    }
 
     public void updateUserEntry(EntryProperty entryProperty){
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
