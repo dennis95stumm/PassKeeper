@@ -80,7 +80,7 @@
         android:id="@+id/mainview"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:background="#ffebeff1"
+        android:background="@drawable/rectangle_ripple"
         android:padding="8dp"
         android:weightSum="1">
 

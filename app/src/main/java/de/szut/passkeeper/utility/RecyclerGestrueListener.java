@@ -44,6 +44,7 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
         }
         swipingEnabled = true;
         iRecyclerActivity.onRecyclerItemClick(recyclerPosition);
+        actualViewHolder.mainView.setPressed(true);
         return super.onSingleTapUp(e);
     }
 
@@ -200,6 +201,7 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
 
     @Override
     public void onLongPress(MotionEvent e) {
+        actualViewHolder.mainView.setPressed(true);
         super.onLongPress(e);
         // TODO longpress
         // makierungs icon
