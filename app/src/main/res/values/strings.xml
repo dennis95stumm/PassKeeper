@@ -13,7 +13,7 @@
     <string name="dialog_title_create_entry">No data found!</string>
     <string name="dialog_title_warning">WARNING!</string>
     <string name="dialog_title_change_database_pwd">Change Password</string>
-
+    <string name="title_activity_notification_receiver_activity">Notification receiver</string>
     <string name="dialog_message_open_database">Password please!</string>
     <string name="dialog_message_add_category">Create a new category!</string>
     <string name="dialog_message_entry_required_data">At least the title and a password must be given!</string>
@@ -43,6 +43,8 @@
     <string name="hint_entry_pwd">Password</string>
     <string name="hint_entry_pwd_repeat">Repeat Password</string>
     <string name="hint_entry_note">Notes</string>
+    <string name="hint_entry_notification_username">Your Username:</string>
+    <string name="hint_entry_notification_pw">Your Password:</string>
 
     <string name="textview_modified">modified on:</string>
 

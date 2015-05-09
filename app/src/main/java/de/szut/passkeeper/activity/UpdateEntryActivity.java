@@ -1,9 +1,14 @@
 package de.szut.passkeeper.activity;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +28,7 @@ import de.szut.passkeeper.utility.ViewPwdTouchListener;
 
 public class UpdateEntryActivity extends Activity implements IActivity {
 
+    private static final int NOTIFICATION_ID = 0;
     private EntryProperty entryProperty;
     private EditText editTextEntryTitle;
     private EditText editTextEntryUsername;
@@ -39,13 +45,38 @@ public class UpdateEntryActivity extends Activity implements IActivity {
     private String decryptedUserPwd;
     private String databasePwd;
     private boolean hasDecrypted;
+    private NotificationManager notificationManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setDefaults();
         new BackgroundTask().execute();
+        setNotification();
     }
+
+
+    public void setNotification() {
+        notificationManager = (NotificationManager)
+                getSystemService(NOTIFICATION_SERVICE);
+        Notification n = new Notification();
+        n.when = System.currentTimeMillis();
+        Intent notificationIntent = new Intent(this, NotificationActivity.class);
+
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+                NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.ic_launcher)
+                        .setContentTitle("Passkeeper Service")
+                        .setTicker("Password temporary saved")
+                        .setContentText("See here Username and Password");
+                mBuilder.setContentIntent(contentIntent);
+
+        notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+   }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
