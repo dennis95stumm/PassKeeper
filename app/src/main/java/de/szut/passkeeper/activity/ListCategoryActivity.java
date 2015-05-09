@@ -81,11 +81,16 @@ public class ListCategoryActivity extends IRecyclerActivity implements IActivity
                 alertDialog.setPositiveButton(R.string.dialog_positive_button_default, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(editTextCategoryName.getWindowToken(), 0);
                         int categoryId = databaseModel.createUserCategory(new CategoryProperty(databaseId, editTextCategoryName.getText().toString(), R.drawable.ic_folder));
                         vectorCategoryProperty.add(databaseModel.getUserCategoryProperty(categoryId));
                         recyclerViewAdapter.refresh(databaseModel.getUserCategoryPropertyVector(databaseId));
+                    }
+                });
+                alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
                     }
                 });
                 alertDialog.show();
