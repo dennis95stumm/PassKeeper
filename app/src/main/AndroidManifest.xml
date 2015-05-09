@@ -1,21 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="de.szut.passkeeper" >
+    package="de.szut.passkeeper">
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name">
+        android:label="@string/app_name"
+        android:theme="@style/MaterialLightTheme">
         <activity
-            android:name="de.szut.passkeeper.PassKeeperActivity"
-            android:theme="@style/MaterialDarkTheme"
-            android:label="@string/app_name" >
+            android:name=".activity.StartActivity"
+            android:label="@string/app_name"
+            android:theme="@style/MaterLightNoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.CreateDatabaseActivity"
+            android:label="@string/title_activity_create_database" />
+        <activity
+            android:name=".activity.ListDatabaseActivity"
+            android:label="@string/title_activity_choose_database"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".activity.ListCategoryActivity" android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.ListEntryActivity" android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".activity.CreateEntryActivity"
+            android:label="@string/title_activity_create_entry" />
+        <activity
+            android:name=".activity.UpdateEntryActivity"
+            android:label="@string/title_activity_update_entry" />
     </application>
 
 </manifest>

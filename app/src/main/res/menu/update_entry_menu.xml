@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="de.szut.passkeeper.activity.UpdateEntryActivity">
+    <item
+        android:id="@+id/updateEntry"
+        android:icon="@android:drawable/ic_menu_save"
+        android:showAsAction="always"
+        android:title="@string/menu_item_title_update_entry"></item>
+</menu>

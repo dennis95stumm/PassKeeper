@@ -1,0 +1,10 @@
+<menu xmlns:tools="http://schemas.android.com/tools"
+    tools:context="de.szut.passkeeper.activity.ListCategoryActivity">
+    <!--<item
+        android:id="@+id/addCategory"
+        android:icon="@android:drawable/ic_menu_add"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="@string/menu_item_title_add_category" />
+    -->
+</menu>
