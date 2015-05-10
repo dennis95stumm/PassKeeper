@@ -162,6 +162,9 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
 
                             if (iRecyclerActivity.confirmRemove(actualViewHolder.delteConfirmationView instanceof EditText ? ((EditText) actualViewHolder.delteConfirmationView).getText().toString() : null, recyclerPosition)) {
                                 iRecyclerActivity.removeItem(recyclerPosition);
+                                InputMethodManager imm = (InputMethodManager) iRecyclerActivity.getSystemService(
+                                        Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(iRecyclerActivity.getWindow().getDecorView().getWindowToken(), 0);
                                 actualViewHolder = null;
                                 swipingEnabled = true;
                             } else {
@@ -198,7 +201,7 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
                 ((EditText) actualViewHolder.delteConfirmationView).setText(null);
                 InputMethodManager imm = (InputMethodManager) iRecyclerActivity.getSystemService(
                         Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(actualViewHolder.delteConfirmationView.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(iRecyclerActivity.getWindow().getDecorView().getWindowToken(), 0);
             }
         }
         actualViewHolder = null;
