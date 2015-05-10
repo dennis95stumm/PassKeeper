@@ -215,10 +215,8 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
             actualViewHolder.mainView.setSelected(false);
             selectedItem = -1;
         }
-        //super.onLongPress(e);
         // TODO longpress
         // makierungs icon
-        // nur eine auswahl möglich
         // bei auswahl bearbeitungszeichen im floating button
         // beim betätigen des baerbeitungsbuttons entsprechende funktion aufrufen
     }

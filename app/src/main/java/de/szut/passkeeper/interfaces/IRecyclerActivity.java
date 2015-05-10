@@ -16,8 +16,4 @@ public abstract class IRecyclerActivity extends Activity {
 
     public void onRemoveConfirmationFailed() {
     }
-
-    public abstract void setDefaults();
-
-    public abstract void populateView();
 }
