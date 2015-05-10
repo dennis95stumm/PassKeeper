@@ -208,21 +208,25 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
 
     @Override
     public void onLongPress(MotionEvent e) {
-        if (iRecyclerActivity.longPressEnabled()) {
+        if (actualViewHolder != null && iRecyclerActivity.longPressEnabled()) {
             actualViewHolder.mainView.setPressed(false);
             if (selectedItem != recyclerPosition) {
+                if (selectedItem != -1) {
+                    RecyclerViewAdapter.ViewHolder viewHolder = (RecyclerViewAdapter.ViewHolder) view.getChildViewHolder(view.getChildAt(selectedItem));
+                    viewHolder.mainView.setSelected(false);
+                }
                 actualViewHolder.mainView.setSelected(true);
                 selectedItem = recyclerPosition;
                 iRecyclerActivity.getEditMenu().setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         actualViewHolder.mainView.setSelected(false);
-                        boolean returnVal = iRecyclerActivity.editItem(selectedItem);
-                        selectedItem = -1;
                         actualViewHolder = null;
                         recyclerPosition = -1;
                         swipingEnabled = true;
                         iRecyclerActivity.getEditMenu().setVisible(false);
+                        boolean returnVal = iRecyclerActivity.editItem(selectedItem);
+                        selectedItem = -1;
                         return returnVal;
                     }
                 });
@@ -237,6 +241,7 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
 
     @Override
     public void onShowPress(MotionEvent e) {
-        if (iRecyclerActivity.longPressEnabled()) actualViewHolder.mainView.setPressed(true);
+        if (actualViewHolder != null && iRecyclerActivity.longPressEnabled())
+            actualViewHolder.mainView.setPressed(true);
     }
 }

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 
 import de.szut.passkeeper.interfaces.IUserProperty;
@@ -234,11 +236,13 @@ public class DatabaseModel {
         databaseOpenHelper.close();
     }
 
-    public void updateUserDatabasePwd(int databaseId, String password) {
+    public void updateUserDatabase(DatabaseProperty databaseProperty) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DatabaseOpenHelper.KEY_PWD_USER_DATABASE, password);
-        sqLiteDatabase.update(DatabaseOpenHelper.TABLE_USER_DATABASE, contentValues, DatabaseOpenHelper.KEY_ID_USER_DATABASE + " = ?", new String[]{String.valueOf(databaseId)});
+        contentValues.put(DatabaseOpenHelper.KEY_NAME_USER_DATABASE, databaseProperty.getDatabaseName());
+        contentValues.put(DatabaseOpenHelper.KEY_PWD_USER_DATABASE, databaseProperty.getDatabasePwd());
+        contentValues.put(DatabaseOpenHelper.KEY_MODIFY_DATE_USER_DATABASE, SimpleDateFormat.getDateTimeInstance().format(new Date()));
+        sqLiteDatabase.update(DatabaseOpenHelper.TABLE_USER_DATABASE, contentValues, DatabaseOpenHelper.KEY_ID_USER_DATABASE + " = ?", new String[]{String.valueOf(databaseProperty.getDatabaseId())});
     }
 
     public void updateUserEntry(EntryProperty entryProperty) {

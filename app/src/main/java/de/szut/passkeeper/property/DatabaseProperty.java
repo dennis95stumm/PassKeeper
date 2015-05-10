@@ -46,8 +46,16 @@ public class DatabaseProperty implements IUserProperty {
         return databaseName;
     }
 
+    public void setDatabaseName(String databaseName) {
+        this.databaseName = databaseName;
+    }
+
     public String getDatabasePwd() {
         return databasePwd;
+    }
+
+    public void setDatabasePwd(String databasePwd) {
+        this.databasePwd = databasePwd;
     }
 
     public int getDatabaseIconId() {
