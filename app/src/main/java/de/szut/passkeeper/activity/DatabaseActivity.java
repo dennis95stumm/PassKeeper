@@ -19,7 +19,7 @@ import de.szut.passkeeper.property.DatabaseProperty;
 import de.szut.passkeeper.utility.ViewPwdTouchListener;
 
 
-public class CreateDatabaseActivity extends Activity implements IActivity {
+public class DatabaseActivity extends Activity implements IActivity {
 
     private EditText editTextDatabaseName;
     private EditText editTextDatabasePwd;
@@ -59,7 +59,7 @@ public class CreateDatabaseActivity extends Activity implements IActivity {
                                 R.drawable.ic_folder
                         ));
                     }
-                    Intent intentListCategory = new Intent(CreateDatabaseActivity.this, ListCategoryActivity.class)
+                    Intent intentListCategory = new Intent(DatabaseActivity.this, ListCategoryActivity.class)
                             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             .putExtra("databaseId", databaseId)
                             .putExtra("databasePwd", editTextDatabasePwd.getText().toString());
