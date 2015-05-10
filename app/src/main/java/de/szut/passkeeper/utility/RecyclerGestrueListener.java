@@ -28,7 +28,7 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
     private int MIN_FLING_VELOCITY;
     private int MAX_FLING_VELOCITY;
     private int TOUCH_SLOP;
-
+    private int selectedItem = -1;
 
     public RecyclerGestrueListener(IRecyclerActivity iRecyclerActivity, RecyclerView view) {
         this.iRecyclerActivity = iRecyclerActivity;
@@ -52,7 +52,6 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        // || distanceY > MIN_SWIPE_DISTANCE_Y
         if (actualViewHolder == null || !swipingEnabled || Math.abs(e2.getY() - e1.getY()) > TOUCH_SLOP) {
             return false;
         }
@@ -208,9 +207,14 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
 
     @Override
     public void onLongPress(MotionEvent e) {
-        actualViewHolder.mainView.setActivated(true);
         actualViewHolder.mainView.setPressed(false);
-
+        if (selectedItem != recyclerPosition) {
+            actualViewHolder.mainView.setSelected(true);
+            selectedItem = recyclerPosition;
+        } else {
+            actualViewHolder.mainView.setSelected(false);
+            selectedItem = -1;
+        }
         //super.onLongPress(e);
         // TODO longpress
         // makierungs icon
