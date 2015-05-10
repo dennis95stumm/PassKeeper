@@ -1,6 +1,5 @@
 package de.szut.passkeeper.activity;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,8 +34,6 @@ public class ListCategoryActivity extends IRecyclerActivity implements IActivity
     private ImageButton imageButtonFab;
     private String databasePwd;
     private LinearLayoutManager layoutManager;
-
-    //TODO implement context menu
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +116,6 @@ public class ListCategoryActivity extends IRecyclerActivity implements IActivity
         recyclerViewAdapter = new RecyclerViewAdapter(this, databaseModel.getUserCategoryPropertyVector(databaseId), recyclerView, this);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.addItemDecoration(new RecyclerItemDividerDecoration(this));
-        //listView.setOnItemClickListener(this);
         imageButtonFab.setOnClickListener(this);
         registerForContextMenu(recyclerView);
     }

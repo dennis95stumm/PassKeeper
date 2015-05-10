@@ -22,10 +22,16 @@
         <activity
             android:name=".activity.ListDatabaseActivity"
             android:label="@string/title_activity_choose_database"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".activity.ListCategoryActivity" android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.ListEntryActivity" android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".activity.EntryActivity" android:label="@string/title_activity_create_entry" />
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.ListCategoryActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.ListEntryActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.EntryActivity"
+            android:label="@string/title_activity_create_entry" />
     </application>
 
 </manifest>

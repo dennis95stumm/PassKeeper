@@ -37,8 +37,6 @@ public class ListEntryActivity extends IRecyclerActivity implements IActivity, V
     private ImageButton imageButtonFab;
     private LinearLayoutManager layoutManager;
 
-    //TODO implement context menu
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,7 +127,6 @@ public class ListEntryActivity extends IRecyclerActivity implements IActivity, V
         recyclerView.setLayoutManager(layoutManager);
         recyclerViewAdapter = new RecyclerViewAdapter(this, vectorEntryPropery, recyclerView, this);
         recyclerView.setAdapter(recyclerViewAdapter);
-        //recyclerView.setOnItemClickListener(this);
         recyclerView.addItemDecoration(new RecyclerItemDividerDecoration(this));
         imageButtonFab.setOnClickListener(this);
         registerForContextMenu(recyclerView);

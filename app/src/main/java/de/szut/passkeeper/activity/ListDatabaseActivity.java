@@ -1,8 +1,6 @@
 package de.szut.passkeeper.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -123,8 +120,6 @@ public class ListDatabaseActivity extends IRecyclerActivity implements IActivity
                     }
                 });
                 alertBuilderHelper.show();
-                //TODO SET ICON
-                //TODO DISABLE POSITIVE BUTTON
                 break;
         }
         return super.onContextItemSelected(item);

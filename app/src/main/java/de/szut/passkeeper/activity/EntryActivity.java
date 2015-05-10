@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import javax.crypto.SecretKey;
 
@@ -89,7 +88,7 @@ public class EntryActivity extends Activity implements IActivity {
         hasDecrypted = false;
         entryId = getIntent().getExtras().getInt("entryId");
         entryProperty = databaseModel.getUserEntryProperty(entryId);
-        if(entryProperty != null) {
+        if (entryProperty != null) {
             setTitle(R.string.title_activity_update_entry);
         }
     }
