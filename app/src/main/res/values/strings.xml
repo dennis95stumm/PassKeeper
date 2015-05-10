@@ -66,6 +66,7 @@
 
     <string name="add_item">Add Item</string>
     <string name="delete_item">Delete Item</string>
+    <string name="password_not_match">The passwords doesn\'t macht!</string>
     <array name="array_default_category_name">
         <item>Internet</item>
         <item>Networking</item>

@@ -116,7 +116,9 @@ public class DatabaseActivity extends Activity implements IActivity {
                     saveDatabaseItem.setEnabled(false);
                 } else {
                     editTextDatabaseName.setError(null);
-                    saveDatabaseItem.setEnabled(editTextDatabasePwd.getError() == null && !editTextDatabasePwd.getText().toString().isEmpty());
+                    saveDatabaseItem.setEnabled(editTextDatabasePwd.getError() == null && !editTextDatabasePwd.getText().toString().isEmpty()
+                            //&& editTextDatabasePwd.getError() == null && !editTextDatabasePwd.getText().toString().isEmpty() newpassword
+                    );
                 }
             }
 
@@ -136,6 +138,47 @@ public class DatabaseActivity extends Activity implements IActivity {
                     saveDatabaseItem.setEnabled(false);
                 } else {
                     editTextDatabasePwd.setError(null);
+                    saveDatabaseItem.setEnabled(!editTextDatabaseName.getText().toString().isEmpty());
+                    //&& editTextDatabasePwd.getError() == null && !editTextDatabasePwd.getText().toString().isEmpty() newpassword
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        editTextDatabasePwdNew.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!s.toString().matches("((?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!\"#$%&'\\(\\)\\*\\+,\\-\\./:;<=>\\?@\\[\\\\\\]\\^_`\\{\\|\\}~]).{8,16})")) {
+                    editTextDatabasePwdNew.setError(getText(R.string.bad_password));
+                    saveDatabaseItem.setEnabled(false);
+                } else {
+                    editTextDatabasePwdNew.setError(null);
+                    saveDatabaseItem.setEnabled(!editTextDatabaseName.getText().toString().isEmpty());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        editTextDatabasePwdNewRepeat.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!s.toString().equals(editTextDatabasePwdNew.getText().toString())) {
+                    editTextDatabasePwdNew.setError(getText(R.string.password_not_match));
+                    saveDatabaseItem.setEnabled(false);
+                } else {
+                    editTextDatabasePwdNew.setError(null);
                     saveDatabaseItem.setEnabled(!editTextDatabaseName.getText().toString().isEmpty());
                 }
             }
