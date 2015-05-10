@@ -34,10 +34,7 @@ import de.szut.passkeeper.utility.RecyclerViewAdapter;
 
 
 public class ListDatabaseActivity extends IRecyclerActivity implements IActivity, View.OnClickListener {
-
-    private static final int CONTEXT_UPDATE_DATABASE_NAME_ID = ContextMenu.FIRST;
     private static final int CONTEXT_UPDATE_DATABASE_PWD_ID = ContextMenu.FIRST + 1;
-    private static final int CONTEXT_DELETE_DATABASE_ID = ContextMenu.FIRST + 2;
     private DatabaseModel databaseModel;
     private Vector<IUserProperty> vectorUserDatabaseProperties;
     private RecyclerViewAdapter recyclerViewAdapter;
@@ -61,17 +58,14 @@ public class ListDatabaseActivity extends IRecyclerActivity implements IActivity
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(Menu.NONE, CONTEXT_UPDATE_DATABASE_NAME_ID, Menu.NONE, R.string.contextmenu_item_update_database_name);
         menu.add(Menu.NONE, CONTEXT_UPDATE_DATABASE_PWD_ID, Menu.NONE, R.string.contextmenu_item_update_database_password);
-        menu.add(Menu.NONE, CONTEXT_DELETE_DATABASE_ID, Menu.NONE, R.string.contextmenu_item_delete_database);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        // TODO beim longpress die databaseactivity oeffnen, wo dort dann der name und das password geaendert werden kann
         listItemInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
-            case 1:
-                break;
             case 2:
                 final AlertBuilderHelper alertChangePwd = new AlertBuilderHelper(ListDatabaseActivity.this, R.string.dialog_title_change_database_pwd, 0, true);
 
@@ -92,26 +86,6 @@ public class ListDatabaseActivity extends IRecyclerActivity implements IActivity
                     }
                 });
                 alertChangePwd.show();
-                break;
-            case 3:
-                final AlertBuilderHelper alertBuilderHelper = new AlertBuilderHelper(ListDatabaseActivity.this, R.string.dialog_title_warning, R.string.dialog_message_delete_database_warning_message, true);
-                final EditText editTextDatabasePwd = new EditText(ListDatabaseActivity.this);
-                editTextDatabasePwd.setHint(R.string.hint_database_pwd);
-                editTextDatabasePwd.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                editTextDatabasePwd.setTransformationMethod(new PasswordTransformationMethod());
-                alertBuilderHelper.setView(editTextDatabasePwd);
-                alertBuilderHelper.setPositiveButton(R.string.dialog_positive_button_delete, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        if (Security.getInstance().checkPassword(editTextDatabasePwd.getText().toString(), ((DatabaseProperty) vectorUserDatabaseProperties.get(listItemInfo.position)).getDatabasePwd())) {
-                            removeItem(listItemInfo.position);
-                        } else {
-                            Toast.makeText(ListDatabaseActivity.this, R.string.toast_message_wrong_password, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-                alertBuilderHelper.show();
                 break;
         }
         return super.onContextItemSelected(item);
