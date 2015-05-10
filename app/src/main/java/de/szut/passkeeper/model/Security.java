@@ -23,15 +23,9 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
-/**
- * Created by Dennis Stumm on 17.02.15.
- */
 public class Security {
     private static Security INSTANCE;
 
-    /**
-     * @return
-     */
     public static Security getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new Security();
@@ -39,12 +33,8 @@ public class Security {
         return INSTANCE;
     }
 
-    /**
-     * @param password
-     * @return
-     */
     public String encryptPassword(String password) {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-512");
             md.update(password.getBytes("UTF-8"));
@@ -52,29 +42,18 @@ public class Security {
             for (byte b : digest) {
                 result.append(String.format("%02x", b));
             }
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
+        } catch (NoSuchAlgorithmException
+                | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         return result.toString();
     }
 
-    /**
-     * @param password
-     * @param hash
-     * @return
-     */
     public boolean checkPassword(String password, String hash) {
         String passwordHash = encryptPassword(password);
         return hash.equals(passwordHash);
     }
 
-    /**
-     * @param password
-     * @param salt
-     * @return
-     */
     public SecretKey getSecret(String password, byte[] salt) {
         SecretKey secret = null;
         try {
@@ -82,18 +61,13 @@ public class Security {
             KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
             SecretKey tmp = factory.generateSecret(spec);
             secret = new SecretKeySpec(tmp.getEncoded(), "AES");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (InvalidKeySpecException e) {
+        } catch (NoSuchAlgorithmException
+                | InvalidKeySpecException e) {
             e.printStackTrace();
         }
         return secret;
     }
 
-    /**
-     * @param value
-     * @return
-     */
     public String encryptValue(String value, SecretKey secret, byte[] iv) {
         String encryptedValueBase64 = "";
         try {
@@ -114,10 +88,6 @@ public class Security {
         return encryptedValueBase64;
     }
 
-    /**
-     * @param value
-     * @return
-     */
     public String decryptValue(String value, SecretKey secret, byte[] iv) {
         String decryptedValue = "";
         try {
@@ -138,10 +108,6 @@ public class Security {
         return decryptedValue;
     }
 
-    /**
-     * @return
-     * @throws NoSuchAlgorithmException
-     */
     public byte[] generateSalt() {
         byte[] salt = new byte[8];
         try {
@@ -153,10 +119,6 @@ public class Security {
         return salt;
     }
 
-    /**
-     * @return
-     * @throws NoSuchAlgorithmException
-     */
     public byte[] generateIV() {
         byte[] iv = null;
         try {

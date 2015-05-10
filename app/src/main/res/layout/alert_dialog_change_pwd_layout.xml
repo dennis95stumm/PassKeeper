@@ -46,6 +46,7 @@
         android:layout_alignBottom="@+id/editTextNewPwdDbRepeat"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/editTextNewPwdDbRepeat"
+        android:contentDescription="@string/image_button_description_show_pwd"
         android:src="@android:drawable/ic_menu_view" />
 
 </RelativeLayout>

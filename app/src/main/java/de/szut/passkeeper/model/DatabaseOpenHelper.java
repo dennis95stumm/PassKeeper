@@ -4,9 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by Sami.Al-Khatib on 09.02.2015.
- */
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     // Table
@@ -78,9 +75,6 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "PassDatabase";
 
 
-    /**
-     * @param context
-     */
     public DatabaseOpenHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }

@@ -6,16 +6,8 @@ import android.content.DialogInterface;
 
 import de.szut.passkeeper.R;
 
-/**
- * Created by Sami.Al-Khatib on 18.03.2015.
- */
 public class AlertBuilderHelper extends AlertDialog.Builder {
 
-    /**
-     * @param context
-     * @param title
-     * @param message
-     */
     public AlertBuilderHelper(Context context, int title, int message, boolean setNegative) {
         super(context);
         this.setTitle(title);

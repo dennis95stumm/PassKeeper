@@ -3,7 +3,7 @@
 
     <string name="app_name">PassKeeper</string>
 
-    <string name="dialog_positive_button_default">Ok</string>
+    <string name="dialog_positive_button_default">OK</string>
     <string name="dialog_positive_button_delete">Delete Forever!</string>
     <string name="dialog_negative_button">Cancel</string>
 
@@ -18,7 +18,7 @@
     <string name="dialog_message_add_category">Create a new category!</string>
     <string name="dialog_message_entry_required_data">At least the title and a password must be given!</string>
     <string name="dialog_message_create_entry">There is no data available for this category. Would you like to create one?</string>
-    <string name="dialog_message_delete_database_warning_message">Attenion! If you proceed to delete this database, you will lose <b>ALL</b> your data! Including <b>all your credentials and categories</b>. This <b>CAN NOT</b> be undone. If you wish to continue, insert your password and and hit the delete button.</string>
+    <string name="dialog_message_delete_database_warning_message">Attenion! If you proceed to delete this database, you will lose <b>ALL</b> your data! Including <b>all your credentials and categories</b>. This <b>CAN NOT</b> be undone. If you wish to continue, insert your password and hit the delete button.</string>
 
     <string name="dialog_loading_message_encrypting_data">Encrypting data. This may take some time.</string>
     <string name="dialog_loading_message_decrypting_data">Decrypting data. This may take some time.</string>
@@ -30,7 +30,7 @@
     <string name="title_activity_choose_database">Databases</string>
     <string name="title_activity_update_entry">Update Entry</string>
     <string name="title_activity_create_entry">Create Entry</string>
-    <string name="loading">Loading! Please wait...</string>
+    <string name="loading">Loading! Please wait&#8230;</string>
 
     <string name="hint_database_name">Database Name</string>
     <string name="hint_database_pwd">Database Password</string>
@@ -47,6 +47,7 @@
     <string name="textview_modified">modified on:</string>
 
     <string name="image_button_description_show_pwd">Show Password</string>
+    <string name="image_button_description_generate_pwd">Generate Password</string>
 
     <string name="menu_item_title_add_database">Add a new database!</string>
     <string name="menu_item_title_add_category">Add a new category!</string>
@@ -63,6 +64,8 @@
     <string name="bad_db_name">The database name must have at least 1 letter and the password must have 8 letters!</string>
     <string name="bad_password">The password must contain at least one upper case, one lower case character, one special character, one digit and must be between 8 and 16 characters.</string>
 
+    <string name="add_item">Add Item</string>
+    <string name="delete_item">Delete Item</string>
     <array name="array_default_category_name">
         <item>Internet</item>
         <item>Networking</item>

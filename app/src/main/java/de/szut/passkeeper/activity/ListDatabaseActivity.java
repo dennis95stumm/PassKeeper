@@ -40,13 +40,8 @@ public class ListDatabaseActivity extends IRecyclerActivity implements IActivity
     private static final int CONTEXT_DELETE_DATABASE_ID = ContextMenu.FIRST + 2;
     private DatabaseModel databaseModel;
     private Vector<IUserProperty> vectorUserDatabaseProperties;
-    private RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerViewAdapter;
-    private ImageButton imageButtonFab;
     private AdapterView.AdapterContextMenuInfo listItemInfo;
-    private LinearLayoutManager layoutManager;
-
-    //TODO implement context menu
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,14 +74,11 @@ public class ListDatabaseActivity extends IRecyclerActivity implements IActivity
                 break;
             case 2:
                 final AlertBuilderHelper alertChangePwd = new AlertBuilderHelper(ListDatabaseActivity.this, R.string.dialog_title_change_database_pwd, 0, true);
-                AlertDialog.Builder builder = new AlertDialog.Builder(ListDatabaseActivity.this);
-                AlertDialog alertDialog = builder.create();
 
                 alertChangePwd.setView(R.layout.alert_dialog_change_pwd_layout);
                 final EditText editTextOldDbPwd = (EditText) findViewById(R.id.editTextOldDbPwd);
                 final EditText editTextNewDbPwd = (EditText) findViewById(R.id.editTextNewDbPwd);
                 final EditText editTextNewDbPwdRepeat = (EditText) findViewById(R.id.editTextNewPwdDbRepeat);
-                ImageButton imageButtonShowDbPwd = (ImageButton) findViewById(R.id.imageButtonViewPwd);
                 Toast.makeText(ListDatabaseActivity.this, String.valueOf(editTextOldDbPwd), Toast.LENGTH_SHORT).show();
                 alertChangePwd.setPositiveButton(R.string.dialog_positive_button_default, new DialogInterface.OnClickListener() {
                     @Override
@@ -180,10 +172,10 @@ public class ListDatabaseActivity extends IRecyclerActivity implements IActivity
     @Override
     public void populateView() {
         setContentView(R.layout.activity_recyclerview_layout);
-        imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewDefault);
+        ImageButton imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerViewDefault);
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerViewAdapter = new RecyclerViewAdapter(this, databaseModel.getUserDatabasePropertyVector(), recyclerView, this, R.id.delitition_password);

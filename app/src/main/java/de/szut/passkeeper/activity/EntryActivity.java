@@ -29,8 +29,6 @@ public class EntryActivity extends Activity implements IActivity {
     private EditText editTextEntryUsername;
     private EditText editTextEntryPwd;
     private EditText editTextEntryNote;
-    private ImageButton imageButtonDisplayPwd;
-    private ImageButton imageButtonGeneratePwd;
     private ProgressDialog progressDialog;
     private DatabaseModel databaseModel;
     private int databaseId;
@@ -100,8 +98,8 @@ public class EntryActivity extends Activity implements IActivity {
         editTextEntryUsername = (EditText) findViewById(R.id.editTextEntryUsername);
         editTextEntryPwd = (EditText) findViewById(R.id.editTextEntryPwd);
         editTextEntryNote = (EditText) findViewById(R.id.editTextEntryNote);
-        imageButtonDisplayPwd = (ImageButton) findViewById(R.id.imageButtonDisplayPwd);
-        imageButtonGeneratePwd = (ImageButton) findViewById(R.id.imageButtonGeneratePwd);
+        ImageButton imageButtonDisplayPwd = (ImageButton) findViewById(R.id.imageButtonDisplayPwd);
+        ImageButton imageButtonGeneratePwd = (ImageButton) findViewById(R.id.imageButtonGeneratePwd);
         imageButtonDisplayPwd.setOnTouchListener(new ViewPwdTouchListener(editTextEntryPwd));
         imageButtonGeneratePwd.setOnClickListener(new GeneratePwdClickListener(editTextEntryPwd));
         if (entryProperty != null) {

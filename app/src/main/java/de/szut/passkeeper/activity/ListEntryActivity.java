@@ -22,20 +22,14 @@ import de.szut.passkeeper.utility.AlertBuilderHelper;
 import de.szut.passkeeper.utility.RecyclerItemDividerDecoration;
 import de.szut.passkeeper.utility.RecyclerViewAdapter;
 
-/**
- * Created by Sami.Al-Khatib on 21.03.2015.
- */
 public class ListEntryActivity extends IRecyclerActivity implements IActivity, View.OnClickListener {
 
-    private RecyclerView recyclerView;
     private Vector<IUserProperty> vectorEntryPropery;
     private DatabaseModel databaseModel;
     private RecyclerViewAdapter recyclerViewAdapter;
     private int databaseId;
     private int categoryId;
     private String databasePwd;
-    private ImageButton imageButtonFab;
-    private LinearLayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,10 +114,10 @@ public class ListEntryActivity extends IRecyclerActivity implements IActivity, V
     public void populateView() {
         setTitle(databaseModel.getUserCategoryName(categoryId));
         setContentView(R.layout.activity_recyclerview_layout);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewDefault);
-        imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerViewDefault);
+        ImageButton imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerViewAdapter = new RecyclerViewAdapter(this, vectorEntryPropery, recyclerView, this);
         recyclerView.setAdapter(recyclerViewAdapter);

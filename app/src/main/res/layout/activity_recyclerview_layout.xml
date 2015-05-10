@@ -21,9 +21,9 @@
         android:layout_marginBottom="@dimen/fab_button_margin_bottom"
         android:layout_marginEnd="@dimen/fab_button_margin_right"
         android:background="@drawable/oval_ripple"
+        android:contentDescription="@string/add_item"
         android:elevation="@dimen/elevation_low"
         android:src="@drawable/ic_fab_add"
-        android:stateListAnimator="@anim/button_elevation"
         android:tint="@android:color/white" />
 
 </RelativeLayout>

@@ -2,9 +2,6 @@ package de.szut.passkeeper.property;
 
 import de.szut.passkeeper.interfaces.IUserProperty;
 
-/**
- * Created by Sami.Al-Khatib on 09.02.2015.
- */
 public class DatabaseProperty implements IUserProperty {
     private int databaseId;
     private String databaseName;

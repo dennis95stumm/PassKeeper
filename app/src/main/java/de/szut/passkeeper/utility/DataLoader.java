@@ -7,9 +7,6 @@ import java.util.Vector;
 import de.szut.passkeeper.interfaces.IUserProperty;
 import de.szut.passkeeper.model.DatabaseModel;
 
-/**
- * Created by redtiger on 22.03.15.
- */
 public class DataLoader implements Runnable {
     public static final int LOAD_STATE_COMPLETED = 1;
     private DatabaseModel databaseModel;

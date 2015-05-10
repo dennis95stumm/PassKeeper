@@ -16,9 +16,6 @@ import android.widget.RelativeLayout;
 import de.szut.passkeeper.R;
 import de.szut.passkeeper.interfaces.IRecyclerActivity;
 
-/**
- * Created by redtiger on 03.05.15.
- */
 public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureListener {
     private IRecyclerActivity iRecyclerActivity;
     private int recyclerPosition;

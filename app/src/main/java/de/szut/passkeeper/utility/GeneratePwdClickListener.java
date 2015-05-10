@@ -5,9 +5,6 @@ import android.widget.EditText;
 
 import de.szut.passkeeper.model.Security;
 
-/**
- * Created by Sami.Al-Khatib on 17.03.2015.
- */
 public class GeneratePwdClickListener implements View.OnClickListener {
 
     private EditText editText;

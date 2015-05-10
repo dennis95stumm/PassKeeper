@@ -23,7 +23,6 @@ public class CreateDatabaseActivity extends Activity implements IActivity {
 
     private EditText editTextDatabaseName;
     private EditText editTextDatabasePwd;
-    private ImageButton imageButton;
     private MenuItem saveDatabaseItem;
 
     @Override
@@ -123,7 +122,7 @@ public class CreateDatabaseActivity extends Activity implements IActivity {
             public void afterTextChanged(Editable s) {
             }
         });
-        imageButton = (ImageButton) findViewById(R.id.imageButtonDisplayPwd);
+        ImageButton imageButton = (ImageButton) findViewById(R.id.imageButtonDisplayPwd);
         imageButton.setOnTouchListener(new ViewPwdTouchListener(editTextDatabasePwd));
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);

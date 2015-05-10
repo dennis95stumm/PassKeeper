@@ -5,8 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Vector;
 
 import de.szut.passkeeper.interfaces.IUserProperty;
@@ -14,9 +12,6 @@ import de.szut.passkeeper.property.CategoryProperty;
 import de.szut.passkeeper.property.DatabaseProperty;
 import de.szut.passkeeper.property.EntryProperty;
 
-/**
- * Created by Sami.Al-Khatib on 10.02.2015.
- */
 public class DatabaseModel {
     private DatabaseOpenHelper databaseOpenHelper;
     private SQLiteDatabase sqLiteDatabase;
@@ -53,9 +48,6 @@ public class DatabaseModel {
         databaseOpenHelper = new DatabaseOpenHelper(context);
     }
 
-    /**
-     * @return
-     */
     public Vector<IUserProperty> getUserDatabasePropertyVector() {
         sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
         Vector<IUserProperty> vectorUserDatabaseProperty = new Vector<>();
@@ -76,10 +68,6 @@ public class DatabaseModel {
         return vectorUserDatabaseProperty;
     }
 
-    /**
-     * @param databaseId
-     * @return
-     */
     public Vector<IUserProperty> getUserCategoryPropertyVector(int databaseId) {
         sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
         Vector<IUserProperty> vectorUserCategoryProperty = new Vector<>();
@@ -191,12 +179,6 @@ public class DatabaseModel {
         return categoryName;
     }
 
-    /**
-     * @param databaseProperty
-     * @return
-     * @throws NoSuchAlgorithmException
-     * @throws UnsupportedEncodingException
-     */
     public int createUserDatabase(DatabaseProperty databaseProperty) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -208,9 +190,6 @@ public class DatabaseModel {
         return (int) databaseId;
     }
 
-    /**
-     * @param categoryProperty
-     */
     public int createUserCategory(CategoryProperty categoryProperty) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -222,9 +201,6 @@ public class DatabaseModel {
         return (int) categoryId;
     }
 
-    /**
-     * @param entryProperty
-     */
     public void createUserEntry(EntryProperty entryProperty) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();

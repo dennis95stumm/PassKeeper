@@ -22,13 +22,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     Context context;
     private Vector<IUserProperty> vector;
-    private IRecyclerActivity iRecyclerActivity;
     private int deleteConfirmationViewId;
 
     public RecyclerViewAdapter(Context context, Vector<IUserProperty> vector, RecyclerView recyclerView, IRecyclerActivity iRecyclerActivity) {
         this.context = context;
         this.vector = vector;
-        this.iRecyclerActivity = iRecyclerActivity;
         final GestureDetector gestruesDetector = new GestureDetector(null, new RecyclerGestrueListener(iRecyclerActivity, recyclerView));
         ((Activity) context).findViewById(R.id.recyclerViewDefault).setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -42,7 +40,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public RecyclerViewAdapter(Context context, Vector<IUserProperty> vector, RecyclerView recyclerView, IRecyclerActivity iRecyclerActivity, int confirmViewId) {
         this.context = context;
         this.vector = vector;
-        this.iRecyclerActivity = iRecyclerActivity;
         final GestureDetector gestruesDetector = new GestureDetector(null, new RecyclerGestrueListener(iRecyclerActivity, recyclerView));
         ((Activity) context).findViewById(R.id.recyclerViewDefault).setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -53,22 +50,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.deleteConfirmationViewId = confirmViewId;
     }
 
-    /*@Override
-    public int getCount() {
-        return vector.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return position;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }*/
-
-
     public void refresh(Vector<IUserProperty> vector) {
         this.vector = vector;
         notifyDataSetChanged();
@@ -77,9 +58,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_item_layout, viewGroup, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override

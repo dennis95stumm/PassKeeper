@@ -5,9 +5,6 @@ import java.util.Vector;
 import de.szut.passkeeper.activity.StartActivity;
 import de.szut.passkeeper.interfaces.IUserProperty;
 
-/**
- * Created by redtiger on 22.03.15.
- */
 public class DataLoaderTask {
     private StartActivity startActivity;
     private Vector<IUserProperty> propertyVector;

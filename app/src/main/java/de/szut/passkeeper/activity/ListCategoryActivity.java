@@ -26,14 +26,11 @@ import de.szut.passkeeper.utility.RecyclerViewAdapter;
 
 public class ListCategoryActivity extends IRecyclerActivity implements IActivity, View.OnClickListener {
 
-    private RecyclerView recyclerView;
     private Vector<IUserProperty> vectorCategoryProperty;
     private DatabaseModel databaseModel;
     private RecyclerViewAdapter recyclerViewAdapter;
     private int databaseId;
-    private ImageButton imageButtonFab;
     private String databasePwd;
-    private LinearLayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,11 +105,11 @@ public class ListCategoryActivity extends IRecyclerActivity implements IActivity
     public void populateView() {
         setTitle(databaseModel.getUserDatabaseName(databaseId));
         setContentView(R.layout.activity_recyclerview_layout);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewDefault);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerViewDefault);
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
+        ImageButton imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
         recyclerViewAdapter = new RecyclerViewAdapter(this, databaseModel.getUserCategoryPropertyVector(databaseId), recyclerView, this);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.addItemDecoration(new RecyclerItemDividerDecoration(this));
