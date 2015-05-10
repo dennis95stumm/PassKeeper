@@ -88,8 +88,11 @@ public class DatabaseActivity extends Activity implements IActivity {
     public void setDefaults() {
         databaseModel = new DatabaseModel(this);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        databaseId = getIntent().getExtras().getInt("databaseId");
-        databaseProperty = databaseModel.getUserDatabaseProperty(databaseId);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            databaseId = extras.getInt("databaseId");
+            databaseProperty = databaseModel.getUserDatabaseProperty(databaseId);
+        }
     }
 
     @Override

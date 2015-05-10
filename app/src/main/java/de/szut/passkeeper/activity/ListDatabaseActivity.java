@@ -103,7 +103,7 @@ public class ListDatabaseActivity extends IRecyclerActivity implements IActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.imageButtonFab:
-                startActivity(new Intent(ListDatabaseActivity.this, DatabaseActivity.class));
+                startActivity(new Intent(this, DatabaseActivity.class));
                 break;
         }
     }
