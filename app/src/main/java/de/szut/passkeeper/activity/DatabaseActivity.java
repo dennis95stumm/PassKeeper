@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -24,6 +25,11 @@ public class DatabaseActivity extends Activity implements IActivity {
     private EditText editTextDatabaseName;
     private EditText editTextDatabasePwd;
     private MenuItem saveDatabaseItem;
+    private DatabaseModel databaseModel;
+    private int databaseId;
+    private DatabaseProperty databaseProperty;
+    private EditText editTextDatabasePwdNew;
+    private EditText editTextDatabasePwdNewRepeat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +55,13 @@ public class DatabaseActivity extends Activity implements IActivity {
         imm.hideSoftInputFromWindow(editTextDatabaseName.getWindowToken(), 0);
         switch (item.getItemId()) {
             case R.id.menuItemDatabaseSave:
+                /*if (Security.getInstance().checkPassword(editTextOldDbPwd.getText().toString(), ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabasePwd())
+                        && editTextNewDbPwd.getText().toString().equals(editTextNewDbPwdRepeat.getText().toString()) && editTextNewDbPwd.getText().length() == 8) {
+                    databaseModel.updateUserDatabasePwd((((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId()), Security.getInstance().encryptPassword(editTextNewDbPwd.getText().toString()));
+                } else {
+                    Toast.makeText(ListDatabaseActivity.this, R.string.toast_message_wrong_password, Toast.LENGTH_SHORT).show();
+                }*/
                 if (editTextDatabaseName.getText().length() != 0 && editTextDatabasePwd.getText().length() >= 8) {
-                    DatabaseModel databaseModel = new DatabaseModel(this);
                     int databaseId = databaseModel.createUserDatabase(new DatabaseProperty(editTextDatabaseName.getText().toString(), editTextDatabasePwd.getText().toString(), R.drawable.ic_database));
                     for (String categoryName : getResources().getStringArray(R.array.array_default_category_name)) {
                         databaseModel.createUserCategory(new CategoryProperty(
@@ -75,6 +86,10 @@ public class DatabaseActivity extends Activity implements IActivity {
 
     @Override
     public void setDefaults() {
+        databaseModel = new DatabaseModel(this);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        databaseId = getIntent().getExtras().getInt("databaseId");
+        databaseProperty = databaseModel.getUserDatabaseProperty(databaseId);
     }
 
     @Override
@@ -82,6 +97,13 @@ public class DatabaseActivity extends Activity implements IActivity {
         setContentView(R.layout.activity_create_database_layout);
         editTextDatabaseName = (EditText) findViewById(R.id.editTextDatabaseName);
         editTextDatabasePwd = (EditText) findViewById(R.id.editTextDatabasePwd);
+        editTextDatabasePwdNew = (EditText) findViewById(R.id.editTextNewDbPwd);
+        editTextDatabasePwdNewRepeat = (EditText) findViewById(R.id.editTextNewPwdDbRepeat);
+        if (databaseProperty != null) {
+            editTextDatabaseName.setText(databaseProperty.getDatabaseName());
+            editTextDatabasePwdNew.setVisibility(View.VISIBLE);
+            editTextDatabasePwdNewRepeat.setVisibility(View.VISIBLE);
+        }
         editTextDatabaseName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

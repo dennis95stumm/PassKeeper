@@ -110,12 +110,29 @@ public class DatabaseModel {
         return vectorUserEntryProperty;
     }
 
+    public DatabaseProperty getUserDatabaseProperty(int databaseId) {
+        sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
+        DatabaseProperty databaseProperty = null;
+        Cursor cursor = sqLiteDatabase.query(DatabaseOpenHelper.TABLE_USER_DATABASE, passDatabaseColumns, DatabaseOpenHelper.KEY_ID_USER_DATABASE + " = ?", new String[]{String.valueOf(databaseId)}, null, null, null);
+        if (cursor.moveToFirst()) {
+            databaseProperty = new DatabaseProperty(
+                    cursor.getInt(0),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getInt(3),
+                    cursor.getString(4)
+            );
+            cursor.close();
+        }
+        sqLiteDatabase.close();
+        return databaseProperty;
+    }
+
     public CategoryProperty getUserCategoryProperty(int categoryId) {
         sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
         CategoryProperty categoryProperty = null;
         Cursor cursor = sqLiteDatabase.query(DatabaseOpenHelper.TABLE_USER_CATEGORY, passCategoryColumns, DatabaseOpenHelper.KEY_ID_USER_CATEGORY + " = ?", new String[]{String.valueOf(categoryId)}, null, null, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
+        if (cursor.moveToFirst()) {
             categoryProperty = new CategoryProperty(
                     cursor.getInt(0),
                     cursor.getInt(1),

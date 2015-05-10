@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -45,11 +44,6 @@ public class ListEntryActivity extends IRecyclerActivity implements IActivity, V
         vectorEntryPropery.clear();
         vectorEntryPropery.addAll(databaseModel.getUserEntryVector(databaseId, categoryId));
         recyclerViewAdapter.refresh(databaseModel.getUserEntryVector(databaseId, categoryId));
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
     }
 
     @Override

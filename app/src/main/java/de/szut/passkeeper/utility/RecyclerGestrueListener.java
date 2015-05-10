@@ -6,6 +6,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -18,7 +19,7 @@ import de.szut.passkeeper.interfaces.IRecyclerActivity;
 
 public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureListener {
     private IRecyclerActivity iRecyclerActivity;
-    private int recyclerPosition;
+    private int recyclerPosition = -1;
     private RecyclerView view;
     private RecyclerViewAdapter.ViewHolder actualViewHolder;
     private boolean swipingEnabled = true;
@@ -207,22 +208,35 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
 
     @Override
     public void onLongPress(MotionEvent e) {
-        actualViewHolder.mainView.setPressed(false);
-        if (selectedItem != recyclerPosition) {
-            actualViewHolder.mainView.setSelected(true);
-            selectedItem = recyclerPosition;
-        } else {
-            actualViewHolder.mainView.setSelected(false);
-            selectedItem = -1;
+        if (iRecyclerActivity.longPressEnabled()) {
+            actualViewHolder.mainView.setPressed(false);
+            if (selectedItem != recyclerPosition) {
+                actualViewHolder.mainView.setSelected(true);
+                selectedItem = recyclerPosition;
+                iRecyclerActivity.getEditMenu().setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        actualViewHolder.mainView.setSelected(false);
+                        boolean returnVal = iRecyclerActivity.editItem(selectedItem);
+                        selectedItem = -1;
+                        actualViewHolder = null;
+                        recyclerPosition = -1;
+                        swipingEnabled = true;
+                        iRecyclerActivity.getEditMenu().setVisible(false);
+                        return returnVal;
+                    }
+                });
+                iRecyclerActivity.getEditMenu().setVisible(true);
+            } else {
+                actualViewHolder.mainView.setSelected(false);
+                iRecyclerActivity.getEditMenu().setVisible(false);
+                selectedItem = -1;
+            }
         }
-        // TODO longpress
-        // makierungs icon
-        // bei auswahl bearbeitungszeichen im floating button
-        // beim betätigen des baerbeitungsbuttons entsprechende funktion aufrufen
     }
 
     @Override
     public void onShowPress(MotionEvent e) {
-        actualViewHolder.mainView.setPressed(true);
+        if (iRecyclerActivity.longPressEnabled()) actualViewHolder.mainView.setPressed(true);
     }
 }

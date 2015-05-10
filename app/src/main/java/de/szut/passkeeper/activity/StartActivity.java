@@ -37,7 +37,7 @@ public class StartActivity extends Activity {
 
     private void setStartActivity() {
         if (vectorUserDatabaseProperty.size() == 0) {
-            Intent intent = new Intent(this, CreateDatabaseActivity.class);
+            Intent intent = new Intent(this, DatabaseActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else {

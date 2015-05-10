@@ -9,12 +9,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
-import android.view.ContextMenu;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -34,11 +30,9 @@ import de.szut.passkeeper.utility.RecyclerViewAdapter;
 
 
 public class ListDatabaseActivity extends IRecyclerActivity implements IActivity, View.OnClickListener {
-    private static final int CONTEXT_UPDATE_DATABASE_PWD_ID = ContextMenu.FIRST + 1;
     private DatabaseModel databaseModel;
     private Vector<IUserProperty> vectorUserDatabaseProperties;
     private RecyclerViewAdapter recyclerViewAdapter;
-    private AdapterView.AdapterContextMenuInfo listItemInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,39 +50,17 @@ public class ListDatabaseActivity extends IRecyclerActivity implements IActivity
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(Menu.NONE, CONTEXT_UPDATE_DATABASE_PWD_ID, Menu.NONE, R.string.contextmenu_item_update_database_password);
+    public boolean editItem(int position) {
+        Intent intentDatabaseActivity = new Intent(this, DatabaseActivity.class)
+                .putExtra("databaseId", ((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId());
+        startActivity(intentDatabaseActivity);
+
+        return true;
     }
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        // TODO beim longpress die databaseactivity oeffnen, wo dort dann der name und das password geaendert werden kann
-        listItemInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        switch (item.getItemId()) {
-            case 2:
-                final AlertBuilderHelper alertChangePwd = new AlertBuilderHelper(ListDatabaseActivity.this, R.string.dialog_title_change_database_pwd, 0, true);
 
-                alertChangePwd.setView(R.layout.alert_dialog_change_pwd_layout);
-                final EditText editTextOldDbPwd = (EditText) findViewById(R.id.editTextOldDbPwd);
-                final EditText editTextNewDbPwd = (EditText) findViewById(R.id.editTextNewDbPwd);
-                final EditText editTextNewDbPwdRepeat = (EditText) findViewById(R.id.editTextNewPwdDbRepeat);
-                Toast.makeText(ListDatabaseActivity.this, String.valueOf(editTextOldDbPwd), Toast.LENGTH_SHORT).show();
-                alertChangePwd.setPositiveButton(R.string.dialog_positive_button_default, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (Security.getInstance().checkPassword(editTextOldDbPwd.getText().toString(), ((DatabaseProperty) vectorUserDatabaseProperties.get(listItemInfo.position)).getDatabasePwd())
-                                && editTextNewDbPwd.getText().toString().equals(editTextNewDbPwdRepeat.getText().toString()) && editTextNewDbPwd.getText().length() == 8) {
-                            databaseModel.updateUserDatabasePwd((((DatabaseProperty) vectorUserDatabaseProperties.get(listItemInfo.position)).getDatabaseId()), Security.getInstance().encryptPassword(editTextNewDbPwd.getText().toString()));
-                        } else {
-                            Toast.makeText(ListDatabaseActivity.this, R.string.toast_message_wrong_password, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-                alertChangePwd.show();
-                break;
-        }
-        return super.onContextItemSelected(item);
+    public boolean longPressEnabled() {
+        return true;
     }
 
     @Override
@@ -131,7 +103,7 @@ public class ListDatabaseActivity extends IRecyclerActivity implements IActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.imageButtonFab:
-                startActivity(new Intent(ListDatabaseActivity.this, CreateDatabaseActivity.class));
+                startActivity(new Intent(ListDatabaseActivity.this, DatabaseActivity.class));
                 break;
         }
     }
