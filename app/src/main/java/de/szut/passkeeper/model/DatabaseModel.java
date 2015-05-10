@@ -145,8 +145,7 @@ public class DatabaseModel {
         sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
         EntryProperty entryProperty = null;
         Cursor cursor = sqLiteDatabase.query(DatabaseOpenHelper.TABLE_USER_ENTRY, passEntryColumns, DatabaseOpenHelper.KEY_ID_USER_ENTRY + " = ? ", new String[]{String.valueOf(entryId)}, null, null, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
+        if (cursor.moveToFirst()) {
             entryProperty = new EntryProperty(
                     cursor.getInt(0),
                     cursor.getInt(1),

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
@@ -17,7 +16,6 @@ import de.szut.passkeeper.interfaces.IActivity;
 import de.szut.passkeeper.model.DatabaseModel;
 import de.szut.passkeeper.property.CategoryProperty;
 import de.szut.passkeeper.property.DatabaseProperty;
-import de.szut.passkeeper.utility.AlertBuilderHelper;
 import de.szut.passkeeper.utility.ViewPwdTouchListener;
 
 
@@ -38,7 +36,7 @@ public class CreateDatabaseActivity extends Activity implements IActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.create_database_menu, menu);
+        getMenuInflater().inflate(R.menu.database_menu, menu);
         saveDatabaseItem = menu.findItem(R.id.menuItemDatabaseSave);
         return true;
     }

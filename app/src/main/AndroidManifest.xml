@@ -25,12 +25,7 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activity.ListCategoryActivity" android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.ListEntryActivity" android:windowSoftInputMode="adjustPan"/>
-        <activity
-            android:name=".activity.CreateEntryActivity"
-            android:label="@string/title_activity_create_entry" />
-        <activity
-            android:name=".activity.UpdateEntryActivity"
-            android:label="@string/title_activity_update_entry" />
+        <activity android:name=".activity.EntryActivity" android:label="@string/title_activity_create_entry" />
     </application>
 
 </manifest>

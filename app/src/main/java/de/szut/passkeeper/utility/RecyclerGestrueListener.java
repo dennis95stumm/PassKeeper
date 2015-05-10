@@ -191,18 +191,20 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
     }
 
     private void resetView() {
-        actualViewHolder.delteConfirmation.setVisibility(View.GONE);
-        actualViewHolder.deleteAnimView.setVisibility(View.VISIBLE);
-        View animationView = actualViewHolder.mainView;
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) animationView.getLayoutParams();
-        params.rightMargin = 0;
-        params.leftMargin = 0;
-        animationView.setLayoutParams(params);
-        if (actualViewHolder.delteConfirmationView instanceof EditText) {
-            ((EditText) actualViewHolder.delteConfirmationView).setText(null);
-            InputMethodManager imm = (InputMethodManager) iRecyclerActivity.getSystemService(
-                    Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(actualViewHolder.delteConfirmationView.getWindowToken(), 0);
+        if (actualViewHolder != null) {
+            actualViewHolder.delteConfirmation.setVisibility(View.GONE);
+            actualViewHolder.deleteAnimView.setVisibility(View.VISIBLE);
+            View animationView = actualViewHolder.mainView;
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) animationView.getLayoutParams();
+            params.rightMargin = 0;
+            params.leftMargin = 0;
+            animationView.setLayoutParams(params);
+            if (actualViewHolder.delteConfirmationView instanceof EditText) {
+                ((EditText) actualViewHolder.delteConfirmationView).setText(null);
+                InputMethodManager imm = (InputMethodManager) iRecyclerActivity.getSystemService(
+                        Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(actualViewHolder.delteConfirmationView.getWindowToken(), 0);
+            }
         }
         actualViewHolder = null;
         swipingEnabled = true;

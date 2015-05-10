@@ -1,6 +1,5 @@
 package de.szut.passkeeper.activity;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -58,8 +57,6 @@ public class ListEntryActivity extends IRecyclerActivity implements IActivity, V
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.entry_list_menu, menu);
         return true;
     }
 
@@ -76,7 +73,7 @@ public class ListEntryActivity extends IRecyclerActivity implements IActivity, V
 
     @Override
     public void onRecyclerItemClick(int position) {
-        Intent intentUpdateEntryActivity = new Intent(ListEntryActivity.this, UpdateEntryActivity.class)
+        Intent intentUpdateEntryActivity = new Intent(ListEntryActivity.this, EntryActivity.class)
                 .putExtra("databaseId", databaseId)
                 .putExtra("categoryId", categoryId)
                 .putExtra("entryId", ((EntryProperty) vectorEntryPropery.get(position)).getEntryId())
@@ -88,7 +85,7 @@ public class ListEntryActivity extends IRecyclerActivity implements IActivity, V
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.imageButtonFab:
-                Intent intentCreateEntryActivity = new Intent(ListEntryActivity.this, CreateEntryActivity.class)
+                Intent intentCreateEntryActivity = new Intent(ListEntryActivity.this, EntryActivity.class)
                         .putExtra("databaseId", databaseId)
                         .putExtra("categoryId", categoryId)
                         .putExtra("databasePwd", databasePwd);
@@ -110,7 +107,7 @@ public class ListEntryActivity extends IRecyclerActivity implements IActivity, V
             alertBuilderHelper.setPositiveButton(R.string.dialog_positive_button_default, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Intent intentCreateEntryActivity = new Intent(ListEntryActivity.this, CreateEntryActivity.class)
+                    Intent intentCreateEntryActivity = new Intent(ListEntryActivity.this, EntryActivity.class)
                             .putExtra("databaseId", databaseId)
                             .putExtra("categoryId", categoryId)
                             .putExtra("databasePwd", databasePwd);
