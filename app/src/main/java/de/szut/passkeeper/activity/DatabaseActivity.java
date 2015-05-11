@@ -58,7 +58,7 @@ public class DatabaseActivity extends Activity implements IActivity {
             case R.id.menuItemDatabaseSave:
                 if (databaseProperty != null && Security.getInstance().checkPassword(editTextDatabasePwd.getText().toString(), databaseProperty.getDatabasePwd())) {
                     databaseProperty.setDatabaseName(editTextDatabaseName.getText().toString());
-                    if (!editTextDatabasePwdNew.getText.toString().isEmpty()) {
+                    if (!editTextDatabasePwdNew.getText().toString().isEmpty()) {
                         databaseProperty.setDatabasePwd(editTextDatabasePwdNew.getText().toString());
                     }
                     databaseModel.updateUserDatabase(databaseProperty);
