@@ -59,7 +59,7 @@ public class DatabaseActivity extends Activity implements IActivity {
                 if (databaseProperty != null && Security.getInstance().checkPassword(editTextDatabasePwd.getText().toString(), databaseProperty.getDatabasePwd())) {
                     databaseProperty.setDatabaseName(editTextDatabaseName.getText().toString());
                     if (!editTextDatabasePwdNew.getText().toString().isEmpty()) {
-                        databaseProperty.setDatabasePwd(editTextDatabasePwdNew.getText().toString());
+                        databaseProperty.setDatabasePwd(Security.getInstance().encryptPassword(editTextDatabasePwdNew.getText().toString()));
                     }
                     databaseModel.updateUserDatabase(databaseProperty);
                 } else if (databaseProperty == null) {
