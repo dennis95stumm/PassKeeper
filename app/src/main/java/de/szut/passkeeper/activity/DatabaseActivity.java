@@ -58,7 +58,9 @@ public class DatabaseActivity extends Activity implements IActivity {
             case R.id.menuItemDatabaseSave:
                 if (databaseProperty != null && Security.getInstance().checkPassword(editTextDatabasePwd.getText().toString(), databaseProperty.getDatabasePwd())) {
                     databaseProperty.setDatabaseName(editTextDatabaseName.getText().toString());
-                    databaseProperty.setDatabasePwd(editTextDatabasePwdNew.getText().toString());
+                    if (!editTextDatabasePwdNew.getText.toString().isEmpty()) {
+                        databaseProperty.setDatabasePwd(editTextDatabasePwdNew.getText().toString());
+                    }
                     databaseModel.updateUserDatabase(databaseProperty);
                 } else if (databaseProperty == null) {
                     databaseId = databaseModel.createUserDatabase(new DatabaseProperty(editTextDatabaseName.getText().toString(), editTextDatabasePwd.getText().toString(), R.drawable.ic_database));
@@ -110,13 +112,6 @@ public class DatabaseActivity extends Activity implements IActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-/*if (
-                        && editTextNewDbPwd.getText().toString().equals(editTextNewDbPwdRepeat.getText().toString()) && editTextNewDbPwd.getText().length() == 8) {
-                    databaseModel.updateUserDatabasePwd((((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId()), Security.getInstance().encryptPassword(editTextNewDbPwd.getText().toString()));
-                } else {
-                    Toast.makeText(ListDatabaseActivity.this, R.string.toast_message_wrong_password, Toast.LENGTH_SHORT).show();
-                }*/
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.toString().isEmpty()) {
@@ -125,7 +120,7 @@ public class DatabaseActivity extends Activity implements IActivity {
                 } else {
                     editTextDatabaseName.setError(null);
                     saveDatabaseItem.setEnabled(editTextDatabasePwd.getError() == null && !editTextDatabasePwd.getText().toString().isEmpty()
-                            //&& editTextDatabasePwd.getError() == null && !editTextDatabasePwd.getText().toString().isEmpty() newpassword
+                        && editTextDatabasePwdNew.getError() == null && editTextDatabasePwdNewRepeat.getError() == null
                     );
                 }
             }
@@ -146,8 +141,7 @@ public class DatabaseActivity extends Activity implements IActivity {
                     saveDatabaseItem.setEnabled(false);
                 } else {
                     editTextDatabasePwd.setError(null);
-                    saveDatabaseItem.setEnabled(!editTextDatabaseName.getText().toString().isEmpty());
-                    //&& editTextDatabasePwd.getError() == null && !editTextDatabasePwd.getText().toString().isEmpty() newpassword
+                    saveDatabaseItem.setEnabled(!editTextDatabaseName.getText().toString().isEmpty() && editTextDatabasePwdNew.getError() == null && editTextDatabasePwdNewRepeat.getError() == null);
                 }
             }
 
@@ -170,7 +164,7 @@ public class DatabaseActivity extends Activity implements IActivity {
                     saveDatabaseItem.setEnabled(false);
                 } else {
                     editTextDatabasePwdNew.setError(null);
-                    saveDatabaseItem.setEnabled(!editTextDatabaseName.getText().toString().isEmpty());
+                    saveDatabaseItem.setEnabled(!editTextDatabaseName.getText().toString().isEmpty() && editTextDatabasePwd.getError() == null && !editTextDatabasePwd.getText().toString().isEmpty() && editTextDatabasePwdNewRepeat.getError() == null);
                 }
             }
 
@@ -190,7 +184,7 @@ public class DatabaseActivity extends Activity implements IActivity {
                     saveDatabaseItem.setEnabled(false);
                 } else {
                     editTextDatabasePwdNewRepeat.setError(null);
-                    saveDatabaseItem.setEnabled(!editTextDatabaseName.getText().toString().isEmpty());
+                    saveDatabaseItem.setEnabled(!editTextDatabaseName.getText().toString().isEmpty() && editTextDatabasePwd.getError() == null && !editTextDatabasePwd.getText().toString().isEmpty() && editTextDatabasePwdNew.getError() == null);
                 }
             }
 
