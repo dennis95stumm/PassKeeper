@@ -141,7 +141,7 @@ public class DatabaseActivity extends Activity implements IActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!s.toString().matches("((?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!\"#$%&'\\(\\)\\*\\+,\\-\\./:;<=>\\?@\\[\\\\\\]\\^_`\\{\\|\\}~]).{8,16})")) {
+                if (!s.toString().matches("((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[^0-9A-Za-z ]).{8,16})")) {
                     editTextDatabasePwd.setError(getText(R.string.bad_password));
                     saveDatabaseItem.setEnabled(false);
                 } else {
@@ -162,7 +162,7 @@ public class DatabaseActivity extends Activity implements IActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!s.toString().matches("((?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!\"#$%&'\\(\\)\\*\\+,\\-\\./:;<=>\\?@\\[\\\\\\]\\^_`\\{\\|\\}~]).{8,16})")) {
+                if (!s.toString().matches("((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[^0-9A-Za-z ]).{8,16})")) {
                     editTextDatabasePwdNew.setError(getText(R.string.bad_password));
                     saveDatabaseItem.setEnabled(false);
                 } else if (!s.toString().equals(editTextDatabasePwdNewRepeat.getText().toString())) {
