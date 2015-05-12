@@ -1,19 +1,23 @@
 package de.szut.passkeeper.activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import javax.crypto.SecretKey;
@@ -29,6 +33,8 @@ import de.szut.passkeeper.utility.ViewPwdTouchListener;
 public class UpdateEntryActivity extends Activity implements IActivity {
 
     private static final int NOTIFICATION_ID = 0;
+    private static final String EXTRA_PWD = "PWD";
+    private static final String EXTRA_NAME = "NAME";
     private EntryProperty entryProperty;
     private EditText editTextEntryTitle;
     private EditText editTextEntryUsername;
@@ -53,28 +59,34 @@ public class UpdateEntryActivity extends Activity implements IActivity {
         super.onCreate(savedInstanceState);
         setDefaults();
         new BackgroundTask().execute();
-        setNotification();
     }
 
 
     public void setNotification() {
-        notificationManager = (NotificationManager)
-                getSystemService(NOTIFICATION_SERVICE);
-        Notification n = new Notification();
-        n.when = System.currentTimeMillis();
+        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
         Intent notificationIntent = new Intent(this, NotificationActivity.class);
+        //notificationIntent.setData(Uri.parse(String.valueOf(decryptedUsername) + "||" +  String.valueOf(decryptedUserPwd)));
 
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+        notificationIntent.putExtra(EXTRA_PWD, String.valueOf(decryptedUserPwd));
+        notificationIntent.putExtra(EXTRA_NAME, String.valueOf(decryptedUsername));
+        Bundle extras = notificationIntent.getExtras();
 
-                NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_launcher)
-                        .setContentTitle("Passkeeper Service")
-                        .setTicker("Password temporary saved")
-                        .setContentText("See here Username and Password");
-                mBuilder.setContentIntent(contentIntent);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);//PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+        mBuilder.setSmallIcon(R.drawable.ic_launcher);
+        mBuilder.setContentTitle("Passkeeper Service");
+        mBuilder.setTicker("Password temporary saved");
+        mBuilder.setContentText("See here Username and Password");
+        mBuilder.addExtras(extras);
+        mBuilder.setContentIntent(contentIntent);
+        mBuilder.setWhen(System.currentTimeMillis());
 
-        notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        //Intent resultIntent = new Intent(this, NotificationActivity.class);
+        //notificationIntent.putExtra(decryptedUsername,contentIntent);
+        Notification n = mBuilder.build();
+        notificationManager.notify(NOTIFICATION_ID, n);
+
    }
 
 
@@ -132,6 +144,11 @@ public class UpdateEntryActivity extends Activity implements IActivity {
         editTextEntryNote.setText(entryProperty.getEntryNote());
         imageButtonDisplayPwd.setOnTouchListener(new ViewPwdTouchListener(editTextEntryPwd));
         imageButtonGeneratePwd.setOnClickListener(new GeneratePwdClickListener(editTextEntryPwd));
+        setNotification();
+    }
+
+    public String getTest(){
+        return decryptedUserPwd;
     }
 
     private void decryptData() {

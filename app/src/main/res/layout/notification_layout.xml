@@ -3,16 +3,19 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <Button
+        android:id="@+id/btnCopyUsername"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hint_entry_notification_username"
+        android:text="Copy Username"
         />
-    <TextView
+    <Button
+        android:id="@+id/btnCopyPassword"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hint_entry_notification_pw"
+        android:text="Copy Password"
         />
+
     <Button
         android:id="@+id/btnBack"
         android:layout_width="fill_parent"

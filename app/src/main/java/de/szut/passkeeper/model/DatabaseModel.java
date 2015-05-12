@@ -14,9 +14,7 @@ import de.szut.passkeeper.property.CategoryProperty;
 import de.szut.passkeeper.property.DatabaseProperty;
 import de.szut.passkeeper.property.EntryProperty;
 
-/**
- * Created by Sami.Al-Khatib on 10.02.2015.
- */
+
 public class DatabaseModel {
     private DatabaseOpenHelper databaseOpenHelper;
     private SQLiteDatabase sqLiteDatabase;
