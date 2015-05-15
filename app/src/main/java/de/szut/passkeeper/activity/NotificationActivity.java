@@ -29,6 +29,9 @@ public class NotificationActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+    }/*
         setContentView(R.layout.notification_layout);
 
         extras = this.getIntent().getExtras();
@@ -71,6 +74,5 @@ public class NotificationActivity extends Activity{
     protected void onNewIntent(Intent intent){
         //loginData = intent.getData().toString();
         extras =  intent.getExtras();
-    }
-
+    }*/
 }
