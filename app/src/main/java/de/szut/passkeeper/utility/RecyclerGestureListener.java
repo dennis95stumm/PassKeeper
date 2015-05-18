@@ -18,9 +18,10 @@ import de.szut.passkeeper.R;
 import de.szut.passkeeper.interfaces.IRecyclerActivity;
 
 /**
- *
+ * Listener for detected gestures. Handles gestures of the user input and
+ * executes
  */
-public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureListener {
+public class RecyclerGestureListener extends GestureDetector.SimpleOnGestureListener {
     private IRecyclerActivity iRecyclerActivity;
     private int recyclerPosition = -1;
     private RecyclerView view;
@@ -35,7 +36,7 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
      * @param iRecyclerActivity
      * @param view
      */
-    public RecyclerGestrueListener(IRecyclerActivity iRecyclerActivity, RecyclerView view) {
+    public RecyclerGestureListener(IRecyclerActivity iRecyclerActivity, RecyclerView view) {
         this.iRecyclerActivity = iRecyclerActivity;
         this.view = view;
         ViewConfiguration vc = ViewConfiguration.get(iRecyclerActivity);

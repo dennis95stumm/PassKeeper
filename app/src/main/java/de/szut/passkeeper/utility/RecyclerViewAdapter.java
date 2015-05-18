@@ -30,11 +30,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
      */
     public RecyclerViewAdapter(Vector<IUserProperty> vector, RecyclerView recyclerView, IRecyclerActivity iRecyclerActivity) {
         this.vector = vector;
-        final GestureDetector gestruesDetector = new GestureDetector(null, new RecyclerGestrueListener(iRecyclerActivity, recyclerView));
+        final GestureDetector gesturesDetector = new GestureDetector(null, new RecyclerGestureListener(iRecyclerActivity, recyclerView));
         iRecyclerActivity.findViewById(R.id.recyclerViewDefault).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                return gestruesDetector.onTouchEvent(event);
+                return gesturesDetector.onTouchEvent(event);
             }
         });
         this.deleteConfirmationViewId = R.id.delitition_text;
@@ -50,11 +50,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
      */
     public RecyclerViewAdapter(Vector<IUserProperty> vector, RecyclerView recyclerView, IRecyclerActivity iRecyclerActivity, int confirmViewId) {
         this.vector = vector;
-        final GestureDetector gestruesDetector = new GestureDetector(null, new RecyclerGestrueListener(iRecyclerActivity, recyclerView));
+        final GestureDetector gesturesDetector = new GestureDetector(null, new RecyclerGestureListener(iRecyclerActivity, recyclerView));
         iRecyclerActivity.findViewById(R.id.recyclerViewDefault).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                return gestruesDetector.onTouchEvent(event);
+                return gesturesDetector.onTouchEvent(event);
             }
         });
         this.deleteConfirmationViewId = confirmViewId;
