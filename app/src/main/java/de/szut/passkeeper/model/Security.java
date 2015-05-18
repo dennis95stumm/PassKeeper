@@ -48,9 +48,9 @@ public class Security {
     }
 
     /**
-     *
-     * @param password
-     * @return
+     * Creates an hash for a password with the hash algorithm SHA-512.
+     * @param password The password that should be hashed
+     * @return Hash of the password
      */
     public String encryptPassword(String password) {
         StringBuilder result = new StringBuilder();
@@ -69,10 +69,10 @@ public class Security {
     }
 
     /**
-     *
-     * @param password
-     * @param hash
-     * @return
+     * Check if the password equals the hashed password.
+     * @param password The password that should be checked
+     * @param hash The hash on which the password should be checked
+     * @return Boolean value for the equality of the passwords.
      */
     public boolean checkPassword(String password, String hash) {
         String passwordHash = encryptPassword(password);

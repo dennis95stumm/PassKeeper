@@ -7,7 +7,8 @@ import android.view.MenuItem;
 import de.szut.passkeeper.R;
 
 /**
- *
+ * Abstract class which contains common functionality
+ * for the activities with a recycler view.
  */
 public abstract class IRecyclerActivity extends Activity {
     private MenuItem editMenu;
@@ -27,19 +28,6 @@ public abstract class IRecyclerActivity extends Activity {
     }
 
     /**
-     *
-     * @param position
-     */
-    public abstract void removeItem(int position);
-
-    /**
-     *
-     * @param position
-     */
-    public abstract void onRecyclerItemClick(int position);
-
-    /**
-     *
      * @param password
      * @param position
      * @return
@@ -48,11 +36,13 @@ public abstract class IRecyclerActivity extends Activity {
         return true;
     }
 
+    /**
+     * Handles a failed remove confirmation.
+     */
     public void onRemoveConfirmationFailed() {
     }
 
     /**
-     *
      * @param position
      * @return
      */
@@ -61,10 +51,21 @@ public abstract class IRecyclerActivity extends Activity {
     }
 
     /**
-     *
      * @return
      */
     public boolean longPressEnabled() {
         return false;
     }
+
+    /**
+     *
+     * @param position
+     */
+    public abstract void removeItem(int position);
+
+    /**
+     * Handles a click on a item in the recycler view.
+     * @param position The position of the recycler item in the recycler view
+     */
+    public abstract void onRecyclerItemClick(int position);
 }
