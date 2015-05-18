@@ -80,10 +80,11 @@ public class Security {
     }
 
     /**
-     *
-     * @param password
-     * @param salt
-     * @return
+     * Creates a secret key on the basis of a password and a salt which is needed
+     * by the AES algorithm to encrypt and decrypt values.
+     * @param password Password from which the secret key is created
+     * @param salt Salt which is inserted randomly into the hash so that its more safety
+     * @return The created secret key
      */
     public SecretKey getSecret(String password, byte[] salt) {
         SecretKey secret = null;
@@ -154,8 +155,8 @@ public class Security {
     }
 
     /**
-     *
-     * @return
+     * Generates a random salt required for proper en-/decryption.
+     * @return The generated salt
      */
     public byte[] generateSalt() {
         byte[] salt = new byte[8];
@@ -169,8 +170,9 @@ public class Security {
     }
 
     /**
-     *
-     * @return
+     * Generates a initialization vector required for the AES algorithm
+     * based on the block size of the algorithm.
+     * @return The generated initialization vector
      */
     public byte[] generateIV() {
         byte[] iv = null;
