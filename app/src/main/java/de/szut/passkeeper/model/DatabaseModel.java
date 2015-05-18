@@ -5,8 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Vector;
 
 import de.szut.passkeeper.interfaces.IUserProperty;
@@ -14,6 +14,9 @@ import de.szut.passkeeper.property.CategoryProperty;
 import de.szut.passkeeper.property.DatabaseProperty;
 import de.szut.passkeeper.property.EntryProperty;
 
+/**
+ * Created by Sami.Al-Khatib on 10.02.2015.
+ */
 public class DatabaseModel {
     private DatabaseOpenHelper databaseOpenHelper;
     private SQLiteDatabase sqLiteDatabase;
