@@ -85,9 +85,9 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
             return false;
         }
         swipingEnabled = false;
-        if (e1.getX() - e2.getX() > actualViewHolder.mainView.getWidth() * 0.5) {
+        if (e1.getX() - e2.getX() > actualViewHolder.mainView.getWidth() * 0.8) {
             swipe(Math.abs(distanceX), true);
-        } else if (e2.getX() - e1.getX() > actualViewHolder.mainView.getWidth() * 0.5) {
+        } else if (e2.getX() - e1.getX() > actualViewHolder.mainView.getWidth() * 0.8) {
             swipe(Math.abs(distanceX), false);
         } else {
             ValueAnimator animator = ValueAnimator.ofInt(Math.abs(distanceX), 0);

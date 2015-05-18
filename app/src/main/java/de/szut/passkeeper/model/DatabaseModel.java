@@ -5,8 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 
 import de.szut.passkeeper.interfaces.IUserProperty;
@@ -270,15 +270,12 @@ public class DatabaseModel {
     public void deleteUserDatabase(int databaseId) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         sqLiteDatabase.delete(DatabaseOpenHelper.TABLE_USER_DATABASE, DatabaseOpenHelper.KEY_ID_USER_DATABASE + " = ?", new String[]{String.valueOf(databaseId)});
-        sqLiteDatabase.delete(DatabaseOpenHelper.TABLE_USER_CATEGORY, DatabaseOpenHelper.KEY_ID_USER_DATABASE + " = ?", new String[]{String.valueOf(databaseId)});
-        sqLiteDatabase.delete(DatabaseOpenHelper.TABLE_USER_ENTRY, DatabaseOpenHelper.KEY_ID_USER_DATABASE + " = ?", new String[]{String.valueOf(databaseId)});
         databaseOpenHelper.close();
     }
 
     public void deleteUserCategory(int categoryId) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         sqLiteDatabase.delete(DatabaseOpenHelper.TABLE_USER_CATEGORY, DatabaseOpenHelper.KEY_ID_USER_CATEGORY + " = ?", new String[]{String.valueOf(categoryId)});
-        sqLiteDatabase.delete(DatabaseOpenHelper.TABLE_USER_ENTRY, DatabaseOpenHelper.KEY_ID_USER_CATEGORY + " = ?", new String[]{String.valueOf(categoryId)});
         databaseOpenHelper.close();
     }
 

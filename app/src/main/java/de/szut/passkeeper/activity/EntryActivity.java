@@ -1,7 +1,9 @@
 package de.szut.passkeeper.activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
@@ -9,20 +11,15 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import javax.crypto.SecretKey;
 
@@ -37,12 +34,12 @@ import de.szut.passkeeper.utility.ViewPwdTouchListener;
 
 public class EntryActivity extends Activity implements IActivity {
 
-    private static final int NOTIFICATION_ID = 0;
-    private static final String EXTRA_PWD = "PWD";
-    private static final String EXTRA_NAME = "NAME";
     public static final String USERNAME_CLICKED = "UsernameClicked";
     public static final String PASSWORD_CLICKED = "PasswordClicked";
     public static final String RETURN_TO_ACTIVITY = "ReturnToActivity";
+    private static final int NOTIFICATION_ID = 0;
+    private static final String EXTRA_PWD = "PWD";
+    private static final String EXTRA_NAME = "NAME";
     private EntryProperty entryProperty;
     private EditText editTextEntryTitle;
     private EditText editTextEntryUsername;
@@ -70,32 +67,16 @@ public class EntryActivity extends Activity implements IActivity {
 
     public void setNotification() {
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-        //Intent notificationIntent = new Intent(this, NotificationActivity.class);
         Intent userNameIntent = new Intent(USERNAME_CLICKED);
         Intent passwordIntent = new Intent(PASSWORD_CLICKED);
         this.getIntent().setAction(RETURN_TO_ACTIVITY);
-                //notificationIntent.setData(Uri.parse(String.valueOf(decryptedUsername) + "||" +  String.valueOf(decryptedUserPwd)));
-       // notificationIntent.putExtra(EXTRA_PWD, String.valueOf(decryptedUserPwd));
-        //notificationIntent.putExtra(EXTRA_NAME, String.valueOf(decryptedUsername));
-        //Bundle extras = notificationIntent.getExtras();
-        PendingIntent userIntent = PendingIntent.getBroadcast(this,0,userNameIntent,PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent passIntent = PendingIntent.getBroadcast(this,0,passwordIntent,PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent thisIntent = PendingIntent.getBroadcast(this,0,this.getIntent(),PendingIntent.FLAG_UPDATE_CURRENT);
-        //PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_NO_CREATE);//PendingIntent.FLAG_UPDATE_CURRENT);
-
-
-
-        //Intent nextIntent = new Intent("test");
-        //PendingIntent nextPendingIntent = PendingIntent.getBroadcast(this, 0, nextIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent userIntent = PendingIntent.getBroadcast(this, 0, userNameIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent passIntent = PendingIntent.getBroadcast(this, 0, passwordIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent thisIntent = PendingIntent.getBroadcast(this, 0, this.getIntent(), PendingIntent.FLAG_UPDATE_CURRENT);
         IntentFilter filter = new IntentFilter();
         filter.addAction(USERNAME_CLICKED);
         filter.addAction(PASSWORD_CLICKED);
-        //filter.addAction(RETURN_TO_ACTIVITY);
-
-
         final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-        //mBuilder.addExtras(extras);
         mBuilder.addAction(0, "Username?", userIntent);
         mBuilder.addAction(0, "Password?", passIntent);
         mBuilder.setSmallIcon(R.drawable.ic_launcher);
@@ -116,26 +97,23 @@ public class EntryActivity extends Activity implements IActivity {
             public void onReceive(Context context, Intent intent) {
                 String clicked = intent.getAction();
                 String toCopy = null;
-                switch(clicked){
+                switch (clicked) {
                     case PASSWORD_CLICKED:
                         toCopy = decryptedUserPwd;
                         break;
                     case USERNAME_CLICKED:
                         toCopy = decryptedUsername;
                         break;
-                    default:
-                        break;
                 }
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("label", toCopy);
+                clipboard.setPrimaryClip(clip);
                 Intent it = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
                 context.sendBroadcast(it);
-                //context.unregisterReceiver(this);
-                //finish();
             }
         };
         registerReceiver(receiver, filter);
-   }
+    }
 
 
     @Override
@@ -166,6 +144,15 @@ public class EntryActivity extends Activity implements IActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (entryProperty != null) {
+            notificationManager.cancelAll();
+            unregisterReceiver(receiver);
+        }
+        super.onBackPressed();
     }
 
     @Override
