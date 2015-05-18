@@ -19,7 +19,7 @@ import de.szut.passkeeper.interfaces.IRecyclerActivity;
 
 /**
  * Listener for detected gestures. Handles gestures of the user input and
- * executes
+ * executes proper functions for the gestures.
  */
 public class RecyclerGestureListener extends GestureDetector.SimpleOnGestureListener {
     private IRecyclerActivity iRecyclerActivity;
@@ -33,8 +33,9 @@ public class RecyclerGestureListener extends GestureDetector.SimpleOnGestureList
     private int selectedItem = -1;
 
     /**
-     * @param iRecyclerActivity
-     * @param view
+     * Constructor. Initializes the attributes of the class.
+     * @param iRecyclerActivity Activity of the recycler view for executing proper functions for gestures
+     * @param view Recycler view on which the listener handles gestures
      */
     public RecyclerGestureListener(IRecyclerActivity iRecyclerActivity, RecyclerView view) {
         this.iRecyclerActivity = iRecyclerActivity;
@@ -176,8 +177,9 @@ public class RecyclerGestureListener extends GestureDetector.SimpleOnGestureList
     }
 
     /**
-     * @param distanceX
-     * @param rightToLeft
+     * Executes an animation to show the confirmation on a swipe gesture.
+     * @param distanceX Absolute value of the swiped distance on the x-axis
+     * @param rightToLeft Boolean value which indicates that the swipe was from right to left
      */
     private void swipe(int distanceX, final boolean rightToLeft) {
         ValueAnimator animator = ValueAnimator.ofInt(distanceX, actualViewHolder.mainView.getWidth());
@@ -237,7 +239,7 @@ public class RecyclerGestureListener extends GestureDetector.SimpleOnGestureList
     }
 
     /**
-     *
+     * Resets the view of a recycler item.
      */
     private void resetView() {
         if (actualViewHolder != null) {
