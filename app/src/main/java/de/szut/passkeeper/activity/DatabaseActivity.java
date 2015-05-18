@@ -20,9 +20,10 @@ import de.szut.passkeeper.property.CategoryProperty;
 import de.szut.passkeeper.property.DatabaseProperty;
 import de.szut.passkeeper.utility.ViewPwdTouchListener;
 
-
+/**
+ * Activity creates and updates logical password databases.
+ */
 public class DatabaseActivity extends Activity implements IActivity {
-
     private EditText editTextDatabaseName;
     private EditText editTextDatabasePwd;
     private MenuItem saveDatabaseItem;
@@ -41,7 +42,6 @@ public class DatabaseActivity extends Activity implements IActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.database_menu, menu);
         saveDatabaseItem = menu.findItem(R.id.menuItemDatabaseSave);
         return true;
@@ -49,9 +49,6 @@ public class DatabaseActivity extends Activity implements IActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editTextDatabaseName.getWindowToken(), 0);
         switch (item.getItemId()) {

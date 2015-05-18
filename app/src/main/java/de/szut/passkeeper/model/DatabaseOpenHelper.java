@@ -4,8 +4,10 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ *
+ */
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
-
     // Table
     public static final String TABLE_USER_DATABASE = "pass_database";
     public static final String TABLE_USER_CATEGORY = "pass_category";
@@ -74,7 +76,9 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
     private static final String DB_NAME = "PassDatabase";
 
-
+    /**
+     * @param context
+     */
     public DatabaseOpenHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }

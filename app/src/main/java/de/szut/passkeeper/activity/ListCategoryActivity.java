@@ -23,8 +23,10 @@ import de.szut.passkeeper.utility.AlertBuilderHelper;
 import de.szut.passkeeper.utility.RecyclerItemDividerDecoration;
 import de.szut.passkeeper.utility.RecyclerViewAdapter;
 
+/**
+ *
+ */
 public class ListCategoryActivity extends IRecyclerActivity implements IActivity, View.OnClickListener {
-
     private Vector<IUserProperty> vectorCategoryProperty;
     private DatabaseModel databaseModel;
     private RecyclerViewAdapter recyclerViewAdapter;
@@ -48,6 +50,9 @@ public class ListCategoryActivity extends IRecyclerActivity implements IActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * @param position
+     */
     public void onRecyclerItemClick(int position) {
         Intent intentListEntryActivity = new Intent(ListCategoryActivity.this, ListEntryActivity.class)
                 .putExtra("databaseId", ((CategoryProperty) vectorCategoryProperty.get(position)).getDatabaseId())
@@ -111,6 +116,10 @@ public class ListCategoryActivity extends IRecyclerActivity implements IActivity
         registerForContextMenu(recyclerView);
     }
 
+    /**
+     *
+     * @param position
+     */
     public void removeItem(int position) {
         databaseModel.deleteUserCategory(((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryId());
         vectorCategoryProperty.remove(position);

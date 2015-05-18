@@ -5,10 +5,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 
+/**
+ *
+ */
 public class ViewPwdTouchListener implements View.OnTouchListener {
-
     private EditText editText;
 
+    /**
+     * @param editText
+     */
     public ViewPwdTouchListener(EditText editText) {
         this.editText = editText;
     }

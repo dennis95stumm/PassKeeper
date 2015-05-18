@@ -15,7 +15,7 @@ import de.szut.passkeeper.property.DatabaseProperty;
 import de.szut.passkeeper.property.EntryProperty;
 
 /**
- * Created by Sami.Al-Khatib on 10.02.2015.
+ *
  */
 public class DatabaseModel {
     private DatabaseOpenHelper databaseOpenHelper;
@@ -49,10 +49,17 @@ public class DatabaseModel {
             DatabaseOpenHelper.KEY_IV_USER_ENTRY
     };
 
+    /**
+     * @param context
+     */
     public DatabaseModel(Context context) {
         databaseOpenHelper = new DatabaseOpenHelper(context);
     }
 
+    /**
+     *
+     * @return
+     */
     public Vector<IUserProperty> getUserDatabasePropertyVector() {
         sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
         Vector<IUserProperty> vectorUserDatabaseProperty = new Vector<>();
@@ -73,6 +80,11 @@ public class DatabaseModel {
         return vectorUserDatabaseProperty;
     }
 
+    /**
+     *
+     * @param databaseId
+     * @return
+     */
     public Vector<IUserProperty> getUserCategoryPropertyVector(int databaseId) {
         sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
         Vector<IUserProperty> vectorUserCategoryProperty = new Vector<>();
@@ -91,6 +103,12 @@ public class DatabaseModel {
         return vectorUserCategoryProperty;
     }
 
+    /**
+     *
+     * @param databaseId
+     * @param categoryId
+     * @return
+     */
     public Vector<IUserProperty> getUserEntryVector(int databaseId, int categoryId) {
         sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
         Vector<IUserProperty> vectorUserEntryProperty = new Vector<>();
@@ -115,6 +133,11 @@ public class DatabaseModel {
         return vectorUserEntryProperty;
     }
 
+    /**
+     *
+     * @param databaseId
+     * @return
+     */
     public DatabaseProperty getUserDatabaseProperty(int databaseId) {
         sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
         DatabaseProperty databaseProperty = null;
@@ -133,6 +156,11 @@ public class DatabaseModel {
         return databaseProperty;
     }
 
+    /**
+     *
+     * @param categoryId
+     * @return
+     */
     public CategoryProperty getUserCategoryProperty(int categoryId) {
         sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
         CategoryProperty categoryProperty = null;
@@ -151,6 +179,11 @@ public class DatabaseModel {
         return categoryProperty;
     }
 
+    /**
+     *
+     * @param entryId
+     * @return
+     */
     public EntryProperty getUserEntryProperty(int entryId) {
         sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
         EntryProperty entryProperty = null;
@@ -175,6 +208,11 @@ public class DatabaseModel {
         return entryProperty;
     }
 
+    /**
+     *
+     * @param databaseId
+     * @return
+     */
     public String getUserDatabaseName(int databaseId) {
         sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
         String databaseName = null;
@@ -188,6 +226,11 @@ public class DatabaseModel {
         return databaseName;
     }
 
+    /**
+     *
+     * @param categoryId
+     * @return
+     */
     public String getUserCategoryName(int categoryId) {
         sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
         String categoryName = null;
@@ -201,6 +244,11 @@ public class DatabaseModel {
         return categoryName;
     }
 
+    /**
+     *
+     * @param databaseProperty
+     * @return
+     */
     public int createUserDatabase(DatabaseProperty databaseProperty) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -212,6 +260,11 @@ public class DatabaseModel {
         return (int) databaseId;
     }
 
+    /**
+     *
+     * @param categoryProperty
+     * @return
+     */
     public int createUserCategory(CategoryProperty categoryProperty) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -223,6 +276,10 @@ public class DatabaseModel {
         return (int) categoryId;
     }
 
+    /**
+     *
+     * @param entryProperty
+     */
     public void createUserEntry(EntryProperty entryProperty) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -239,6 +296,10 @@ public class DatabaseModel {
         databaseOpenHelper.close();
     }
 
+    /**
+     *
+     * @param databaseProperty
+     */
     public void updateUserDatabase(DatabaseProperty databaseProperty) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -248,6 +309,10 @@ public class DatabaseModel {
         sqLiteDatabase.update(DatabaseOpenHelper.TABLE_USER_DATABASE, contentValues, DatabaseOpenHelper.KEY_ID_USER_DATABASE + " = ?", new String[]{String.valueOf(databaseProperty.getDatabaseId())});
     }
 
+    /**
+     *
+     * @param entryProperty
+     */
     public void updateUserEntry(EntryProperty entryProperty) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -267,18 +332,30 @@ public class DatabaseModel {
         databaseOpenHelper.close();
     }
 
+    /**
+     *
+     * @param databaseId
+     */
     public void deleteUserDatabase(int databaseId) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         sqLiteDatabase.delete(DatabaseOpenHelper.TABLE_USER_DATABASE, DatabaseOpenHelper.KEY_ID_USER_DATABASE + " = ?", new String[]{String.valueOf(databaseId)});
         databaseOpenHelper.close();
     }
 
+    /**
+     *
+     * @param categoryId
+     */
     public void deleteUserCategory(int categoryId) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         sqLiteDatabase.delete(DatabaseOpenHelper.TABLE_USER_CATEGORY, DatabaseOpenHelper.KEY_ID_USER_CATEGORY + " = ?", new String[]{String.valueOf(categoryId)});
         databaseOpenHelper.close();
     }
 
+    /**
+     *
+     * @param entryId
+     */
     public void deleteUserEntry(int entryId) {
         sqLiteDatabase = databaseOpenHelper.getWritableDatabase();
         sqLiteDatabase.delete(DatabaseOpenHelper.TABLE_USER_ENTRY, DatabaseOpenHelper.KEY_ID_USER_ENTRY + " = ?", new String[]{String.valueOf(entryId)});

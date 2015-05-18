@@ -17,6 +17,9 @@ import android.widget.RelativeLayout;
 import de.szut.passkeeper.R;
 import de.szut.passkeeper.interfaces.IRecyclerActivity;
 
+/**
+ *
+ */
 public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureListener {
     private IRecyclerActivity iRecyclerActivity;
     private int recyclerPosition = -1;
@@ -28,6 +31,10 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
     private int TOUCH_SLOP;
     private int selectedItem = -1;
 
+    /**
+     * @param iRecyclerActivity
+     * @param view
+     */
     public RecyclerGestrueListener(IRecyclerActivity iRecyclerActivity, RecyclerView view) {
         this.iRecyclerActivity = iRecyclerActivity;
         this.view = view;
@@ -85,13 +92,13 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
             return false;
         }
         swipingEnabled = false;
-        if (e1.getX() - e2.getX() > actualViewHolder.mainView.getWidth() * 0.8) {
+        if (e1.getX() - e2.getX() > actualViewHolder.mainView.getWidth() * 0.2) {
             swipe(Math.abs(distanceX), true);
-        } else if (e2.getX() - e1.getX() > actualViewHolder.mainView.getWidth() * 0.8) {
+        } else if (e2.getX() - e1.getX() > actualViewHolder.mainView.getWidth() * 0.2) {
             swipe(Math.abs(distanceX), false);
         } else {
             ValueAnimator animator = ValueAnimator.ofInt(Math.abs(distanceX), 0);
-            animator.setDuration(500);
+            animator.setDuration(250);
             animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
@@ -128,9 +135,14 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
         return false;
     }
 
+    /**
+     *
+     * @param distanceX
+     * @param rightToLeft
+     */
     private void swipe(int distanceX, final boolean rightToLeft) {
         ValueAnimator animator = ValueAnimator.ofInt(distanceX, actualViewHolder.mainView.getWidth());
-        animator.setDuration(500);
+        animator.setDuration(250);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -186,6 +198,9 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
         });
     }
 
+    /**
+     *
+     */
     private void resetView() {
         if (actualViewHolder != null) {
             actualViewHolder.delteConfirmation.setVisibility(View.GONE);

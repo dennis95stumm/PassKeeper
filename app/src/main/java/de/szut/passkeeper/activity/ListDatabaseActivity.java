@@ -28,7 +28,9 @@ import de.szut.passkeeper.utility.AlertBuilderHelper;
 import de.szut.passkeeper.utility.RecyclerItemDividerDecoration;
 import de.szut.passkeeper.utility.RecyclerViewAdapter;
 
-
+/**
+ *
+ */
 public class ListDatabaseActivity extends IRecyclerActivity implements IActivity, View.OnClickListener {
     private DatabaseModel databaseModel;
     private Vector<IUserProperty> vectorUserDatabaseProperties;

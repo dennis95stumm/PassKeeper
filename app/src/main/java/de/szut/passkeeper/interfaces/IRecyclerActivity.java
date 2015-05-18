@@ -6,6 +6,9 @@ import android.view.MenuItem;
 
 import de.szut.passkeeper.R;
 
+/**
+ *
+ */
 public abstract class IRecyclerActivity extends Activity {
     private MenuItem editMenu;
 
@@ -16,14 +19,31 @@ public abstract class IRecyclerActivity extends Activity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * @return
+     */
     public MenuItem getEditMenu() {
         return editMenu;
     }
 
+    /**
+     *
+     * @param position
+     */
     public abstract void removeItem(int position);
 
+    /**
+     *
+     * @param position
+     */
     public abstract void onRecyclerItemClick(int position);
 
+    /**
+     *
+     * @param password
+     * @param position
+     * @return
+     */
     public boolean confirmRemove(String password, int position) {
         return true;
     }
@@ -31,10 +51,19 @@ public abstract class IRecyclerActivity extends Activity {
     public void onRemoveConfirmationFailed() {
     }
 
+    /**
+     *
+     * @param position
+     * @return
+     */
     public boolean editItem(int position) {
         return false;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean longPressEnabled() {
         return false;
     }

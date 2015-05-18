@@ -17,13 +17,20 @@ import de.szut.passkeeper.R;
 import de.szut.passkeeper.interfaces.IRecyclerActivity;
 import de.szut.passkeeper.interfaces.IUserProperty;
 
-
+/**
+ *
+ */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
-
     Context context;
     private Vector<IUserProperty> vector;
     private int deleteConfirmationViewId;
 
+    /**
+     * @param context
+     * @param vector
+     * @param recyclerView
+     * @param iRecyclerActivity
+     */
     public RecyclerViewAdapter(Context context, Vector<IUserProperty> vector, RecyclerView recyclerView, IRecyclerActivity iRecyclerActivity) {
         this.context = context;
         this.vector = vector;
@@ -37,6 +44,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.deleteConfirmationViewId = R.id.delitition_text;
     }
 
+    /**
+     *
+     * @param context
+     * @param vector
+     * @param recyclerView
+     * @param iRecyclerActivity
+     * @param confirmViewId
+     */
     public RecyclerViewAdapter(Context context, Vector<IUserProperty> vector, RecyclerView recyclerView, IRecyclerActivity iRecyclerActivity, int confirmViewId) {
         this.context = context;
         this.vector = vector;
@@ -50,6 +65,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.deleteConfirmationViewId = confirmViewId;
     }
 
+    /**
+     *
+     * @param vector
+     */
     public void refresh(Vector<IUserProperty> vector) {
         this.vector = vector;
         notifyDataSetChanged();
@@ -73,6 +92,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return vector.size();
     }
 
+    /**
+     *
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView header;
         public TextView subheader;
@@ -83,6 +105,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public View delteConfirmation;
         public View delteConfirmationView;
 
+        /**
+         * @param itemView
+         */
         public ViewHolder(View itemView) {
             super(itemView);
             this.itemView = itemView;

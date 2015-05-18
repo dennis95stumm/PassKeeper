@@ -23,9 +23,15 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
+/**
+ *
+ */
 public class Security {
     private static Security INSTANCE;
 
+    /**
+     * @return
+     */
     public static Security getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new Security();
@@ -33,6 +39,11 @@ public class Security {
         return INSTANCE;
     }
 
+    /**
+     *
+     * @param password
+     * @return
+     */
     public String encryptPassword(String password) {
         StringBuilder result = new StringBuilder();
         try {
@@ -49,11 +60,23 @@ public class Security {
         return result.toString();
     }
 
+    /**
+     *
+     * @param password
+     * @param hash
+     * @return
+     */
     public boolean checkPassword(String password, String hash) {
         String passwordHash = encryptPassword(password);
         return hash.equals(passwordHash);
     }
 
+    /**
+     *
+     * @param password
+     * @param salt
+     * @return
+     */
     public SecretKey getSecret(String password, byte[] salt) {
         SecretKey secret = null;
         try {
@@ -68,6 +91,13 @@ public class Security {
         return secret;
     }
 
+    /**
+     *
+     * @param value
+     * @param secret
+     * @param iv
+     * @return
+     */
     public String encryptValue(String value, SecretKey secret, byte[] iv) {
         String encryptedValueBase64 = "";
         try {
@@ -88,6 +118,13 @@ public class Security {
         return encryptedValueBase64;
     }
 
+    /**
+     *
+     * @param value
+     * @param secret
+     * @param iv
+     * @return
+     */
     public String decryptValue(String value, SecretKey secret, byte[] iv) {
         String decryptedValue = "";
         try {
@@ -108,6 +145,10 @@ public class Security {
         return decryptedValue;
     }
 
+    /**
+     *
+     * @return
+     */
     public byte[] generateSalt() {
         byte[] salt = new byte[8];
         try {
@@ -119,6 +160,10 @@ public class Security {
         return salt;
     }
 
+    /**
+     *
+     * @return
+     */
     public byte[] generateIV() {
         byte[] iv = null;
         try {
@@ -132,6 +177,10 @@ public class Security {
         return iv;
     }
 
+    /**
+     *
+     * @return
+     */
     public String generatePassword() {
         String password = "";
         Random random = new Random();

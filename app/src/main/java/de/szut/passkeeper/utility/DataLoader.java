@@ -7,11 +7,18 @@ import java.util.Vector;
 import de.szut.passkeeper.interfaces.IUserProperty;
 import de.szut.passkeeper.model.DatabaseModel;
 
+/**
+ *
+ */
 public class DataLoader implements Runnable {
     public static final int LOAD_STATE_COMPLETED = 1;
     private DatabaseModel databaseModel;
     private DataLoaderTask task;
 
+    /**
+     * @param context
+     * @param dataLoaderTask
+     */
     public DataLoader(Context context, DataLoaderTask dataLoaderTask) {
         databaseModel = new DatabaseModel(context);
         task = dataLoaderTask;

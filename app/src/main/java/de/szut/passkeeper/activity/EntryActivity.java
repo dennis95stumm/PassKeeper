@@ -32,8 +32,10 @@ import de.szut.passkeeper.utility.AlertBuilderHelper;
 import de.szut.passkeeper.utility.GeneratePwdClickListener;
 import de.szut.passkeeper.utility.ViewPwdTouchListener;
 
+/**
+ *
+ */
 public class EntryActivity extends Activity implements IActivity {
-
     public static final String USERNAME_CLICKED = "UsernameClicked";
     public static final String PASSWORD_CLICKED = "PasswordClicked";
     public static final String RETURN_TO_ACTIVITY = "ReturnToActivity";
@@ -64,7 +66,9 @@ public class EntryActivity extends Activity implements IActivity {
         new BackgroundTask().execute();
     }
 
-
+    /**
+     *
+     */
     public void setNotification() {
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         Intent userNameIntent = new Intent(USERNAME_CLICKED);
@@ -192,6 +196,9 @@ public class EntryActivity extends Activity implements IActivity {
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
+    /**
+     *
+     */
     private void decryptData() {
         if (entryProperty != null) {
             String username = entryProperty.getEntryUsername();
@@ -204,6 +211,9 @@ public class EntryActivity extends Activity implements IActivity {
         }
     }
 
+    /**
+     *
+     */
     private void encryptData() {
         String username = editTextEntryUsername.getText().toString();
         String password = editTextEntryPwd.getText().toString();
@@ -238,6 +248,9 @@ public class EntryActivity extends Activity implements IActivity {
         }
     }
 
+    /**
+     *
+     */
     private class BackgroundTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {

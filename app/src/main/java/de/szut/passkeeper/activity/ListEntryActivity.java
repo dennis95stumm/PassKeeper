@@ -22,7 +22,6 @@ import de.szut.passkeeper.utility.RecyclerItemDividerDecoration;
 import de.szut.passkeeper.utility.RecyclerViewAdapter;
 
 public class ListEntryActivity extends IRecyclerActivity implements IActivity, View.OnClickListener {
-
     private Vector<IUserProperty> vectorEntryPropery;
     private DatabaseModel databaseModel;
     private RecyclerViewAdapter recyclerViewAdapter;
