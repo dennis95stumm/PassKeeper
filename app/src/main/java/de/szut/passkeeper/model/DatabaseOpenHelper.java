@@ -5,10 +5,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * Created by Sami.Al-Khatib on 09.02.2015.
+ *
  */
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
-
     // Table
     public static final String TABLE_USER_DATABASE = "pass_database";
     public static final String TABLE_USER_CATEGORY = "pass_category";
@@ -76,7 +75,6 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     // Database Version and Name
     private static final int DB_VERSION = 1;
     private static final String DB_NAME = "PassDatabase";
-
 
     /**
      * @param context

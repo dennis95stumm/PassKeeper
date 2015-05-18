@@ -13,7 +13,9 @@ import de.szut.passkeeper.R;
 import de.szut.passkeeper.interfaces.IUserProperty;
 import de.szut.passkeeper.utility.DataLoaderTask;
 
-
+/**
+ *
+ */
 public class StartActivity extends Activity {
     public static final int TASK_COMPLETE = 1;
     private Vector<IUserProperty> vectorUserDatabaseProperty;
@@ -35,9 +37,12 @@ public class StartActivity extends Activity {
         dataLoaderTask.startTask();
     }
 
+    /**
+     *
+     */
     private void setStartActivity() {
         if (vectorUserDatabaseProperty.size() == 0) {
-            Intent intent = new Intent(this, CreateDatabaseActivity.class);
+            Intent intent = new Intent(this, DatabaseActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else {
@@ -47,6 +52,10 @@ public class StartActivity extends Activity {
         }
     }
 
+    /**
+     * @param dataLoaderTask
+     * @param state
+     */
     public void handleState(DataLoaderTask dataLoaderTask, int state) {
         switch (state) {
             case TASK_COMPLETE:

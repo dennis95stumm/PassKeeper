@@ -4,6 +4,7 @@
     android:layout_height="64dp"
     android:background="#ffebeff1"
     android:orientation="horizontal">
+
     <RelativeLayout
         android:id="@+id/delete_recycler_item_confirmation"
         android:layout_width="match_parent"
@@ -17,27 +18,27 @@
             android:id="@+id/delitition_password"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_toStartOf="@+id/deltition_yes"
             android:hint="@string/hint_entry_pwd"
             android:inputType="textPassword"
-            android:layout_toLeftOf="@+id/deltition_yes"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/delitition_text"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="@string/delte_confirmation"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/deltition_yes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/elevation_high"
-            android:layout_toLeftOf="@+id/deltition_no"
+            android:layout_marginEnd="@dimen/elevation_high"
+            android:layout_toStartOf="@+id/deltition_no"
             android:text="@string/yes"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
 
@@ -45,7 +46,7 @@
             android:id="@+id/deltition_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:text="@string/no"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
@@ -63,19 +64,22 @@
             android:id="@+id/delete_image_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
+            android:contentDescription="@string/delete_item"
             android:src="@android:drawable/ic_menu_delete" />
 
         <ImageView
             android:id="@+id/delete_image_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:contentDescription="@string/delete_item"
             android:src="@android:drawable/ic_menu_delete" />
 
     </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/mainview"
         android:layout_width="match_parent"
@@ -108,7 +112,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
-                android:text="Random Header"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
 
 
@@ -118,7 +121,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
-                android:text="Random Description"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
 
         </LinearLayout>

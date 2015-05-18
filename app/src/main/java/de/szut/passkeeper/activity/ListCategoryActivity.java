@@ -1,12 +1,10 @@
 package de.szut.passkeeper.activity;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -25,31 +23,21 @@ import de.szut.passkeeper.utility.AlertBuilderHelper;
 import de.szut.passkeeper.utility.RecyclerItemDividerDecoration;
 import de.szut.passkeeper.utility.RecyclerViewAdapter;
 
+/**
+ *
+ */
 public class ListCategoryActivity extends IRecyclerActivity implements IActivity, View.OnClickListener {
-
-    private RecyclerView recyclerView;
     private Vector<IUserProperty> vectorCategoryProperty;
     private DatabaseModel databaseModel;
     private RecyclerViewAdapter recyclerViewAdapter;
     private int databaseId;
-    private ImageButton imageButtonFab;
     private String databasePwd;
-    private LinearLayoutManager layoutManager;
-
-    //TODO implement context menu
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setDefaults();
         populateView();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.category_list_menu, menu);
-        return true;
     }
 
     @Override
@@ -62,6 +50,9 @@ public class ListCategoryActivity extends IRecyclerActivity implements IActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * @param position
+     */
     public void onRecyclerItemClick(int position) {
         Intent intentListEntryActivity = new Intent(ListCategoryActivity.this, ListEntryActivity.class)
                 .putExtra("databaseId", ((CategoryProperty) vectorCategoryProperty.get(position)).getDatabaseId())
@@ -113,19 +104,22 @@ public class ListCategoryActivity extends IRecyclerActivity implements IActivity
     public void populateView() {
         setTitle(databaseModel.getUserDatabaseName(databaseId));
         setContentView(R.layout.activity_recyclerview_layout);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewDefault);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerViewDefault);
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
+        ImageButton imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
         recyclerViewAdapter = new RecyclerViewAdapter(this, databaseModel.getUserCategoryPropertyVector(databaseId), recyclerView, this);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.addItemDecoration(new RecyclerItemDividerDecoration(this));
-        //listView.setOnItemClickListener(this);
         imageButtonFab.setOnClickListener(this);
         registerForContextMenu(recyclerView);
     }
 
+    /**
+     *
+     * @param position
+     */
     public void removeItem(int position) {
         databaseModel.deleteUserCategory(((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryId());
         vectorCategoryProperty.remove(position);

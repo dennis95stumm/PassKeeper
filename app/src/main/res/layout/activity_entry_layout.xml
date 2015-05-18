@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="de.szut.passkeeper.activity.CreateEntryActivity">
+    tools:context="de.szut.passkeeper.activity.EntryActivity">
 
 
     <EditText
@@ -43,6 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/editTextEntryNote"
         android:layout_toStartOf="@+id/imageButtonGeneratePwd"
+        android:contentDescription="@string/image_button_description_show_pwd"
         android:src="@android:drawable/ic_menu_view" />
 
     <ImageButton
@@ -52,6 +53,7 @@
         android:layout_above="@+id/editTextEntryNote"
         android:layout_alignEnd="@+id/editTextEntryUsername"
         android:layout_alignTop="@+id/imageButtonDisplayPwd"
+        android:contentDescription="@string/image_button_description_generate_pwd"
         android:src="@android:drawable/ic_lock_idle_lock" />
 
     <EditText

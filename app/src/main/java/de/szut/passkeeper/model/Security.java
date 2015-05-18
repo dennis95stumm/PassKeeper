@@ -24,7 +24,7 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * Created by Dennis Stumm on 17.02.15.
+ *
  */
 public class Security {
     private static Security INSTANCE;
@@ -40,11 +40,12 @@ public class Security {
     }
 
     /**
+     *
      * @param password
      * @return
      */
     public String encryptPassword(String password) {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-512");
             md.update(password.getBytes("UTF-8"));
@@ -52,15 +53,15 @@ public class Security {
             for (byte b : digest) {
                 result.append(String.format("%02x", b));
             }
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
+        } catch (NoSuchAlgorithmException
+                | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         return result.toString();
     }
 
     /**
+     *
      * @param password
      * @param hash
      * @return
@@ -71,6 +72,7 @@ public class Security {
     }
 
     /**
+     *
      * @param password
      * @param salt
      * @return
@@ -82,16 +84,18 @@ public class Security {
             KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
             SecretKey tmp = factory.generateSecret(spec);
             secret = new SecretKeySpec(tmp.getEncoded(), "AES");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (InvalidKeySpecException e) {
+        } catch (NoSuchAlgorithmException
+                | InvalidKeySpecException e) {
             e.printStackTrace();
         }
         return secret;
     }
 
     /**
+     *
      * @param value
+     * @param secret
+     * @param iv
      * @return
      */
     public String encryptValue(String value, SecretKey secret, byte[] iv) {
@@ -115,7 +119,10 @@ public class Security {
     }
 
     /**
+     *
      * @param value
+     * @param secret
+     * @param iv
      * @return
      */
     public String decryptValue(String value, SecretKey secret, byte[] iv) {
@@ -139,8 +146,8 @@ public class Security {
     }
 
     /**
+     *
      * @return
-     * @throws NoSuchAlgorithmException
      */
     public byte[] generateSalt() {
         byte[] salt = new byte[8];
@@ -154,8 +161,8 @@ public class Security {
     }
 
     /**
+     *
      * @return
-     * @throws NoSuchAlgorithmException
      */
     public byte[] generateIV() {
         byte[] iv = null;
@@ -170,6 +177,10 @@ public class Security {
         return iv;
     }
 
+    /**
+     *
+     * @return
+     */
     public String generatePassword() {
         String password = "";
         Random random = new Random();

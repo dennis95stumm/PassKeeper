@@ -3,38 +3,45 @@ package de.szut.passkeeper.utility;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.GestureDetector;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import de.szut.passkeeper.R;
 import de.szut.passkeeper.interfaces.IRecyclerActivity;
 
 /**
- * Created by redtiger on 03.05.15.
+ *
  */
 public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureListener {
     private IRecyclerActivity iRecyclerActivity;
-    private int recyclerPosition;
-    private Context context;
+    private int recyclerPosition = -1;
     private RecyclerView view;
     private RecyclerViewAdapter.ViewHolder actualViewHolder;
     private boolean swipingEnabled = true;
-    private int MIN_SWIPE_DISTANCE_X = 100;
-    private int MIN_SWIPE_DISTANCE_Y = 30;
+    private int MIN_FLING_VELOCITY;
+    private int MAX_FLING_VELOCITY;
+    private int TOUCH_SLOP;
+    private int selectedItem = -1;
 
-    public RecyclerGestrueListener(Context context, IRecyclerActivity iRecyclerActivity, RecyclerView view) {
+    /**
+     * @param iRecyclerActivity
+     * @param view
+     */
+    public RecyclerGestrueListener(IRecyclerActivity iRecyclerActivity, RecyclerView view) {
         this.iRecyclerActivity = iRecyclerActivity;
-        this.context = context;
         this.view = view;
+        ViewConfiguration vc = ViewConfiguration.get(iRecyclerActivity);
+        MAX_FLING_VELOCITY = vc.getScaledMaximumFlingVelocity();
+        MIN_FLING_VELOCITY = vc.getScaledMinimumFlingVelocity();
+        TOUCH_SLOP = vc.getScaledTouchSlop();
     }
 
     @Override
@@ -50,11 +57,10 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        // || distanceY > MIN_SWIPE_DISTANCE_Y
-        if (actualViewHolder == null || !swipingEnabled) {
+        if (actualViewHolder == null || !swipingEnabled || Math.abs(e2.getY() - e1.getY()) > TOUCH_SLOP) {
             return false;
         }
-        if (e1.getX() - e2.getX() > MIN_SWIPE_DISTANCE_X) { // Right to left swipe
+        if (e1.getX() - e2.getX() > TOUCH_SLOP) { // Right to left swipe
             int distance = (int) (e2.getX() - e1.getX());
             actualViewHolder.deleteAnimView.findViewById(R.id.delete_image_left).setVisibility(View.GONE);
             actualViewHolder.deleteAnimView.findViewById(R.id.delete_image_right).setVisibility(View.VISIBLE);
@@ -63,7 +69,7 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
             params.rightMargin = -distance;
             params.leftMargin = distance;
             animationView.setLayoutParams(params);
-        } else if (e2.getX() - e1.getX() > MIN_SWIPE_DISTANCE_X) { // Left to right
+        } else if (e2.getX() - e1.getX() > TOUCH_SLOP) { // Left to right
             int distance = (int) (e1.getX() - e2.getX());
             actualViewHolder.deleteAnimView.findViewById(R.id.delete_image_left).setVisibility(View.VISIBLE);
             actualViewHolder.deleteAnimView.findViewById(R.id.delete_image_right).setVisibility(View.GONE);
@@ -79,17 +85,20 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
     @Override
     public boolean onFling(final MotionEvent e1, final MotionEvent e2, float velocityX, float velocityY) {
         final int distanceX = (int) (e2.getX() - e1.getX());
-        if (actualViewHolder == null || !swipingEnabled) {// || Math.abs(e2.getY()-e1.getY()) > MIN_SWIPE_DISTANCE_Y
+        if (actualViewHolder == null || !swipingEnabled || MIN_FLING_VELOCITY > Math.abs(velocityX) || Math.abs(velocityX) > MAX_FLING_VELOCITY || velocityY > Math.abs(velocityX)) {
+            if (MIN_FLING_VELOCITY > Math.abs(velocityX) || Math.abs(velocityX) > MAX_FLING_VELOCITY || velocityY > Math.abs(velocityX)) {
+                resetView();
+            }
             return false;
         }
         swipingEnabled = false;
-        if (e1.getX() - e2.getX() > actualViewHolder.mainView.getWidth() * 0.80) { // Right to Left
+        if (e1.getX() - e2.getX() > actualViewHolder.mainView.getWidth() * 0.2) {
             swipe(Math.abs(distanceX), true);
-        } else if (e2.getX() - e1.getX() > actualViewHolder.mainView.getWidth() * 0.80) { // Left to Right
+        } else if (e2.getX() - e1.getX() > actualViewHolder.mainView.getWidth() * 0.2) {
             swipe(Math.abs(distanceX), false);
         } else {
             ValueAnimator animator = ValueAnimator.ofInt(Math.abs(distanceX), 0);
-            animator.setDuration(500);
+            animator.setDuration(250);
             animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
@@ -126,9 +135,14 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
         return false;
     }
 
+    /**
+     *
+     * @param distanceX
+     * @param rightToLeft
+     */
     private void swipe(int distanceX, final boolean rightToLeft) {
         ValueAnimator animator = ValueAnimator.ofInt(distanceX, actualViewHolder.mainView.getWidth());
-        animator.setDuration(500);
+        animator.setDuration(250);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -146,7 +160,7 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
                 actualViewHolder.deleteAnimView.setVisibility(View.GONE);
                 actualViewHolder.delteConfirmation.setVisibility(View.VISIBLE);
                 if (actualViewHolder.delteConfirmationView instanceof EditText) {
-                    InputMethodManager imm = (InputMethodManager) context.getSystemService(
+                    InputMethodManager imm = (InputMethodManager) iRecyclerActivity.getSystemService(
                             Context.INPUT_METHOD_SERVICE);
                     imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
                     actualViewHolder.delteConfirmationView.requestFocus();
@@ -158,6 +172,9 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
 
                             if (iRecyclerActivity.confirmRemove(actualViewHolder.delteConfirmationView instanceof EditText ? ((EditText) actualViewHolder.delteConfirmationView).getText().toString() : null, recyclerPosition)) {
                                 iRecyclerActivity.removeItem(recyclerPosition);
+                                InputMethodManager imm = (InputMethodManager) iRecyclerActivity.getSystemService(
+                                        Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(iRecyclerActivity.getWindow().getDecorView().getWindowToken(), 0);
                                 actualViewHolder = null;
                                 swipingEnabled = true;
                             } else {
@@ -181,19 +198,24 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
         });
     }
 
+    /**
+     *
+     */
     private void resetView() {
-        actualViewHolder.delteConfirmation.setVisibility(View.GONE);
-        actualViewHolder.deleteAnimView.setVisibility(View.VISIBLE);
-        View animationView = actualViewHolder.mainView;
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) animationView.getLayoutParams();
-        params.rightMargin = 0;
-        params.leftMargin = 0;
-        animationView.setLayoutParams(params);
-        if (actualViewHolder.delteConfirmationView instanceof EditText) {
-            ((EditText) actualViewHolder.delteConfirmationView).setText(null);
-            InputMethodManager imm = (InputMethodManager) context.getSystemService(
-                    Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(actualViewHolder.delteConfirmationView.getWindowToken(), 0);
+        if (actualViewHolder != null) {
+            actualViewHolder.delteConfirmation.setVisibility(View.GONE);
+            actualViewHolder.deleteAnimView.setVisibility(View.VISIBLE);
+            View animationView = actualViewHolder.mainView;
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) animationView.getLayoutParams();
+            params.rightMargin = 0;
+            params.leftMargin = 0;
+            animationView.setLayoutParams(params);
+            if (actualViewHolder.delteConfirmationView instanceof EditText) {
+                ((EditText) actualViewHolder.delteConfirmationView).setText(null);
+                InputMethodManager imm = (InputMethodManager) iRecyclerActivity.getSystemService(
+                        Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(iRecyclerActivity.getWindow().getDecorView().getWindowToken(), 0);
+            }
         }
         actualViewHolder = null;
         swipingEnabled = true;
@@ -201,12 +223,40 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
 
     @Override
     public void onLongPress(MotionEvent e) {
-        actualViewHolder.mainView.setPressed(true);
-        super.onLongPress(e);
-        // TODO longpress
-        // makierungs icon
-        // nur eine auswahl möglich
-        // bei auswahl bearbeitungszeichen im floating button
-        // beim betätigen des baerbeitungsbuttons entsprechende funktion aufrufen
+        if (actualViewHolder != null && iRecyclerActivity.longPressEnabled()) {
+            actualViewHolder.mainView.setPressed(false);
+            if (selectedItem != recyclerPosition) {
+                if (selectedItem != -1) {
+                    RecyclerViewAdapter.ViewHolder viewHolder = (RecyclerViewAdapter.ViewHolder) view.getChildViewHolder(view.getChildAt(selectedItem));
+                    viewHolder.mainView.setSelected(false);
+                }
+                actualViewHolder.mainView.setSelected(true);
+                selectedItem = recyclerPosition;
+                iRecyclerActivity.getEditMenu().setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        actualViewHolder.mainView.setSelected(false);
+                        actualViewHolder = null;
+                        recyclerPosition = -1;
+                        swipingEnabled = true;
+                        iRecyclerActivity.getEditMenu().setVisible(false);
+                        boolean returnVal = iRecyclerActivity.editItem(selectedItem);
+                        selectedItem = -1;
+                        return returnVal;
+                    }
+                });
+                iRecyclerActivity.getEditMenu().setVisible(true);
+            } else {
+                actualViewHolder.mainView.setSelected(false);
+                iRecyclerActivity.getEditMenu().setVisible(false);
+                selectedItem = -1;
+            }
+        }
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+        if (actualViewHolder != null && iRecyclerActivity.longPressEnabled())
+            actualViewHolder.mainView.setPressed(true);
     }
 }

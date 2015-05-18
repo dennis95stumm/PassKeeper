@@ -6,12 +6,14 @@ import android.view.View;
 import android.widget.EditText;
 
 /**
- * Created by Sami.Al-Khatib on 17.03.2015.
+ *
  */
 public class ViewPwdTouchListener implements View.OnTouchListener {
-
     private EditText editText;
 
+    /**
+     * @param editText
+     */
     public ViewPwdTouchListener(EditText editText) {
         this.editText = editText;
     }

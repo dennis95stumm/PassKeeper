@@ -1,9 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="de.szut.passkeeper.activity.CreateEntryActivity">
+    tools:context="de.szut.passkeeper.activity.DatabaseActivity">
     <item
-        android:id="@+id/createEntry"
+        android:id="@+id/menuItemDatabaseSave"
+        android:enabled="false"
         android:icon="@android:drawable/ic_menu_save"
         android:showAsAction="always"
-        android:title="@string/menu_item_title_create_entry"></item>
+        android:title="Null" />
+
 </menu>

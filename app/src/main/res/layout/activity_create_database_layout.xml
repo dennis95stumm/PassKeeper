@@ -6,7 +6,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
 
-
     <EditText
         android:id="@+id/editTextDatabaseName"
         android:layout_width="wrap_content"
@@ -35,5 +34,29 @@
         android:layout_alignTop="@+id/editTextDatabasePwd"
         android:contentDescription="@string/image_button_description_show_pwd"
         android:src="@android:drawable/ic_menu_view" />
+
+    <EditText
+        android:id="@+id/editTextNewDbPwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/imageButtonDisplayPwd"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/editTextDatabasePwd"
+        android:ems="10"
+        android:hint="@string/hint_database_pwd_new"
+        android:inputType="textPassword"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/editTextNewPwdDbRepeat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/imageButtonDisplayPwd"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/editTextNewDbPwd"
+        android:ems="10"
+        android:hint="@string/hint_entry_pwd_repeat"
+        android:inputType="textPassword"
+        android:visibility="gone" />
 
 </RelativeLayout>

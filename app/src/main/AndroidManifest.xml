@@ -17,23 +17,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.CreateDatabaseActivity"
+            android:name=".activity.DatabaseActivity"
             android:label="@string/title_activity_create_database" />
         <activity
             android:name=".activity.ListDatabaseActivity"
             android:label="@string/title_activity_choose_database"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".activity.ListCategoryActivity" android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.ListEntryActivity" android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.CreateEntryActivity"
+            android:name=".activity.ListCategoryActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.ListEntryActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.EntryActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_create_entry" />
-        <activity
-            android:name=".activity.UpdateEntryActivity"
-            android:label="@string/title_activity_update_entry" />
-        <activity
-            android:name=".activity.NotificationActivity"
-            android:label="@string/app_name" />
     </application>
 
 </manifest>

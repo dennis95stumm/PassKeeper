@@ -1,12 +1,10 @@
 package de.szut.passkeeper.activity;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -23,22 +21,13 @@ import de.szut.passkeeper.utility.AlertBuilderHelper;
 import de.szut.passkeeper.utility.RecyclerItemDividerDecoration;
 import de.szut.passkeeper.utility.RecyclerViewAdapter;
 
-/**
- * Created by Sami.Al-Khatib on 21.03.2015.
- */
 public class ListEntryActivity extends IRecyclerActivity implements IActivity, View.OnClickListener {
-
-    private RecyclerView recyclerView;
     private Vector<IUserProperty> vectorEntryPropery;
     private DatabaseModel databaseModel;
     private RecyclerViewAdapter recyclerViewAdapter;
     private int databaseId;
     private int categoryId;
     private String databasePwd;
-    private ImageButton imageButtonFab;
-    private LinearLayoutManager layoutManager;
-
-    //TODO implement context menu
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +46,6 @@ public class ListEntryActivity extends IRecyclerActivity implements IActivity, V
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.entry_list_menu, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -76,7 +58,7 @@ public class ListEntryActivity extends IRecyclerActivity implements IActivity, V
 
     @Override
     public void onRecyclerItemClick(int position) {
-        Intent intentUpdateEntryActivity = new Intent(ListEntryActivity.this, UpdateEntryActivity.class)
+        Intent intentUpdateEntryActivity = new Intent(ListEntryActivity.this, EntryActivity.class)
                 .putExtra("databaseId", databaseId)
                 .putExtra("categoryId", categoryId)
                 .putExtra("entryId", ((EntryProperty) vectorEntryPropery.get(position)).getEntryId())
@@ -88,7 +70,7 @@ public class ListEntryActivity extends IRecyclerActivity implements IActivity, V
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.imageButtonFab:
-                Intent intentCreateEntryActivity = new Intent(ListEntryActivity.this, CreateEntryActivity.class)
+                Intent intentCreateEntryActivity = new Intent(ListEntryActivity.this, EntryActivity.class)
                         .putExtra("databaseId", databaseId)
                         .putExtra("categoryId", categoryId)
                         .putExtra("databasePwd", databasePwd);
@@ -110,7 +92,7 @@ public class ListEntryActivity extends IRecyclerActivity implements IActivity, V
             alertBuilderHelper.setPositiveButton(R.string.dialog_positive_button_default, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Intent intentCreateEntryActivity = new Intent(ListEntryActivity.this, CreateEntryActivity.class)
+                    Intent intentCreateEntryActivity = new Intent(ListEntryActivity.this, EntryActivity.class)
                             .putExtra("databaseId", databaseId)
                             .putExtra("categoryId", categoryId)
                             .putExtra("databasePwd", databasePwd);
@@ -125,14 +107,13 @@ public class ListEntryActivity extends IRecyclerActivity implements IActivity, V
     public void populateView() {
         setTitle(databaseModel.getUserCategoryName(categoryId));
         setContentView(R.layout.activity_recyclerview_layout);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewDefault);
-        imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerViewDefault);
+        ImageButton imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerViewAdapter = new RecyclerViewAdapter(this, vectorEntryPropery, recyclerView, this);
         recyclerView.setAdapter(recyclerViewAdapter);
-        //recyclerView.setOnItemClickListener(this);
         recyclerView.addItemDecoration(new RecyclerItemDividerDecoration(this));
         imageButtonFab.setOnClickListener(this);
         registerForContextMenu(recyclerView);

@@ -1,12 +1,23 @@
 package de.szut.passkeeper.interfaces;
 
 /**
- * Created by Sami.Al-Khatib on 20.03.2015.
+ *
  */
 public interface IUserProperty {
-    public String getItemHeader();
+    /**
+     * @return
+     */
+    String getItemHeader();
 
-    public String getItemSubHeader();
+    /**
+     *
+     * @return
+     */
+    String getItemSubHeader();
 
-    public int getItemImage();
+    /**
+     *
+     * @return
+     */
+    int getItemImage();
 }

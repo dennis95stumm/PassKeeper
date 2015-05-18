@@ -3,7 +3,6 @@ package de.szut.passkeeper.utility;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -18,19 +17,24 @@ import de.szut.passkeeper.R;
 import de.szut.passkeeper.interfaces.IRecyclerActivity;
 import de.szut.passkeeper.interfaces.IUserProperty;
 
-
+/**
+ *
+ */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
-
     Context context;
     private Vector<IUserProperty> vector;
-    private IRecyclerActivity iRecyclerActivity;
     private int deleteConfirmationViewId;
 
+    /**
+     * @param context
+     * @param vector
+     * @param recyclerView
+     * @param iRecyclerActivity
+     */
     public RecyclerViewAdapter(Context context, Vector<IUserProperty> vector, RecyclerView recyclerView, IRecyclerActivity iRecyclerActivity) {
         this.context = context;
         this.vector = vector;
-        this.iRecyclerActivity = iRecyclerActivity;
-        final GestureDetector gestruesDetector = new GestureDetector(null, new RecyclerGestrueListener(context, iRecyclerActivity, recyclerView));
+        final GestureDetector gestruesDetector = new GestureDetector(null, new RecyclerGestrueListener(iRecyclerActivity, recyclerView));
         ((Activity) context).findViewById(R.id.recyclerViewDefault).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -40,11 +44,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.deleteConfirmationViewId = R.id.delitition_text;
     }
 
+    /**
+     *
+     * @param context
+     * @param vector
+     * @param recyclerView
+     * @param iRecyclerActivity
+     * @param confirmViewId
+     */
     public RecyclerViewAdapter(Context context, Vector<IUserProperty> vector, RecyclerView recyclerView, IRecyclerActivity iRecyclerActivity, int confirmViewId) {
         this.context = context;
         this.vector = vector;
-        this.iRecyclerActivity = iRecyclerActivity;
-        final GestureDetector gestruesDetector = new GestureDetector(null, new RecyclerGestrueListener(context, iRecyclerActivity, recyclerView));
+        final GestureDetector gestruesDetector = new GestureDetector(null, new RecyclerGestrueListener(iRecyclerActivity, recyclerView));
         ((Activity) context).findViewById(R.id.recyclerViewDefault).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -54,22 +65,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.deleteConfirmationViewId = confirmViewId;
     }
 
-    /*@Override
-    public int getCount() {
-        return vector.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return position;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }*/
-
-
+    /**
+     *
+     * @param vector
+     */
     public void refresh(Vector<IUserProperty> vector) {
         this.vector = vector;
         notifyDataSetChanged();
@@ -78,9 +77,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_item_layout, viewGroup, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -95,6 +92,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return vector.size();
     }
 
+    /**
+     *
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView header;
         public TextView subheader;
@@ -105,6 +105,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public View delteConfirmation;
         public View delteConfirmationView;
 
+        /**
+         * @param itemView
+         */
         public ViewHolder(View itemView) {
             super(itemView);
             this.itemView = itemView;
