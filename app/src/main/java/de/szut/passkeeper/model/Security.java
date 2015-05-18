@@ -100,11 +100,11 @@ public class Security {
     }
 
     /**
-     *
-     * @param value
-     * @param secret
-     * @param iv
-     * @return
+     * Encrypts a value with the AES-256 algorithm by the given secret key and initialization vector.
+     * @param value Value that should be encrypted
+     * @param secret Secret key with which the value should be encrypted
+     * @param iv Initialization vector with which the value should be encrypted
+     * @return The AES-256 encrypted value
      */
     public String encryptValue(String value, SecretKey secret, byte[] iv) {
         String encryptedValueBase64 = "";
@@ -127,11 +127,11 @@ public class Security {
     }
 
     /**
-     *
-     * @param value
-     * @param secret
-     * @param iv
-     * @return
+     * Decrypts a value with the AES-256 algorithm by the given secret key and initialization vector.
+     * @param value The previously encrypted value
+     * @param secret Secret key with which the value should be decrypted
+     * @param iv Initialization vector with which the value should be decrypted
+     * @return The decrypted value
      */
     public String decryptValue(String value, SecretKey secret, byte[] iv) {
         String decryptedValue = "";
