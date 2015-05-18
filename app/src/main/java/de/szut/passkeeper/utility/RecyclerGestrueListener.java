@@ -135,8 +135,46 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
         return false;
     }
 
+    @Override
+    public void onLongPress(MotionEvent e) {
+        if (swipingEnabled && actualViewHolder != null && iRecyclerActivity.longPressEnabled()) {
+            actualViewHolder.mainView.setPressed(false);
+            if (selectedItem != recyclerPosition) {
+                if (selectedItem != -1) {
+                    RecyclerViewAdapter.ViewHolder viewHolder = (RecyclerViewAdapter.ViewHolder) view.getChildViewHolder(view.getChildAt(selectedItem));
+                    viewHolder.mainView.setSelected(false);
+                }
+                actualViewHolder.mainView.setSelected(true);
+                selectedItem = recyclerPosition;
+                iRecyclerActivity.getEditMenu().setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        actualViewHolder.mainView.setSelected(false);
+                        actualViewHolder = null;
+                        recyclerPosition = -1;
+                        swipingEnabled = true;
+                        iRecyclerActivity.getEditMenu().setVisible(false);
+                        boolean returnVal = iRecyclerActivity.editItem(selectedItem);
+                        selectedItem = -1;
+                        return returnVal;
+                    }
+                });
+                iRecyclerActivity.getEditMenu().setVisible(true);
+            } else {
+                actualViewHolder.mainView.setSelected(false);
+                iRecyclerActivity.getEditMenu().setVisible(false);
+                selectedItem = -1;
+            }
+        }
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+        if (swipingEnabled && actualViewHolder != null && iRecyclerActivity.longPressEnabled())
+            actualViewHolder.mainView.setPressed(true);
+    }
+
     /**
-     *
      * @param distanceX
      * @param rightToLeft
      */
@@ -218,44 +256,5 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
         }
         actualViewHolder = null;
         swipingEnabled = true;
-    }
-
-    @Override
-    public void onLongPress(MotionEvent e) {
-        if (swipingEnabled && actualViewHolder != null && iRecyclerActivity.longPressEnabled()) {
-            actualViewHolder.mainView.setPressed(false);
-            if (selectedItem != recyclerPosition) {
-                if (selectedItem != -1) {
-                    RecyclerViewAdapter.ViewHolder viewHolder = (RecyclerViewAdapter.ViewHolder) view.getChildViewHolder(view.getChildAt(selectedItem));
-                    viewHolder.mainView.setSelected(false);
-                }
-                actualViewHolder.mainView.setSelected(true);
-                selectedItem = recyclerPosition;
-                iRecyclerActivity.getEditMenu().setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        actualViewHolder.mainView.setSelected(false);
-                        actualViewHolder = null;
-                        recyclerPosition = -1;
-                        swipingEnabled = true;
-                        iRecyclerActivity.getEditMenu().setVisible(false);
-                        boolean returnVal = iRecyclerActivity.editItem(selectedItem);
-                        selectedItem = -1;
-                        return returnVal;
-                    }
-                });
-                iRecyclerActivity.getEditMenu().setVisible(true);
-            } else {
-                actualViewHolder.mainView.setSelected(false);
-                iRecyclerActivity.getEditMenu().setVisible(false);
-                selectedItem = -1;
-            }
-        }
-    }
-
-    @Override
-    public void onShowPress(MotionEvent e) {
-        if (swipingEnabled && actualViewHolder != null && iRecyclerActivity.longPressEnabled())
-            actualViewHolder.mainView.setPressed(true);
     }
 }
