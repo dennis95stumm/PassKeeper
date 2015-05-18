@@ -107,8 +107,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public View itemView;
         public View deleteAnimView;
         public View mainView;
-        public View delteConfirmation;
-        public View delteConfirmationView;
+        public View deleteConfirmation;
+        public View deleteConfirmationView;
 
         /**
          * Constructor. Initializes the attributes of the view holder.
@@ -122,9 +122,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             icon = (ImageView) itemView.findViewById(R.id.icon);
             deleteAnimView = itemView.findViewById(R.id.delete_recycler_item);
             mainView = itemView.findViewById(R.id.mainview);
-            delteConfirmation = itemView.findViewById(R.id.delete_recycler_item_confirmation);
-            delteConfirmationView = itemView.findViewById(deleteConfirmationViewId);
-            delteConfirmationView.setVisibility(View.VISIBLE);
+            deleteConfirmation = itemView.findViewById(R.id.delete_recycler_item_confirmation);
+            deleteConfirmationView = itemView.findViewById(deleteConfirmationViewId);
+            deleteConfirmationView.setVisibility(View.VISIBLE);
         }
     }
 }

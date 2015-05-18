@@ -197,18 +197,18 @@ public class RecyclerGestureListener extends GestureDetector.SimpleOnGestureList
             @Override
             public void onAnimationEnd(Animator animation) {
                 actualViewHolder.deleteAnimView.setVisibility(View.GONE);
-                actualViewHolder.delteConfirmation.setVisibility(View.VISIBLE);
-                if (actualViewHolder.delteConfirmationView instanceof EditText) {
+                actualViewHolder.deleteConfirmation.setVisibility(View.VISIBLE);
+                if (actualViewHolder.deleteConfirmationView instanceof EditText) {
                     InputMethodManager imm = (InputMethodManager) iRecyclerActivity.getSystemService(
                             Context.INPUT_METHOD_SERVICE);
                     imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-                    actualViewHolder.delteConfirmationView.requestFocus();
+                    actualViewHolder.deleteConfirmationView.requestFocus();
                 }
-                actualViewHolder.delteConfirmation.findViewById(R.id.deltition_yes).setOnTouchListener(new View.OnTouchListener() {
+                actualViewHolder.deleteConfirmation.findViewById(R.id.deltition_yes).setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
                         if (actualViewHolder != null) {
-                            if (iRecyclerActivity.confirmRemove(actualViewHolder.delteConfirmationView instanceof EditText ? ((EditText) actualViewHolder.delteConfirmationView).getText().toString() : null, recyclerPosition)) {
+                            if (iRecyclerActivity.confirmRemove(actualViewHolder.deleteConfirmationView instanceof EditText ? ((EditText) actualViewHolder.deleteConfirmationView).getText().toString() : null, recyclerPosition)) {
                                 iRecyclerActivity.removeItem(recyclerPosition);
                                 InputMethodManager imm = (InputMethodManager) iRecyclerActivity.getSystemService(
                                         Context.INPUT_METHOD_SERVICE);
@@ -223,7 +223,7 @@ public class RecyclerGestureListener extends GestureDetector.SimpleOnGestureList
                         return true;
                     }
                 });
-                actualViewHolder.delteConfirmation.findViewById(R.id.deltition_no).setOnTouchListener(new View.OnTouchListener() {
+                actualViewHolder.deleteConfirmation.findViewById(R.id.deltition_no).setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
                         if (actualViewHolder != null) {
@@ -241,15 +241,15 @@ public class RecyclerGestureListener extends GestureDetector.SimpleOnGestureList
      */
     private void resetView() {
         if (actualViewHolder != null) {
-            actualViewHolder.delteConfirmation.setVisibility(View.GONE);
+            actualViewHolder.deleteConfirmation.setVisibility(View.GONE);
             actualViewHolder.deleteAnimView.setVisibility(View.VISIBLE);
             View animationView = actualViewHolder.mainView;
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) animationView.getLayoutParams();
             params.rightMargin = 0;
             params.leftMargin = 0;
             animationView.setLayoutParams(params);
-            if (actualViewHolder.delteConfirmationView instanceof EditText) {
-                ((EditText) actualViewHolder.delteConfirmationView).setText(null);
+            if (actualViewHolder.deleteConfirmationView instanceof EditText) {
+                ((EditText) actualViewHolder.deleteConfirmationView).setText(null);
                 InputMethodManager imm = (InputMethodManager) iRecyclerActivity.getSystemService(
                         Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(iRecyclerActivity.getWindow().getDecorView().getWindowToken(), 0);
