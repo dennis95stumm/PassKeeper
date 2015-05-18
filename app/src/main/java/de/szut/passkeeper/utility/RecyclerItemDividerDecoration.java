@@ -9,13 +9,14 @@ import android.view.View;
 import de.szut.passkeeper.R;
 
 /**
- *
+ * Divider decoration for the recycler items.
  */
 public class RecyclerItemDividerDecoration extends RecyclerView.ItemDecoration {
     private Drawable mDivider;
 
     /**
-     * @param context
+     * Constructor.
+     * @param context Context to get the divider drawable
      */
     public RecyclerItemDividerDecoration(Context context) {
         mDivider = context.getResources().getDrawable(R.drawable.recycler_item_divider);
