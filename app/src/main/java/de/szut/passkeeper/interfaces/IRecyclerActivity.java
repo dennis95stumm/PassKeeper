@@ -21,6 +21,7 @@ public abstract class IRecyclerActivity extends Activity {
     }
 
     /**
+     *
      * @return
      */
     public MenuItem getEditMenu() {
@@ -28,9 +29,11 @@ public abstract class IRecyclerActivity extends Activity {
     }
 
     /**
-     * @param password
-     * @param position
-     * @return
+     * Confirms an remove of a recycler item. Default is always true returned and the recycler
+     * item is always deleted. Override this function if the item needs special confirmation.
+     * @param password Password of the input field if one is available else null
+     * @param position Position of the recycler that should be deleted
+     * @return Boolean value that indicates if the recycler item can be removed
      */
     public boolean confirmRemove(String password, int position) {
         return true;
@@ -43,6 +46,7 @@ public abstract class IRecyclerActivity extends Activity {
     }
 
     /**
+     *
      * @param position
      * @return
      */
@@ -51,7 +55,8 @@ public abstract class IRecyclerActivity extends Activity {
     }
 
     /**
-     * @return
+     *
+     * @return Boolean value that indicates if long press is enabled on the recycler view
      */
     public boolean longPressEnabled() {
         return false;
