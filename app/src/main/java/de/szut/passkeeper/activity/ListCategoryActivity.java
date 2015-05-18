@@ -109,7 +109,7 @@ public class ListCategoryActivity extends IRecyclerActivity implements IActivity
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         ImageButton imageButtonFab = (ImageButton) findViewById(R.id.imageButtonFab);
-        recyclerViewAdapter = new RecyclerViewAdapter(this, databaseModel.getUserCategoryPropertyVector(databaseId), recyclerView, this);
+        recyclerViewAdapter = new RecyclerViewAdapter(databaseModel.getUserCategoryPropertyVector(databaseId), recyclerView, this);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.addItemDecoration(new RecyclerItemDividerDecoration(this));
         imageButtonFab.setOnClickListener(this);

@@ -112,7 +112,7 @@ public class ListEntryActivity extends IRecyclerActivity implements IActivity, V
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerViewAdapter = new RecyclerViewAdapter(this, vectorEntryPropery, recyclerView, this);
+        recyclerViewAdapter = new RecyclerViewAdapter(vectorEntryPropery, recyclerView, this);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.addItemDecoration(new RecyclerItemDividerDecoration(this));
         imageButtonFab.setOnClickListener(this);

@@ -1,7 +1,5 @@
 package de.szut.passkeeper.utility;
 
-import android.app.Activity;
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -18,24 +16,22 @@ import de.szut.passkeeper.interfaces.IRecyclerActivity;
 import de.szut.passkeeper.interfaces.IUserProperty;
 
 /**
- *
+ * Adapter for the recycler view. Layouts the recycler items an manges the data.
  */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
-    Context context;
     private Vector<IUserProperty> vector;
     private int deleteConfirmationViewId;
 
     /**
-     * @param context
-     * @param vector
+     * Constructor for the recycler view. Initializes the values and creates a gestures detector to the recycler view.
+     * @param vector Vector with data for the recycler view
      * @param recyclerView
      * @param iRecyclerActivity
      */
-    public RecyclerViewAdapter(Context context, Vector<IUserProperty> vector, RecyclerView recyclerView, IRecyclerActivity iRecyclerActivity) {
-        this.context = context;
+    public RecyclerViewAdapter(Vector<IUserProperty> vector, RecyclerView recyclerView, IRecyclerActivity iRecyclerActivity) {
         this.vector = vector;
         final GestureDetector gestruesDetector = new GestureDetector(null, new RecyclerGestrueListener(iRecyclerActivity, recyclerView));
-        ((Activity) context).findViewById(R.id.recyclerViewDefault).setOnTouchListener(new View.OnTouchListener() {
+        iRecyclerActivity.findViewById(R.id.recyclerViewDefault).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return gestruesDetector.onTouchEvent(event);
@@ -46,17 +42,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     /**
      *
-     * @param context
      * @param vector
      * @param recyclerView
      * @param iRecyclerActivity
      * @param confirmViewId
      */
-    public RecyclerViewAdapter(Context context, Vector<IUserProperty> vector, RecyclerView recyclerView, IRecyclerActivity iRecyclerActivity, int confirmViewId) {
-        this.context = context;
+    public RecyclerViewAdapter(Vector<IUserProperty> vector, RecyclerView recyclerView, IRecyclerActivity iRecyclerActivity, int confirmViewId) {
         this.vector = vector;
         final GestureDetector gestruesDetector = new GestureDetector(null, new RecyclerGestrueListener(iRecyclerActivity, recyclerView));
-        ((Activity) context).findViewById(R.id.recyclerViewDefault).setOnTouchListener(new View.OnTouchListener() {
+        iRecyclerActivity.findViewById(R.id.recyclerViewDefault).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return gestruesDetector.onTouchEvent(event);
