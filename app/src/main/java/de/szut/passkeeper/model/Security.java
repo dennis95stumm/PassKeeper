@@ -186,8 +186,8 @@ public class Security {
     }
 
     /**
-     *
-     * @return
+     * Generates a secure password.
+     * @return The generated password
      */
     public String generatePassword() {
         String password = "";
