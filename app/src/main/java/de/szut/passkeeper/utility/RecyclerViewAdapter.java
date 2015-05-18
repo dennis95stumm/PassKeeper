@@ -25,8 +25,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     /**
      * Constructor for the recycler view. Initializes the values and creates a gestures detector to the recycler view.
      * @param vector Vector with data for the recycler view
-     * @param recyclerView
-     * @param iRecyclerActivity
+     * @param recyclerView Recycler view to which the adapter is attached
+     * @param iRecyclerActivity Activity that uses the recycler view
      */
     public RecyclerViewAdapter(Vector<IUserProperty> vector, RecyclerView recyclerView, IRecyclerActivity iRecyclerActivity) {
         this.vector = vector;
@@ -41,11 +41,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     /**
-     *
-     * @param vector
-     * @param recyclerView
-     * @param iRecyclerActivity
-     * @param confirmViewId
+     * Constructor for the recycler view. Initializes the values and creates a gestures detector to the recycler view.
+     * A custom view of the recycler item layout can be specified here for the delete confirmation.
+     * @param vector Vector with data for the recycler view
+     * @param recyclerView Recycler view to which the adapter is attached
+     * @param iRecyclerActivity Activity that uses the recycler view
+     * @param confirmViewId ID of the delete confirmation view
      */
     public RecyclerViewAdapter(Vector<IUserProperty> vector, RecyclerView recyclerView, IRecyclerActivity iRecyclerActivity, int confirmViewId) {
         this.vector = vector;
@@ -60,7 +61,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     /**
-     * @param vector
+     * Update the recycler adapter with new data.
+     * @param vector Vector with new data for the recycler view
      */
     public void refresh(Vector<IUserProperty> vector) {
         this.vector = vector;
@@ -68,9 +70,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     /**
-     *
-     * @param vector
-     * @param position
+     * Update the recycler adapter with new data specially if a recycler item is removed.
+     * @param vector Vector with new data for the recycler view
+     * @param position Position of deleted recycler item in the recycler view
      */
     public void refresh(Vector<IUserProperty> vector, int position) {
         this.vector = vector;
@@ -96,7 +98,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     /**
-     *
+     * Inner class for the view holder of a recycler item.
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView header;
@@ -109,7 +111,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public View delteConfirmationView;
 
         /**
-         * @param itemView
+         * Constructor. Initializes the attributes of the view holder.
+         * @param itemView View for the recycler item
          */
         public ViewHolder(View itemView) {
             super(itemView);
