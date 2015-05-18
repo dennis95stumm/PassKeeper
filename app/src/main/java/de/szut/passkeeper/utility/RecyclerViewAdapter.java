@@ -66,12 +66,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     /**
-     *
      * @param vector
      */
     public void refresh(Vector<IUserProperty> vector) {
         this.vector = vector;
         notifyDataSetChanged();
+    }
+
+    /**
+     *
+     * @param vector
+     * @param position
+     */
+    public void refresh(Vector<IUserProperty> vector, int position) {
+        this.vector = vector;
+        notifyItemRemoved(position);
     }
 
     @Override

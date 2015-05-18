@@ -169,7 +169,6 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
                         if (actualViewHolder != null) {
-
                             if (iRecyclerActivity.confirmRemove(actualViewHolder.delteConfirmationView instanceof EditText ? ((EditText) actualViewHolder.delteConfirmationView).getText().toString() : null, recyclerPosition)) {
                                 iRecyclerActivity.removeItem(recyclerPosition);
                                 InputMethodManager imm = (InputMethodManager) iRecyclerActivity.getSystemService(
@@ -223,7 +222,7 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
 
     @Override
     public void onLongPress(MotionEvent e) {
-        if (actualViewHolder != null && iRecyclerActivity.longPressEnabled()) {
+        if (swipingEnabled && actualViewHolder != null && iRecyclerActivity.longPressEnabled()) {
             actualViewHolder.mainView.setPressed(false);
             if (selectedItem != recyclerPosition) {
                 if (selectedItem != -1) {
@@ -256,7 +255,7 @@ public class RecyclerGestrueListener extends GestureDetector.SimpleOnGestureList
 
     @Override
     public void onShowPress(MotionEvent e) {
-        if (actualViewHolder != null && iRecyclerActivity.longPressEnabled())
+        if (swipingEnabled && actualViewHolder != null && iRecyclerActivity.longPressEnabled())
             actualViewHolder.mainView.setPressed(true);
     }
 }

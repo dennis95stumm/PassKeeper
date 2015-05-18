@@ -137,7 +137,7 @@ public class ListDatabaseActivity extends IRecyclerActivity implements IActivity
     public void removeItem(int position) {
         databaseModel.deleteUserDatabase(((DatabaseProperty) vectorUserDatabaseProperties.get(position)).getDatabaseId());
         vectorUserDatabaseProperties.remove(position);
-        recyclerViewAdapter.refresh(vectorUserDatabaseProperties);
+        recyclerViewAdapter.refresh(vectorUserDatabaseProperties, position);
     }
 
     @Override

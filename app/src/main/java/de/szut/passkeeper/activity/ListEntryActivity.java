@@ -123,6 +123,6 @@ public class ListEntryActivity extends IRecyclerActivity implements IActivity, V
     public void removeItem(int position) {
         databaseModel.deleteUserEntry(((EntryProperty) vectorEntryPropery.get(position)).getEntryId());
         vectorEntryPropery.remove(position);
-        recyclerViewAdapter.refresh(vectorEntryPropery);
+        recyclerViewAdapter.refresh(vectorEntryPropery, position);
     }
 }

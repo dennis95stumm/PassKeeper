@@ -123,6 +123,6 @@ public class ListCategoryActivity extends IRecyclerActivity implements IActivity
     public void removeItem(int position) {
         databaseModel.deleteUserCategory(((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryId());
         vectorCategoryProperty.remove(position);
-        recyclerViewAdapter.refresh(vectorCategoryProperty);
+        recyclerViewAdapter.refresh(vectorCategoryProperty, position);
     }
 }
