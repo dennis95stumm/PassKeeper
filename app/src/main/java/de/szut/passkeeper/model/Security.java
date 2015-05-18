@@ -24,13 +24,21 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- *
+ * A singleton class, which supply the security functionality of the app.
  */
 public class Security {
     private static Security INSTANCE;
 
     /**
-     * @return
+     * A private constructor so that this class couldn't be instantiated from another class.
+     */
+    private Security() {
+    }
+
+    /**
+     * Method for getting the instance of the security class.
+     * It generates a new instance if the class wasn't instantiated before.
+     * @return The instance of this class
      */
     public static Security getInstance() {
         if (INSTANCE == null) {
