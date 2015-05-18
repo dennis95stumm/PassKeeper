@@ -21,8 +21,8 @@ public abstract class IRecyclerActivity extends Activity {
     }
 
     /**
-     *
-     * @return
+     * Getter for the menu item which should be shown on long press of an recycler item.
+     * @return Menu item for long press gesture
      */
     public MenuItem getEditMenu() {
         return editMenu;
@@ -46,16 +46,19 @@ public abstract class IRecyclerActivity extends Activity {
     }
 
     /**
-     *
-     * @param position
-     * @return
+     * Handles an click of the menu item which is shown on long press gesture of an
+     * recycler item. Override to add proper functionality to the menu item click.
+     * @param position Position of the recycler item in the recycler view
+     * @return Boolean value which indicates that the event was consumed
      */
     public boolean editItem(int position) {
         return false;
     }
 
     /**
-     *
+     * Indicates if the long press gesture is enabled on the recycler view. Default
+     * the long press is disabled by returning false. Override this function if
+     * long press should be enabled on the recycler view.
      * @return Boolean value that indicates if long press is enabled on the recycler view
      */
     public boolean longPressEnabled() {
@@ -63,14 +66,14 @@ public abstract class IRecyclerActivity extends Activity {
     }
 
     /**
-     *
-     * @param position
+     * Handles an remove of a recycler item in the recycler view.
+     * @param position Position of the recycler item in the recycler view
      */
     public abstract void removeItem(int position);
 
     /**
-     * Handles a click on a item in the recycler view.
-     * @param position The position of the recycler item in the recycler view
+     * Handles an click on a item in the recycler view.
+     * @param position Position of the recycler item in the recycler view
      */
     public abstract void onRecyclerItemClick(int position);
 }
