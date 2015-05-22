@@ -66,7 +66,7 @@ public class EntryActivity extends Activity implements IActivity {
 
 
     /**
-     *
+     * This activity is used to create a notification, that copy's and paste's the username and password
      */
     public void setNotification() {
         //Notificationmanager wird aus dem context geholt
