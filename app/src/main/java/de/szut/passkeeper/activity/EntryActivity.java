@@ -33,7 +33,7 @@ import de.szut.passkeeper.utility.GeneratePwdClickListener;
 import de.szut.passkeeper.utility.ViewPwdTouchListener;
 
 /**
- *
+ * This activity is used to open exisiting user-entries for updating or for creating new user-entries
  */
 public class EntryActivity extends Activity implements IActivity {
     public static final String USERNAME_CLICKED = "UsernameClicked";

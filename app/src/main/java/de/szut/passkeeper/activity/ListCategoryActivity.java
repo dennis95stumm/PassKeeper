@@ -24,7 +24,7 @@ import de.szut.passkeeper.utility.RecyclerItemDividerDecoration;
 import de.szut.passkeeper.utility.RecyclerViewAdapter;
 
 /**
- *
+ * This class lists all categories of a specific user-database
  */
 public class ListCategoryActivity extends IRecyclerActivity implements IActivity, View.OnClickListener {
     private Vector<IUserProperty> vectorCategoryProperty;
@@ -116,10 +116,7 @@ public class ListCategoryActivity extends IRecyclerActivity implements IActivity
         registerForContextMenu(recyclerView);
     }
 
-    /**
-     *
-     * @param position
-     */
+    @Override
     public void removeItem(int position) {
         databaseModel.deleteUserCategory(((CategoryProperty) vectorCategoryProperty.get(position)).getCategoryId());
         vectorCategoryProperty.remove(position);
