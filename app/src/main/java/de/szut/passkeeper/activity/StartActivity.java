@@ -14,7 +14,7 @@ import de.szut.passkeeper.interfaces.IUserProperty;
 import de.szut.passkeeper.utility.DataLoaderTask;
 
 /**
- *
+ * Activity that is executed at startup. Displays a splash screen while the data is loading.
  */
 public class StartActivity extends Activity {
     public static final int TASK_COMPLETE = 1;
@@ -38,7 +38,7 @@ public class StartActivity extends Activity {
     }
 
     /**
-     *
+     * Sets the activity that should be executed after loading the data.
      */
     private void setStartActivity() {
         if (vectorUserDatabaseProperty.size() == 0) {
@@ -53,8 +53,9 @@ public class StartActivity extends Activity {
     }
 
     /**
-     * @param dataLoaderTask
-     * @param state
+     * Handles the state of the data loader task.
+     * @param dataLoaderTask Data loader task that should load the data
+     * @param state State of the data loader that should be handled
      */
     public void handleState(DataLoaderTask dataLoaderTask, int state) {
         switch (state) {
