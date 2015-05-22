@@ -61,6 +61,9 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
+    <string name="notification_button_copy_username">Username</string>
+    <string name="notification_button_copy_password">Password</string>
+
     <string name="bad_db_name">The database name must have at least 1 letter and the password must have 8 letters!</string>
     <string name="bad_password">The password must contain at least one upper case, one lower case character, one special character, one digit and must be between 8 and 16 characters.</string>
 

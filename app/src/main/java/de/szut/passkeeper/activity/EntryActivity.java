@@ -40,8 +40,6 @@ public class EntryActivity extends Activity implements IActivity {
     public static final String PASSWORD_CLICKED = "PasswordClicked";
     public static final String RETURN_TO_ACTIVITY = "ReturnToActivity";
     private static final int NOTIFICATION_ID = 0;
-    private static final String EXTRA_PWD = "PWD";
-    private static final String EXTRA_NAME = "NAME";
     private EntryProperty entryProperty;
     private EditText editTextEntryTitle;
     private EditText editTextEntryUsername;
@@ -80,20 +78,20 @@ public class EntryActivity extends Activity implements IActivity {
         IntentFilter filter = new IntentFilter();
         filter.addAction(USERNAME_CLICKED);
         filter.addAction(PASSWORD_CLICKED);
-        final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-        mBuilder.addAction(0, "Username?", userIntent);
-        mBuilder.addAction(0, "Password?", passIntent);
-        mBuilder.setSmallIcon(R.drawable.ic_launcher);
-        mBuilder.setContentTitle("Passkeeper Service");
-        mBuilder.setTicker("Password temporary saved");
-        mBuilder.setContentText("See here Username and Password");
-        mBuilder.setWhen(System.currentTimeMillis());
-        mBuilder.setOnlyAlertOnce(false);
-        mBuilder.setOngoing(false);
-        mBuilder.setAutoCancel(false);
-        mBuilder.setContentIntent(thisIntent);
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.addAction(0, getResources().getString(R.string.notification_button_copy_username), userIntent);
+        builder.addAction(0, getResources().getString(R.string.notification_button_copy_password), passIntent);
+        builder.setSmallIcon(R.drawable.ic_launcher);
+        builder.setContentTitle("Passkeeper Service");
+        builder.setTicker("Password temporary saved");
+        builder.setContentText("See here Username and Password");
+        builder.setWhen(System.currentTimeMillis());
+        builder.setOnlyAlertOnce(false);
+        builder.setOngoing(false);
+        builder.setAutoCancel(false);
+        builder.setContentIntent(thisIntent);
 
-        final Notification n = mBuilder.build();
+        final Notification n = builder.build();
 
         notificationManager.notify(NOTIFICATION_ID, n);
         receiver = new BroadcastReceiver() {
