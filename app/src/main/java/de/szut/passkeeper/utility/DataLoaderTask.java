@@ -6,7 +6,7 @@ import de.szut.passkeeper.activity.StartActivity;
 import de.szut.passkeeper.interfaces.IUserProperty;
 
 /**
- *
+ * This class is supposed load the data while the start-up screen is shown
  */
 public class DataLoaderTask {
     private StartActivity startActivity;
@@ -20,7 +20,7 @@ public class DataLoaderTask {
     }
 
     /**
-     *
+     * Starts the async task
      */
     public void startTask() {
         new Thread(new DataLoader(startActivity, this)).start();
