@@ -204,7 +204,7 @@ public class EntryActivity extends Activity implements IActivity {
     }
 
     /**
-     *
+     * Holt username und password aus der Datenbank und entschlüsselt diese, wenn vorhanden, oder ermöglicht die Anlage eines neuen Eintrags
      */
     private void decryptData() {
         if (entryProperty != null) {
@@ -219,7 +219,7 @@ public class EntryActivity extends Activity implements IActivity {
     }
 
     /**
-     *
+     * Verschlüsselt username und password wenn vorhanden, oder ermöglicht die Anlage eines neuen Eintrags
      */
     private void encryptData() {
         String username = editTextEntryUsername.getText().toString();
@@ -256,7 +256,7 @@ public class EntryActivity extends Activity implements IActivity {
     }
 
     /**
-     *
+     * Führt die Sorgt dafür, dass die Entschlüsslung im Hintergrund ausgeführt wird
      */
     private class BackgroundTask extends AsyncTask<Void, Void, Void> {
         @Override
