@@ -64,6 +64,7 @@ public class EntryActivity extends Activity implements IActivity {
         new BackgroundTask().execute();
     }
 
+
     /**
      *
      */
@@ -98,7 +99,8 @@ public class EntryActivity extends Activity implements IActivity {
         builder.setContentIntent(thisIntent);
         final Notification n = builder.build();
         notificationManager.notify(NOTIFICATION_ID, n);
-
+        // In der Notification werden die entschlüsselten Werte decryptedUserPwd & decryptedUsername
+        // bei einem Auslösen des Buttons per Broadcast empfangen und in die Zwischenablage gelegt.
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -119,8 +121,10 @@ public class EntryActivity extends Activity implements IActivity {
                 context.sendBroadcast(it);
             }
         };
+        //Der Receiver kann jetzt die zur Verfügung gestellten Werte des PendingIntent empfangen
         registerReceiver(receiver, filter);
     }
+
 
 
     @Override
