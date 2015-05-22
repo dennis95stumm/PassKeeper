@@ -3,7 +3,7 @@ package de.szut.passkeeper.property;
 import de.szut.passkeeper.interfaces.IUserProperty;
 
 /**
- *
+ * This class holds the properties of an logical user-database
  */
 public class DatabaseProperty implements IUserProperty {
     private int databaseId;
@@ -13,11 +13,11 @@ public class DatabaseProperty implements IUserProperty {
     private String databaseModifyDate;
 
     /**
-     * @param databaseId
-     * @param databaseName
-     * @param databasePwd
-     * @param databaseIconId
-     * @param databaseModifyDate
+     * @param databaseId the id of the database
+     * @param databaseName the database name of the database
+     * @param databasePwd the password of the database
+     * @param databaseIconId the icon of the database
+     * @param databaseModifyDate the modification date of the databse
      */
     public DatabaseProperty(int databaseId, String databaseName, String databasePwd, int databaseIconId, String databaseModifyDate) {
         this.databaseId = databaseId;
@@ -29,9 +29,9 @@ public class DatabaseProperty implements IUserProperty {
 
     /**
      *
-     * @param databaseName
-     * @param databasePwd
-     * @param databaseIconId
+     * @param databaseName the database name of the database
+     * @param databasePwd the password of the database
+     * @param databaseIconId the icon of the database
      */
     public DatabaseProperty(String databaseName, String databasePwd, int databaseIconId) {
         this.databaseName = databaseName;
@@ -56,7 +56,7 @@ public class DatabaseProperty implements IUserProperty {
 
     /**
      *
-     * @return
+     * @return the database id
      */
     public int getDatabaseId() {
         return databaseId;
@@ -64,7 +64,7 @@ public class DatabaseProperty implements IUserProperty {
 
     /**
      *
-     * @return
+     * @return the database name
      */
     public String getDatabaseName() {
         return databaseName;
@@ -72,7 +72,7 @@ public class DatabaseProperty implements IUserProperty {
 
     /**
      *
-     * @param databaseName
+     * @param databaseName set the databasename
      */
     public void setDatabaseName(String databaseName) {
         this.databaseName = databaseName;
@@ -80,7 +80,7 @@ public class DatabaseProperty implements IUserProperty {
 
     /**
      *
-     * @return
+     * @return get the database password
      */
     public String getDatabasePwd() {
         return databasePwd;
@@ -88,7 +88,7 @@ public class DatabaseProperty implements IUserProperty {
 
     /**
      *
-     * @param databasePwd
+     * @param databasePwd set the database password
      */
     public void setDatabasePwd(String databasePwd) {
         this.databasePwd = databasePwd;
@@ -96,7 +96,7 @@ public class DatabaseProperty implements IUserProperty {
 
     /**
      *
-     * @return
+     * @return get the database icon id
      */
     public int getDatabaseIconId() {
         return databaseIconId;
@@ -104,7 +104,7 @@ public class DatabaseProperty implements IUserProperty {
 
     /**
      *
-     * @return
+     * @return get the database modification date
      */
     public String getDatabaseModifyDate() {
         return databaseModifyDate;

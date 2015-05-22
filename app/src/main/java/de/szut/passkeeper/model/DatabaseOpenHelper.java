@@ -5,10 +5,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- *
+ * This class helps to create and update a database
+ * All the tables and columns are defined right here
+ * Everything else belonging to creates, updates and deletes can be found in class {@link DatabaseModel}
  */
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
-    // Table
+    // Tables
     public static final String TABLE_USER_DATABASE = "pass_database";
     public static final String TABLE_USER_CATEGORY = "pass_category";
     public static final String TABLE_USER_ENTRY = "pass_entry";
@@ -33,7 +35,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     public static final String KEY_ICON_USER_ENTRY = "pass_entry_icon";
     public static final String KEY_MODIFY_DATE_USER_ENTRY = "pass_entry_mdate";
     public static final String KEY_IV_USER_ENTRY = "pass_entry_iv";
-    //
+    // Table create statements
     private static final String CREATE_USER_DATABASE_TABLE_SQL =
             "CREATE TABLE " + TABLE_USER_DATABASE +
                     "(\n"
@@ -43,7 +45,6 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                     + KEY_ICON_USER_DATABASE + " INTEGER,\n"
                     + KEY_MODIFY_DATE_USER_DATABASE + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n" +
                     ")";
-    //
     private static final String CREATE_USER_CATEGORY_TABLE_SQL =
             "CREATE TABLE " + TABLE_USER_CATEGORY +
                     "(\n"
@@ -54,7 +55,6 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                     + KEY_MODIFY_DATE_USER_CATEGORY + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n"
                     + " FOREIGN KEY (" + KEY_ID_USER_DATABASE + ") REFERENCES " + TABLE_USER_DATABASE + "(" + KEY_ID_USER_DATABASE + ") ON DELETE CASCADE\n" +
                     ")";
-    // CREATE STATEMENTS FOR TABLES
     private static final String CREATE_USER_ENTRY_TABLE_SQL =
             "CREATE TABLE " + TABLE_USER_ENTRY +
                     "(\n"
@@ -77,7 +77,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "PassDatabase";
 
     /**
-     * @param context
+     * @param context the application context
      */
     public DatabaseOpenHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -92,6 +92,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+        // Drop tables on upgrade for noew
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_USER_DATABASE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_USER_CATEGORY);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_USER_ENTRY);

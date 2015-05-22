@@ -15,7 +15,7 @@ import de.szut.passkeeper.property.DatabaseProperty;
 import de.szut.passkeeper.property.EntryProperty;
 
 /**
- *
+ * This class provides all the necessary functions for creating, updating or deleting user-databases, categories and password-entries
  */
 public class DatabaseModel {
     private DatabaseOpenHelper databaseOpenHelper;
@@ -50,15 +50,15 @@ public class DatabaseModel {
     };
 
     /**
-     * @param context
+     * @param context the application context that is passed to the {{@link DatabaseOpenHelper}}
      */
     public DatabaseModel(Context context) {
         databaseOpenHelper = new DatabaseOpenHelper(context);
     }
 
     /**
-     *
-     * @return
+     * Get all user databases and return a single vector object
+     * @return the vector that holds all the user-database data
      */
     public Vector<IUserProperty> getUserDatabasePropertyVector() {
         sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
@@ -81,9 +81,9 @@ public class DatabaseModel {
     }
 
     /**
-     *
-     * @param databaseId
-     * @return
+     * This function get's all categories of an users database
+     * @param databaseId the databaseid of which the categories should be selected
+     * @return the vector that holds all the categories of an database
      */
     public Vector<IUserProperty> getUserCategoryPropertyVector(int databaseId) {
         sqLiteDatabase = databaseOpenHelper.getReadableDatabase();
@@ -104,10 +104,10 @@ public class DatabaseModel {
     }
 
     /**
-     *
-     * @param databaseId
-     * @param categoryId
-     * @return
+     * This function get's all user entries of an database & category
+     * @param databaseId the database id of user-entries
+     * @param categoryId the category id of user-entries
+     * @return the vector that holds all user-entries of the selected category and user-database
      */
     public Vector<IUserProperty> getUserEntryVector(int databaseId, int categoryId) {
         sqLiteDatabase = databaseOpenHelper.getReadableDatabase();

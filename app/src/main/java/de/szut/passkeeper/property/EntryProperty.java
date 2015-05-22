@@ -3,7 +3,7 @@ package de.szut.passkeeper.property;
 import de.szut.passkeeper.interfaces.IUserProperty;
 
 /**
- *
+ * This class is used to store data for user entries out of the database
  */
 public class EntryProperty implements IUserProperty {
     private int databaseId;
@@ -19,17 +19,17 @@ public class EntryProperty implements IUserProperty {
     private String entryIV;
 
     /**
-     * @param entryId
-     * @param categoryId
-     * @param databaseId
-     * @param entryTitle
-     * @param entryUsername
-     * @param entryPwd
-     * @param entryHash
-     * @param entryNote
-     * @param entryIconId
-     * @param entryModifyDate
-     * @param iv
+     * @param entryId the id of an entry
+     * @param categoryId the category id of an entry
+     * @param databaseId the database id of an entry
+     * @param entryTitle the title of an entry
+     * @param entryUsername the username of an entry
+     * @param entryPwd the password of an entry
+     * @param entryHash the hashed salt generated for this entry
+     * @param entryNote the note of an entry
+     * @param entryIconId the icon of an entry
+     * @param entryModifyDate the modification date of an entry
+     * @param iv string value used for encryption and decryption of an entry
      */
     public EntryProperty(int entryId, int categoryId, int databaseId, String entryTitle, String entryUsername, String entryPwd, String entryHash, String entryNote, int entryIconId, String entryModifyDate, String iv) {
         this.entryId = entryId;
@@ -46,16 +46,15 @@ public class EntryProperty implements IUserProperty {
     }
 
     /**
-     *
-     * @param databaseId
-     * @param categoryId
-     * @param entryTitle
-     * @param entryUsername
-     * @param entryPwd
-     * @param entryHash
-     * @param entryNote
-     * @param entryIconId
-     * @param iv
+     * @param databaseId the database id of an entry
+     * @param categoryId the category id of an entry
+     * @param entryTitle the title of an entry
+     * @param entryUsername the username of an entry
+     * @param entryPwd the password of an entry
+     * @param entryHash the hashed salt generated for this entry
+     * @param entryNote the note of an entry
+     * @param entryIconId the icon of an entry
+     * @param iv string value used for encryption and decryption of an entry
      */
     public EntryProperty(int databaseId, int categoryId, String entryTitle, String entryUsername, String entryPwd, String entryHash, String entryNote, int entryIconId, String iv) {
         this.databaseId = databaseId;
@@ -70,14 +69,13 @@ public class EntryProperty implements IUserProperty {
     }
 
     /**
-     *
-     * @param entryId
-     * @param entryTitle
-     * @param entryUsername
-     * @param entryPwd
-     * @param entryHash
-     * @param entryNote
-     * @param iv
+     * @param entryId the id of an entry
+     * @param entryTitle the title of an entry
+     * @param entryUsername the username of an entry
+     * @param entryPwd the password of an entry
+     * @param entryHash the hashed salt generated for this entry
+     * @param entryNote the note of an entry
+     * @param iv string value used for encryption and decryption of an entry
      */
     public EntryProperty(int entryId, String entryTitle, String entryUsername, String entryPwd, String entryHash, String entryNote, String iv) {
         this.entryId = entryId;
@@ -106,7 +104,7 @@ public class EntryProperty implements IUserProperty {
 
     /**
      *
-     * @return
+     * @return the database id of an entry
      */
     public int getDatabaseId() {
         return databaseId;
@@ -114,7 +112,7 @@ public class EntryProperty implements IUserProperty {
 
     /**
      *
-     * @return
+     * @return the category id of an entry
      */
     public int getCategoryId() {
         return categoryId;
@@ -122,7 +120,7 @@ public class EntryProperty implements IUserProperty {
 
     /**
      *
-     * @return
+     * @return the entry id of an entry
      */
     public int getEntryId() {
         return entryId;
@@ -130,7 +128,7 @@ public class EntryProperty implements IUserProperty {
 
     /**
      *
-     * @return
+     * @return the title of an entry
      */
     public String getEntryTitle() {
         return entryTitle;
@@ -138,7 +136,7 @@ public class EntryProperty implements IUserProperty {
 
     /**
      *
-     * @return
+     * @return the username of an entry
      */
     public String getEntryUsername() {
         return entryUsername;
@@ -146,7 +144,7 @@ public class EntryProperty implements IUserProperty {
 
     /**
      *
-     * @return
+     * @return the password of an entry
      */
     public String getEntryPwd() {
         return entryPwd;
@@ -154,7 +152,7 @@ public class EntryProperty implements IUserProperty {
 
     /**
      *
-     * @return
+     * @return the hash of an entry (for username and password)
      */
     public String getEntryHash() {
         return entryHash;
@@ -162,7 +160,7 @@ public class EntryProperty implements IUserProperty {
 
     /**
      *
-     * @return
+     * @return the notes of entry
      */
     public String getEntryNote() {
         return entryNote;
@@ -170,7 +168,7 @@ public class EntryProperty implements IUserProperty {
 
     /**
      *
-     * @return
+     * @return the icon id of entry
      */
     public int getEntryIconId() {
         return entryIconId;
@@ -178,7 +176,7 @@ public class EntryProperty implements IUserProperty {
 
     /**
      *
-     * @return
+     * @return the modification date of an entry
      */
     public String getEntryModifyDate() {
         return entryModifyDate;
@@ -186,7 +184,7 @@ public class EntryProperty implements IUserProperty {
 
     /**
      *
-     * @return
+     * @return the string for encryption / decryption of an entry
      */
     public String getEntryIV() {
         return entryIV;

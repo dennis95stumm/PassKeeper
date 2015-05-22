@@ -7,14 +7,14 @@ import android.content.DialogInterface;
 import de.szut.passkeeper.R;
 
 /**
- *
+ * this is a helper for creating simple alert dialogs
  */
 public class AlertBuilderHelper extends AlertDialog.Builder {
     /**
-     * @param context
-     * @param title
-     * @param message
-     * @param setNegative
+     * @param context the application context
+     * @param title the title of the dialog
+     * @param message the message of the dialog
+     * @param setNegative if a negative clicklistener should be set
      */
     public AlertBuilderHelper(Context context, int title, int message, boolean setNegative) {
         super(context);
