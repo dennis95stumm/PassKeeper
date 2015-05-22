@@ -8,7 +8,7 @@ import de.szut.passkeeper.interfaces.IUserProperty;
 import de.szut.passkeeper.model.DatabaseModel;
 
 /**
- *
+ * Runnable class that loads the information of the password databases for the list.
  */
 public class DataLoader implements Runnable {
     public static final int LOAD_STATE_COMPLETED = 1;
@@ -16,8 +16,9 @@ public class DataLoader implements Runnable {
     private DataLoaderTask task;
 
     /**
-     * @param context
-     * @param dataLoaderTask
+     * Constructor. Initializes the class attributes.
+     * @param context Context for which the data will be loaded from the database
+     * @param dataLoaderTask Data loader task that should handle data load state
      */
     public DataLoader(Context context, DataLoaderTask dataLoaderTask) {
         databaseModel = new DatabaseModel(context);
@@ -27,6 +28,9 @@ public class DataLoader implements Runnable {
     @Override
     public void run() {
         try {
+            /* Sleep the thread so that the loading animation will
+             * be displayed even when data is loaded fast.
+             */
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();

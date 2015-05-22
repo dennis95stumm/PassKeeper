@@ -29,7 +29,7 @@ import de.szut.passkeeper.utility.RecyclerItemDividerDecoration;
 import de.szut.passkeeper.utility.RecyclerViewAdapter;
 
 /**
- *
+ * This activity lists all available user-databases
  */
 public class ListDatabaseActivity extends IRecyclerActivity implements IActivity, View.OnClickListener {
     private DatabaseModel databaseModel;
@@ -45,6 +45,7 @@ public class ListDatabaseActivity extends IRecyclerActivity implements IActivity
 
     @Override
     protected void onResume() {
+        // refresh the dataset when the activity is resumed
         super.onResume();
         vectorUserDatabaseProperties.clear();
         vectorUserDatabaseProperties.addAll(databaseModel.getUserDatabasePropertyVector());

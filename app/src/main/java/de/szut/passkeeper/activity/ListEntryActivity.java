@@ -21,6 +21,9 @@ import de.szut.passkeeper.utility.AlertBuilderHelper;
 import de.szut.passkeeper.utility.RecyclerItemDividerDecoration;
 import de.szut.passkeeper.utility.RecyclerViewAdapter;
 
+/**
+ * This activity lists all the available user-entries of a specific category and user-database
+ */
 public class ListEntryActivity extends IRecyclerActivity implements IActivity, View.OnClickListener {
     private Vector<IUserProperty> vectorEntryPropery;
     private DatabaseModel databaseModel;
@@ -40,6 +43,7 @@ public class ListEntryActivity extends IRecyclerActivity implements IActivity, V
     @Override
     protected void onResume() {
         super.onResume();
+        // refresh the data when the activity is reopend
         vectorEntryPropery.clear();
         vectorEntryPropery.addAll(databaseModel.getUserEntryVector(databaseId, categoryId));
         recyclerViewAdapter.refresh(databaseModel.getUserEntryVector(databaseId, categoryId));
