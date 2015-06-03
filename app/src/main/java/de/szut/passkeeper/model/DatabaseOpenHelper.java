@@ -77,6 +77,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "PassDatabase";
 
     /**
+     * Constructor.
      * @param context the application context
      */
     public DatabaseOpenHelper(Context context) {

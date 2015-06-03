@@ -12,6 +12,7 @@ public class ViewPwdTouchListener implements View.OnTouchListener {
     private EditText editText;
 
     /**
+     * Constructor.
      * @param editText the textfield where the password should be shown or hidden
      */
     public ViewPwdTouchListener(EditText editText) {

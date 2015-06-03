@@ -69,13 +69,13 @@ public class EntryActivity extends Activity implements IActivity {
      * This activity is used to create a notification, that copy's and paste's the username and password
      */
     public void setNotification() {
-        //Notificationmanager wird aus dem context geholt
+        // Notificationmanager wird aus dem context geholt
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         //Intent wird über den PendingIntent von der Notification angesteuert, wenn diese ausgewählt wird
         Intent userNameIntent = new Intent(USERNAME_CLICKED);
         Intent passwordIntent = new Intent(PASSWORD_CLICKED);
         this.getIntent().setAction(RETURN_TO_ACTIVITY);
-        //Der PendingIntent gibt einen Token an die notification und gestattet die Ausführung dieses Abschnittes der Applikation
+        // Der PendingIntent gibt einen Token an die notification und gestattet die Ausführung dieses Abschnittes der Applikation
         PendingIntent userIntent = PendingIntent.getBroadcast(this, 0, userNameIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         PendingIntent passIntent = PendingIntent.getBroadcast(this, 0, passwordIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         PendingIntent thisIntent = PendingIntent.getBroadcast(this, 0, this.getIntent(), PendingIntent.FLAG_UPDATE_CURRENT);
@@ -83,9 +83,9 @@ public class EntryActivity extends Activity implements IActivity {
         IntentFilter filter = new IntentFilter();
         filter.addAction(USERNAME_CLICKED);
         filter.addAction(PASSWORD_CLICKED);
-        //der builder konfiguriert und baut die Notification
+        // Der Builder konfiguriert und baut die Notification
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        //Die Aktionen rufen den derzeitigen PendingIntent auf
+        // Die Aktionen rufen den derzeitigen PendingIntent auf
         builder.addAction(0, getResources().getString(R.string.notification_button_copy_username), userIntent);
         builder.addAction(0, getResources().getString(R.string.notification_button_copy_password), passIntent);
         builder.setSmallIcon(R.drawable.ic_launcher);
@@ -121,7 +121,7 @@ public class EntryActivity extends Activity implements IActivity {
                 context.sendBroadcast(it);
             }
         };
-        //Der Receiver kann jetzt die zur Verfügung gestellten Werte des PendingIntent empfangen
+        // Der Receiver kann jetzt die zur Verfügung gestellten Werte des PendingIntent empfangen
         registerReceiver(receiver, filter);
     }
 

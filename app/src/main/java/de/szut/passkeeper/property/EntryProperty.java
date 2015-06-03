@@ -19,6 +19,7 @@ public class EntryProperty implements IUserProperty {
     private String entryIV;
 
     /**
+     * Constructor.
      * @param entryId the id of an entry
      * @param categoryId the category id of an entry
      * @param databaseId the database id of an entry
@@ -46,6 +47,7 @@ public class EntryProperty implements IUserProperty {
     }
 
     /**
+     * Constructor.
      * @param databaseId the database id of an entry
      * @param categoryId the category id of an entry
      * @param entryTitle the title of an entry
@@ -69,6 +71,7 @@ public class EntryProperty implements IUserProperty {
     }
 
     /**
+     * Constructor.
      * @param entryId the id of an entry
      * @param entryTitle the title of an entry
      * @param entryUsername the username of an entry
@@ -103,7 +106,6 @@ public class EntryProperty implements IUserProperty {
     }
 
     /**
-     *
      * @return the database id of an entry
      */
     public int getDatabaseId() {
@@ -111,7 +113,6 @@ public class EntryProperty implements IUserProperty {
     }
 
     /**
-     *
      * @return the category id of an entry
      */
     public int getCategoryId() {
@@ -119,7 +120,6 @@ public class EntryProperty implements IUserProperty {
     }
 
     /**
-     *
      * @return the entry id of an entry
      */
     public int getEntryId() {
@@ -127,7 +127,6 @@ public class EntryProperty implements IUserProperty {
     }
 
     /**
-     *
      * @return the title of an entry
      */
     public String getEntryTitle() {
@@ -135,7 +134,6 @@ public class EntryProperty implements IUserProperty {
     }
 
     /**
-     *
      * @return the username of an entry
      */
     public String getEntryUsername() {
@@ -143,7 +141,6 @@ public class EntryProperty implements IUserProperty {
     }
 
     /**
-     *
      * @return the password of an entry
      */
     public String getEntryPwd() {
@@ -151,7 +148,6 @@ public class EntryProperty implements IUserProperty {
     }
 
     /**
-     *
      * @return the hash of an entry (for username and password)
      */
     public String getEntryHash() {
@@ -159,7 +155,6 @@ public class EntryProperty implements IUserProperty {
     }
 
     /**
-     *
      * @return the notes of entry
      */
     public String getEntryNote() {
@@ -167,7 +162,6 @@ public class EntryProperty implements IUserProperty {
     }
 
     /**
-     *
      * @return the icon id of entry
      */
     public int getEntryIconId() {
@@ -175,7 +169,6 @@ public class EntryProperty implements IUserProperty {
     }
 
     /**
-     *
      * @return the modification date of an entry
      */
     public String getEntryModifyDate() {
@@ -183,7 +176,6 @@ public class EntryProperty implements IUserProperty {
     }
 
     /**
-     *
      * @return the string for encryption / decryption of an entry
      */
     public String getEntryIV() {

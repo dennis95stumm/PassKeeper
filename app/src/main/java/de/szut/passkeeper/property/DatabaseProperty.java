@@ -13,6 +13,7 @@ public class DatabaseProperty implements IUserProperty {
     private String databaseModifyDate;
 
     /**
+     * Constructor.
      * @param databaseId the id of the database
      * @param databaseName the database name of the database
      * @param databasePwd the password of the database
@@ -28,7 +29,7 @@ public class DatabaseProperty implements IUserProperty {
     }
 
     /**
-     *
+     * Constructor.
      * @param databaseName the database name of the database
      * @param databasePwd the password of the database
      * @param databaseIconId the icon of the database
@@ -55,7 +56,6 @@ public class DatabaseProperty implements IUserProperty {
     }
 
     /**
-     *
      * @return the database id
      */
     public int getDatabaseId() {
@@ -63,7 +63,6 @@ public class DatabaseProperty implements IUserProperty {
     }
 
     /**
-     *
      * @return the database name
      */
     public String getDatabaseName() {
@@ -71,7 +70,6 @@ public class DatabaseProperty implements IUserProperty {
     }
 
     /**
-     *
      * @param databaseName set the databasename
      */
     public void setDatabaseName(String databaseName) {
@@ -87,15 +85,13 @@ public class DatabaseProperty implements IUserProperty {
     }
 
     /**
-     *
      * @param databasePwd set the database password
      */
     public void setDatabasePwd(String databasePwd) {
         this.databasePwd = databasePwd;
     }
 
-    /**
-     *
+    /***
      * @return get the database icon id
      */
     public int getDatabaseIconId() {
@@ -103,7 +99,6 @@ public class DatabaseProperty implements IUserProperty {
     }
 
     /**
-     *
      * @return get the database modification date
      */
     public String getDatabaseModifyDate() {

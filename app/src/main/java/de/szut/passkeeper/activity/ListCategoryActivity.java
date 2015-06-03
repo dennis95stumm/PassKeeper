@@ -50,9 +50,7 @@ public class ListCategoryActivity extends IRecyclerActivity implements IActivity
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * @param position
-     */
+    @Override
     public void onRecyclerItemClick(int position) {
         Intent intentListEntryActivity = new Intent(ListCategoryActivity.this, ListEntryActivity.class)
                 .putExtra("databaseId", ((CategoryProperty) vectorCategoryProperty.get(position)).getDatabaseId())

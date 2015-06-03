@@ -13,6 +13,7 @@ public class CategoryProperty implements IUserProperty {
     private String categoryModifyDate;
 
     /**
+     * Constructor.
      * @param categoryId the id of a category
      * @param databaseId the database id of a category
      * @param categoryName the name of a category
@@ -28,7 +29,7 @@ public class CategoryProperty implements IUserProperty {
     }
 
     /**
-     *
+     * Constructor.
      * @param databaseId the database id of a category
      * @param categoryName the name of a category
      * @param categoryIconId the icon id of a cateogry
@@ -55,7 +56,6 @@ public class CategoryProperty implements IUserProperty {
     }
 
     /**
-     *
      * @return the databaseId of a category
      */
     public int getDatabaseId() {
@@ -63,7 +63,6 @@ public class CategoryProperty implements IUserProperty {
     }
 
     /**
-     *
      * @return the category id of a category
      */
     public int getCategoryId() {
@@ -71,7 +70,6 @@ public class CategoryProperty implements IUserProperty {
     }
 
     /**
-     *
      * @return the name of a category
      */
     public String getCategoryName() {
@@ -79,7 +77,6 @@ public class CategoryProperty implements IUserProperty {
     }
 
     /**
-     *
      * @return the icon id of a category
      */
     public int getCategoryIconId() {
@@ -87,7 +84,6 @@ public class CategoryProperty implements IUserProperty {
     }
 
     /**
-     *
      * @return the modification date of a category
      */
     public String getCategoryModifyDate() {

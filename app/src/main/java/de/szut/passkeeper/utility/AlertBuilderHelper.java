@@ -11,6 +11,7 @@ import de.szut.passkeeper.R;
  */
 public class AlertBuilderHelper extends AlertDialog.Builder {
     /**
+     * Constructor.
      * @param context the application context
      * @param title the title of the dialog
      * @param message the message of the dialog

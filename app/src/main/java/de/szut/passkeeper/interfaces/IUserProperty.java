@@ -11,13 +11,11 @@ public interface IUserProperty {
     String getItemHeader();
 
     /**
-     *
      * @return the item sub-header for an recyler-item
      */
     String getItemSubHeader();
 
     /**
-     *
      * @return the item image for an recyler-item
      */
     int getItemImage();
