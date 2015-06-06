@@ -66,7 +66,7 @@ public class EntryActivity extends Activity implements IActivity {
 
 
     /**
-     * This activity is used to create a notification, that copy's and paste's the username and password
+     * This function is used to create a notification, that copy's and paste's the username and password
      */
     public void setNotification() {
         // Notificationmanager wird aus dem context geholt
@@ -91,7 +91,7 @@ public class EntryActivity extends Activity implements IActivity {
         builder.setSmallIcon(R.drawable.ic_launcher);
         builder.setContentTitle("Passkeeper Service");
         builder.setTicker("Password temporary saved");
-        builder.setContentText("See here Username and Password");
+        builder.setContentText("Copy username or password.");
         builder.setWhen(System.currentTimeMillis());
         builder.setOnlyAlertOnce(false);
         builder.setOngoing(false);
